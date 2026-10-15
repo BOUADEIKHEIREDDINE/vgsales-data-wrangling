@@ -45,6 +45,8 @@ puis ouvrir http://localhost:8501. Les pages :
 - **Qualité des données** : journal de nettoyage et export du jeu propre
 - **Synthèse et conclusion** : les six insights clés (recalculés sur les données), difficultés de data wrangling, apport des visualisations, galerie des 24 figures du notebook
 
+L'interface est interactive : un clic sur un jeu (barre, point ou ligne de tableau) ouvre sa fiche, un clic sur une année, un genre, une plateforme ou un éditeur affiche son détail, et les réglages (pondérations du MPI, jeu choisi...) sont conservés d'une page à l'autre. Les calculs sont mis en cache et chaque section réglable se recharge seule, sans recalculer toute la page.
+
 Les filtres de la barre latérale (période, genres, constructeurs, type de plateforme) s'appliquent à toutes les pages d'analyse (la qualité des données et la synthèse portent sur le jeu complet). L'interface nettoie les données brutes au lancement avec le même module que le notebook : un `assert_frame_equal` dans le notebook garantit que les deux donnent un résultat identique.
 
 ## Nettoyage en bref

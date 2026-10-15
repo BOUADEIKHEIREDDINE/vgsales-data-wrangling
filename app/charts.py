@@ -21,7 +21,11 @@ LAYOUT = dict(
     xaxis=dict(showgrid=False, linecolor="#c3c2b7", ticks="outside", tickcolor="#c3c2b7", zeroline=False),
     yaxis=dict(gridcolor=C.GRILLE, zeroline=False, linecolor="#c3c2b7"),
     separators=", ",
+    # Conserve le zoom et les séries masquées par l'utilisateur quand la figure est recalculée.
+    uirevision="fixe",
 )
+
+CLAIR = "#9fc3ee"  # bleu atténué pour les éléments non sélectionnés
 
 
 def habiller(fig: go.Figure, hauteur: int = 420, **kwargs) -> go.Figure:
@@ -60,8 +64,14 @@ def ventes_par_constructeur(df: pd.DataFrame, en_part: bool = False) -> go.Figur
     return fig
 
 
-def barres_annuelles(serie: pd.Series, titre_y: str, format_hover: str) -> go.Figure:
-    couleurs = [C.GRIS if a == C.ANNEE_PARTIELLE else C.PALETTE[0] for a in serie.index]
+def barres_annuelles(serie: pd.Series, titre_y: str, format_hover: str, annee: int | None = None) -> go.Figure:
+    def couleur(a: int) -> str:
+        if a == annee:
+            return C.PALETTE[1] if a != C.ANNEE_PARTIELLE else C.ENCRE_MUTED
+        if a == C.ANNEE_PARTIELLE:
+            return C.GRIS
+        return C.PALETTE[0] if annee is None else CLAIR
+    couleurs = [couleur(a) for a in serie.index]
     fig = go.Figure(go.Bar(x=serie.index, y=serie.values, marker_color=couleurs, marker_line_width=0,
                            hovertemplate="%{x}<br><b>" + format_hover + "</b><extra></extra>"))
     habiller(fig, 300, bargap=0.2, showlegend=False)
@@ -103,7 +113,7 @@ def barres_horizontales(serie: pd.Series, couleurs=None, format_texte=lambda v: 
     return fig
 
 
-def frequence_vs_ventes(df: pd.DataFrame) -> go.Figure:
+def frequence_vs_ventes(df: pd.DataFrame, focus: str | None = None) -> go.Figure:
     g = df.groupby("Genre", observed=True).agg(jeux=("Name", "size"), ventes=("Global_Sales", "sum"))
     g["pc"] = g["jeux"] / g["jeux"].sum()
     g["pv"] = g["ventes"] / g["ventes"].sum()
@@ -113,7 +123,9 @@ def frequence_vs_ventes(df: pd.DataFrame) -> go.Figure:
     fig.add_trace(go.Scatter(x=[0, m], y=[0, m], mode="lines", line=dict(color=C.GRIS, width=1), hoverinfo="skip", showlegend=False))
     fig.add_trace(go.Scatter(
         x=g["pc"], y=g["pv"], mode="markers+text", text=g["nom"], textposition="middle right",
-        marker=dict(size=13, color=C.PALETTE[0], line=dict(color="white", width=2)), showlegend=False,
+        marker=dict(size=[18 if x == focus else 13 for x in g.index], line=dict(color="white", width=2),
+                    color=[C.PALETTE[0] if focus is None or x == focus else CLAIR for x in g.index]),
+        textfont=dict(color=[C.ENCRE if x == focus else C.ENCRE_2 for x in g.index]), showlegend=False,
         customdata=np.c_[g["jeux"], g["ventes"], g["pv"] / g["pc"]],
         hovertemplate="<b>%{text}</b><br>%{customdata[0]:,} jeux (%{x:.1%})<br>%{customdata[1]:,.0f} M (%{y:.1%})"
                       "<br>Rendement : x%{customdata[2]:.2f}<extra></extra>",
@@ -162,10 +174,13 @@ def lignes(df_large: pd.DataFrame, couleurs: dict, noms: dict, titre_y: str, fmt
 # Market Power Index et profil d'un jeu
 # --------------------------------------------------------------------------------------
 
-def decomposition_mpi(mpi: pd.DataFrame, poids: dict, n: int = 15) -> go.Figure:
+def decomposition_mpi(mpi: pd.DataFrame, poids: dict, n: int = 15, editeur: str | None = None) -> go.Figure:
     top = mpi.head(n).iloc[::-1]
     total = sum(poids.values()) or 1
     fig = go.Figure()
+    if editeur in top.index:
+        i = list(top.index).index(editeur)
+        fig.add_hrect(y0=i - 0.5, y1=i + 0.5, fillcolor=C.GRILLE, opacity=0.8, line_width=0, layer="below")
     for i, (k, label) in enumerate(I.COMPOSANTES.items()):
         contrib = 100 * poids[k] / total * top[f"{k}_norm"]
         fig.add_trace(go.Bar(
@@ -215,4 +230,34 @@ def nuage_outliers(div: pd.DataFrame, seuil: float) -> go.Figure:
     fig.update_xaxes(type="log", title="Ventes mondiales du titre (M, échelle log)", showgrid=True, gridcolor=C.GRILLE,
                      tickvals=[0.3, 0.5, 1, 2, 5, 10, 20, 50, 100], ticktext=["0,3", "0,5", "1", "2", "5", "10", "20", "50", "100"])
     fig.update_yaxes(title="Divergence régionale (Jensen-Shannon)")
+    return fig
+
+
+COURTS = {"part_marche": "Part de marché", "leadership": "Leadership", "diversite": "Diversité",
+          "constance": "Constance", "taux_hits": "Taux de hits"}
+
+
+def _rgba(hexa: str, alpha: float) -> str:
+    r, g, b = (int(hexa[i:i + 2], 16) for i in (1, 3, 5))
+    return f"rgba({r},{g},{b},{alpha})"
+
+
+def radar_editeurs(mpi: pd.DataFrame, editeurs: list[str]) -> go.Figure:
+    """Profil des 5 composantes normalisées d'un ou deux éditeurs, face à la médiane des éditeurs classés."""
+    axes = list(COURTS.values()) + [list(COURTS.values())[0]]
+    fig = go.Figure()
+    mediane = [mpi[f"{k}_norm"].median() for k in COURTS]
+    fig.add_trace(go.Scatterpolar(r=mediane + mediane[:1], theta=axes, name="Médiane des éditeurs", mode="lines",
+                                  line=dict(color=C.GRIS, dash="dot", width=1.5),
+                                  hovertemplate="Médiane · %{theta}<br>%{r:.2f}<extra></extra>"))
+    for e, couleur in zip(editeurs, [C.PALETTE[0], C.PALETTE[1]]):
+        v = [float(mpi.loc[e, f"{k}_norm"]) for k in COURTS]
+        fig.add_trace(go.Scatterpolar(r=v + v[:1], theta=axes, name=e, mode="lines+markers", fill="toself",
+                                      fillcolor=_rgba(couleur, 0.15), line=dict(color=couleur, width=2.5), marker=dict(size=6),
+                                      hovertemplate=f"<b>{e}</b> · %{{theta}}<br>%{{r:.2f}}<extra></extra>"))
+    habiller(fig, 400, margin=dict(l=50, r=50, t=50, b=30))
+    fig.update_layout(polar=dict(bgcolor="rgba(0,0,0,0)",
+                                 radialaxis=dict(range=[0, 1], gridcolor=C.GRILLE, linecolor=C.GRILLE, tickfont=dict(size=10),
+                                                 tickvals=[0.25, 0.5, 0.75, 1]),
+                                 angularaxis=dict(gridcolor=C.GRILLE, linecolor="#c3c2b7")))
     return fig
