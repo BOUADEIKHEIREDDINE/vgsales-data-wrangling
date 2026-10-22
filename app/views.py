@@ -37,7 +37,8 @@ def pct(v: float, d: int = 1) -> str:
 
 
 def entete(titre: str, sous_titre: str) -> None:
-    st.markdown(f"<h1 class='titre'>{titre}</h1><p class='sous-titre'>{sous_titre}</p>", unsafe_allow_html=True)
+    st.markdown(f"<h1 class='titre'>{titre}</h1><p class='sous-titre'>{sous_titre}</p>"
+                f"<div class='pac-ligne'></div>", unsafe_allow_html=True)
 
 
 def encart(texte: str) -> None:
@@ -410,7 +411,7 @@ def _genres_zoom(ctx: dict) -> None:
     with c2:
         st.markdown("**Ventes mondiales par genre**")
         noms = pd.Series(v.to_numpy(), index=[C.GENRES_FR[g] for g in v.index])
-        couleurs = [C.PALETTE[0] if g == focus else "#9fc3ee" for g in v.index]
+        couleurs = [C.PALETTE[0] if g == focus else G.CLAIR for g in v.index]
         graphique(G.barres_horizontales(noms, couleurs, hauteur=430), key="g_barres", clic=choisir_genre)
     astuce("Cliquez sur un genre (point ou barre) pour le détailler ci-dessous.")
 

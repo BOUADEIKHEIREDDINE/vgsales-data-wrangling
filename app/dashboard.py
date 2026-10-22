@@ -11,6 +11,7 @@ if str(ROOT) not in sys.path:
 
 import streamlit as st
 
+from app import theme  # avant charts / views : palette arcade des diapos
 from app import donnees as D
 from app import views
 from modules import config as C
@@ -19,29 +20,7 @@ from modules import jointure as J
 
 st.set_page_config(page_title="Ventes mondiales de jeux vidéo", page_icon="🎮", layout="wide")
 
-st.markdown("""
-<style>
-.block-container {padding-top: 2.2rem; max-width: 1350px;}
-h1.titre {font-size: 2.0rem; font-weight: 700; margin-bottom: 0; letter-spacing: -0.01em;}
-p.sous-titre {color: #52514e; font-size: 1.02rem; margin-top: 0.2rem; margin-bottom: 1.4rem;}
-h2, h3 {letter-spacing: -0.01em;}
-div[data-testid="stMetric"] {background: #ffffff; border-radius: 10px;}
-div[data-testid="stMetricValue"] {font-size: 1.55rem;}
-.encart {background: #f3f6fb; border-left: 3px solid #2a78d6; border-radius: 6px; padding: 0.8rem 1.1rem;
-         color: #2b2b29; margin: 0.4rem 0 1.2rem 0; font-size: 0.97rem;}
-.encart ol, .encart ul {margin: 0; padding-left: 1.2rem;} .encart li {margin: 0.25rem 0;}
-.carte {background: #ffffff; border: 1px solid #e1e0d9; border-radius: 10px; padding: 1rem 1.1rem; min-height: 175px; margin-bottom: 1rem;}
-.carte-chiffre {font-size: 1.7rem; font-weight: 700; color: #2a78d6; letter-spacing: -0.01em;}
-.carte-titre {font-weight: 600; color: #0b0b0b; margin: 0.15rem 0 0.3rem 0;}
-.carte-texte {color: #52514e; font-size: 0.92rem; line-height: 1.4;}
-section[data-testid="stSidebar"] .note {font-size: 0.82rem; color: #6b6a66;}
-.astuce {color: #6b6a66; font-size: 0.86rem; margin: -0.4rem 0 0.6rem 0;}
-.zoom {background: #ffffff; border: 1px solid #e1e0d9; border-radius: 10px; padding: 0.9rem 1.1rem;}
-.carte {transition: transform .15s ease, box-shadow .15s ease;}
-.carte:hover {transform: translateY(-2px); box-shadow: 0 6px 18px rgba(11,11,11,.07);}
-div[data-testid="stPlotlyChart"] {transition: opacity .2s ease;}
-</style>
-""", unsafe_allow_html=True)
+st.markdown(theme.CSS, unsafe_allow_html=True)
 
 
 raw, df_all, journal = D.charger()

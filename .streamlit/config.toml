@@ -1,9 +1,10 @@
 [theme]
-base = "light"
-primaryColor = "#2a78d6"
-backgroundColor = "#fcfcfb"
-secondaryBackgroundColor = "#f3f2ee"
-textColor = "#0b0b0b"
+# Style arcade des diapos : fond noir, murs bleus, accent jaune Pac-Man
+base = "dark"
+primaryColor = "#FFE600"
+backgroundColor = "#000000"
+secondaryBackgroundColor = "#0A0A2A"
+textColor = "#FFFFFF"
 font = "sans serif"
 
 [server]

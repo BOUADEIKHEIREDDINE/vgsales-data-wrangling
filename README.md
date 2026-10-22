@@ -52,6 +52,8 @@ puis ouvrir http://localhost:8501. Les pages :
 - **Qualité des données** : journaux de nettoyage des deux bases, bilan de la jointure, export des jeux propres
 - **Synthèse et conclusion** : les six insights clés et les trois apports de la deuxième source (recalculés sur les données), difficultés de data wrangling, apport des visualisations, galerie des figures des deux notebooks
 
+Le thème reprend le style arcade des diapos (fond noir, murs bleus, police pixel *Press Start 2P* sous licence OFL) : voir `app/theme.py`. Les figures du notebook gardent leur palette claire.
+
 La deuxième source enrichit aussi les pages existantes : la fiche d'un jeu affiche ses notes, son studio et sa classification d'âge ; le classement des plateformes affiche leur note moyenne ; la page Genres propose les notes par genre.
 
 L'interface est interactive : un clic sur un jeu (barre, point ou ligne de tableau) ouvre sa fiche, un clic sur une année, un genre, une plateforme ou un éditeur affiche son détail, et les réglages (pondérations du MPI, jeu choisi...) sont conservés d'une page à l'autre. Les calculs sont mis en cache et chaque section réglable se recharge seule, sans recalculer toute la page.
@@ -88,6 +90,6 @@ Résultat : 16 326 jeux, 11 239 titres, 99,3 % du volume de ventes conservé.
 
 ## Présentation
 
-Les diapos sont dans `presentation/`. Pour la soutenance, projeter `presentation_complete.pptx` : partie 1 (ventes VGChartz), puis partie 2 (notes Metacritic), avec une diapo réservée à la démo de l'interface. Les fichiers `BDD1_…` et `BDD2_…` contiennent chaque partie seule.
+Les diapos sont dans `presentation/`. Pour la soutenance, projeter `presentation_complete.pptx` : partie 1 (ventes VGChartz), puis partie 2 (notes Metacritic), puis une seule démo de l'interface à la fin, qui montre les deux bases ensemble. Les fichiers `BDD1_…` et `BDD2_…` contiennent chaque partie seule.
 
 Les animations (Pac-Man qui avance sur la barre de progression, transitions) ne marchent que dans PowerPoint. Les PDF sont des versions statiques, à utiliser pour lire les diapos ou en secours.

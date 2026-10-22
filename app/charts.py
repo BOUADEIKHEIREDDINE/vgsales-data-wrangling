@@ -8,6 +8,7 @@ import plotly.graph_objects as go
 
 from modules import config as C
 from modules import indicators as I
+from app import theme as T
 
 FONT = "Inter, system-ui, -apple-system, Segoe UI, sans-serif"
 
@@ -16,16 +17,16 @@ LAYOUT = dict(
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
     margin=dict(l=10, r=20, t=30, b=10),
-    hoverlabel=dict(bgcolor="white", bordercolor=C.GRILLE, font=dict(family=FONT, size=12, color=C.ENCRE)),
+    hoverlabel=dict(bgcolor=T.NUIT, bordercolor=T.MUR, font=dict(family=FONT, size=12, color=C.ENCRE)),
     legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0, title_text="", traceorder="normal"),
-    xaxis=dict(showgrid=False, linecolor="#c3c2b7", ticks="outside", tickcolor="#c3c2b7", zeroline=False),
-    yaxis=dict(gridcolor=C.GRILLE, zeroline=False, linecolor="#c3c2b7"),
+    xaxis=dict(showgrid=False, linecolor=C.GRIS, ticks="outside", tickcolor=C.GRIS, zeroline=False),
+    yaxis=dict(gridcolor=C.GRILLE, zeroline=False, linecolor=C.GRIS),
     separators=", ",
     # Conserve le zoom et les séries masquées par l'utilisateur quand la figure est recalculée.
     uirevision="fixe",
 )
 
-CLAIR = "#9fc3ee"  # bleu atténué pour les éléments non sélectionnés
+CLAIR = T.CLAIR  # éléments non sélectionnés
 
 
 def habiller(fig: go.Figure, hauteur: int = 420, **kwargs) -> go.Figure:
@@ -50,7 +51,7 @@ def ventes_par_constructeur(df: pd.DataFrame, en_part: bool = False) -> go.Figur
     fig = go.Figure()
     for c in v.columns:
         fig.add_trace(go.Scatter(
-            x=v.index, y=v[c], name=c, mode="lines", stackgroup="un", line=dict(width=0.6, color="white"),
+            x=v.index, y=v[c], name=c, mode="lines", stackgroup="un", line=dict(width=0.6, color=C.SURFACE),
             fillcolor=C.COULEURS_CONSTRUCTEUR[c],
             hovertemplate=f"<b>{c}</b> · %{{x}}<br>" + ("%{y:.1%}" if en_part else "%{y:,.0f} M") + "<extra></extra>",
         ))
@@ -123,7 +124,7 @@ def frequence_vs_ventes(df: pd.DataFrame, focus: str | None = None) -> go.Figure
     fig.add_trace(go.Scatter(x=[0, m], y=[0, m], mode="lines", line=dict(color=C.GRIS, width=1), hoverinfo="skip", showlegend=False))
     fig.add_trace(go.Scatter(
         x=g["pc"], y=g["pv"], mode="markers+text", text=g["nom"], textposition="middle right",
-        marker=dict(size=[18 if x == focus else 13 for x in g.index], line=dict(color="white", width=2),
+        marker=dict(size=[18 if x == focus else 13 for x in g.index], line=dict(color=C.SURFACE, width=2),
                     color=[C.PALETTE[0] if focus is None or x == focus else CLAIR for x in g.index]),
         textfont=dict(color=[C.ENCRE if x == focus else C.ENCRE_2 for x in g.index]), showlegend=False,
         customdata=np.c_[g["jeux"], g["ventes"], g["pv"] / g["pc"]],
@@ -185,7 +186,7 @@ def decomposition_mpi(mpi: pd.DataFrame, poids: dict, n: int = 15, editeur: str 
     for i, (k, label) in enumerate(composantes.items()):
         contrib = 100 * poids[k] / total * top[f"{k}_norm"]
         fig.add_trace(go.Bar(
-            y=top.index, x=contrib, name=label, orientation="h", marker=dict(color=C.PALETTE[i], line=dict(color="white", width=1.5)),
+            y=top.index, x=contrib, name=label, orientation="h", marker=dict(color=C.PALETTE[i], line=dict(color=C.SURFACE, width=1.5)),
             customdata=top[k], hovertemplate="<b>%{y}</b><br>" + label + " : %{x:.1f} pts<extra></extra>",
         ))
     fig.add_trace(go.Scatter(y=top.index, x=top["MPI"] + 1.5, mode="text", text=[f"{v:.1f}".replace(".", ",") for v in top["MPI"]],
@@ -220,7 +221,7 @@ def nuage_outliers(div: pd.DataFrame, seuil: float) -> go.Figure:
         o = div[div["outlier"] & (div["region_dominante"] == r)]
         fig.add_trace(go.Scattergl(
             x=o["Global_Sales"], y=o["divergence"], mode="markers", name=f"Outlier {C.REGION_LABELS[r]} ({len(o)})",
-            marker=dict(size=8, color=C.COULEURS_REGION[r], line=dict(color="white", width=1)), text=o["Name"],
+            marker=dict(size=8, color=C.COULEURS_REGION[r], line=dict(color=C.SURFACE, width=1)), text=o["Name"],
             customdata=np.c_[o["part_NA_Sales"], o["part_EU_Sales"], o["part_JP_Sales"], o["part_Other_Sales"]],
             hovertemplate="<b>%{text}</b><br>%{x:.2f} M · divergence %{y:.3f}<br>NA %{customdata[0]:.0%} · EU %{customdata[1]:.0%}"
                           " · JP %{customdata[2]:.0%} · Autres %{customdata[3]:.0%}<extra></extra>",
@@ -261,7 +262,7 @@ def radar_editeurs(mpi: pd.DataFrame, editeurs: list[str], courts: dict = COURTS
     fig.update_layout(polar=dict(bgcolor="rgba(0,0,0,0)",
                                  radialaxis=dict(range=[0, 1], gridcolor=C.GRILLE, linecolor=C.GRILLE, tickfont=dict(size=10),
                                                  tickvals=[0.25, 0.5, 0.75, 1]),
-                                 angularaxis=dict(gridcolor=C.GRILLE, linecolor="#c3c2b7")))
+                                 angularaxis=dict(gridcolor=C.GRILLE, linecolor=C.GRIS)))
     return fig
 
 
@@ -310,7 +311,7 @@ def notes_par_categorie(g: pd.DataFrame, noms: list[str], focus: str | None = No
     taille = [14 if focus is None or n == focus else 9 for n in noms]
     for col, nom, couleur in [("Presse", "Presse", PRESSE), ("Joueurs", "Joueurs (x10)", JOUEURS)]:
         fig.add_trace(go.Scatter(x=g[col], y=noms, mode="markers", name=nom, text=noms, customdata=g["Jeux"],
-                                 marker=dict(size=taille, color=couleur, line=dict(color="white", width=1.5)),
+                                 marker=dict(size=taille, color=couleur, line=dict(color=C.SURFACE, width=1.5)),
                                  hovertemplate=f"<b>%{{y}}</b><br>{nom} : %{{x:.1f}}/100<br>%{{customdata:,}} jeux notés<extra></extra>"))
     habiller(fig, max(340, 32 * len(noms) + 80))
     fig.update_xaxes(title="Note moyenne (/100)", showgrid=True, gridcolor=C.GRILLE)
@@ -323,7 +324,7 @@ def regions_par_note(profil: pd.DataFrame) -> go.Figure:
     for r in C.REGIONS:
         fig.add_trace(go.Bar(x=profil.index.astype(str), y=profil[r], name=C.REGION_LABELS[r], marker_color=C.COULEURS_REGION[r],
                              text=[f"{v:.0%}".replace("%", " %") if v > 0.06 else "" for v in profil[r]],
-                             textposition="inside", insidetextanchor="middle", textfont=dict(color="white"),
+                             textposition="inside", insidetextanchor="middle", textfont=dict(color=C.SURFACE),
                              hovertemplate=f"<b>{C.REGION_LABELS[r]}</b> · note %{{x}}<br>%{{y:.1%}} des ventes<extra></extra>"))
     habiller(fig, 400, barmode="stack", bargap=0.3)
     fig.update_yaxes(title="Part moyenne des ventes du jeu", tickformat=".0%", range=[0, 1])
