@@ -14,6 +14,8 @@ Projet final de Data Wrangling : nettoyage, analyse exploratoire, indicateurs av
 | `BDD_states/` | `vgsales.csv` (brut), `vgsales_clean.csv` (propre), `market_power_index.csv`, `divergence_regionale.csv`, `video_games_ratings.csv` (brut, base 2), `video_games_ratings_clean.csv`, `vgsales_ratings_joint.csv` (ventes + notes) |
 | `figures/` | Les graphiques des notebooks en PNG : 01 à 24 (`projet_final.ipynb`), 25 à 38 (`bdd2.ipynb`) |
 | `docs/` | `dictionnaire_bdd2.md` (dictionnaire des données de la base 2), `jointure.md` (méthode et limites de la jointure), `prix_prestation.md` (chiffrage avant / après) |
+| `presentation/` | Les diapos de la soutenance (style Pac-Man, en PPTX et en PDF) : `presentation_complete` (les deux parties dans un seul fichier), `BDD1_vgsales_pacman` (partie ventes), `BDD2_metacritic_pacman` (partie notes Metacritic) |
+| `consignes.md` | Organisation de l'équipe : répartition du travail, branches, PR |
 | `brouillons/` | Les notebooks de travail d'origine, conservés tels quels |
 
 ## Installation
@@ -83,3 +85,9 @@ Résultat : 16 326 jeux, 11 239 titres, 99,3 % du volume de ventes conservé.
 **Jointure** sur nom normalisé + plateforme + année : 99,7 % des jeux reliés, mais 49 % seulement ont une note presse (63 % des ventes). Méthode, vérifications et limites : `docs/jointure.md`.
 
 **Prix de la prestation** : 7 200 € HT pour l'analyse des ventes seule, 11 700 € HT avec la deuxième base (TJM 450 €). Détail : `docs/prix_prestation.md`.
+
+## Présentation
+
+Les diapos sont dans `presentation/`. Pour la soutenance, projeter `presentation_complete.pptx` : partie 1 (ventes VGChartz), puis partie 2 (notes Metacritic), avec une diapo réservée à la démo de l'interface. Les fichiers `BDD1_…` et `BDD2_…` contiennent chaque partie seule.
+
+Les animations (Pac-Man qui avance sur la barre de progression, transitions) ne marchent que dans PowerPoint. Les PDF sont des versions statiques, à utiliser pour lire les diapos ou en secours.
