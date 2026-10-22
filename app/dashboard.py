@@ -15,8 +15,8 @@ from app import theme  # avant charts / views : palette arcade des diapos
 from app import donnees as D
 from app import views
 from modules import config as C
-from modules import indicators as I
-from modules import jointure as J
+from modules import bdd1_indicators as I
+from modules import bdd2_jointure as J
 
 st.set_page_config(page_title="Ventes mondiales de jeux vidéo", page_icon="🎮", layout="wide")
 

@@ -7,7 +7,7 @@ import pandas as pd
 import plotly.graph_objects as go
 
 from modules import config as C
-from modules import indicators as I
+from modules import bdd1_indicators as I
 from app import theme as T
 
 FONT = "Inter, system-ui, -apple-system, Segoe UI, sans-serif"

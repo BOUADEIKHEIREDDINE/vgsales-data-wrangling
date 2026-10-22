@@ -6,10 +6,10 @@ import pandas as pd
 import streamlit as st
 
 from modules import config as C
-from modules import indicators as I
-from modules import jointure as J
-from modules.cleaning import nettoyer
-from modules.cleaning_bdd2 import nettoyer as nettoyer_notes
+from modules import bdd1_indicators as I
+from modules import bdd2_jointure as J
+from modules.bdd1_cleaning import nettoyer
+from modules.bdd2_cleaning import nettoyer as nettoyer_notes
 
 # Clé de filtres : (période, genres, constructeurs, types), tuples triés pour être hachables et stables.
 Cle = tuple[tuple[int, int], tuple[str, ...], tuple[str, ...], tuple[str, ...]]

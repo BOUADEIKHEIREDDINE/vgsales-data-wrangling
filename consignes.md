@@ -10,17 +10,17 @@ Le client veut qu'on **ajoute une deuxième base de données** à l'analyse. Ce 
 
 ## 1. Ce qui est déjà fait (Kheireddine)
 
-Tout le travail sur `vgsales.csv` (16 598 jeux, source VGChartz, 1980-2016) est terminé et poussé sur `main`.
+Tout le travail sur `bdd1_vgsales.csv` (16 598 jeux, source VGChartz, 1980-2016) est terminé et poussé sur `main`.
 
 | Élément | Contenu |
 |---|---|
-| `projet_final.ipynb` (+ `projet_final.html`) | Livrable principal, exécuté de bout en bout : Partie I (nettoyage), Partie II (EDA, Market Power Index, divergences régionales), Partie III (storytelling), conclusion |
-| `modules/cleaning.py` | Toutes les règles de nettoyage (utilisées par le notebook **et** par l'interface) |
-| `modules/indicators.py` | Calcul du Market Power Index (5 composantes) et du score de divergence régionale |
+| `bdd1_vgsales.ipynb` (+ `bdd1_vgsales.html`) | Livrable principal, exécuté de bout en bout : Partie I (nettoyage), Partie II (EDA, Market Power Index, divergences régionales), Partie III (storytelling), conclusion |
+| `modules/bdd1_cleaning.py` | Toutes les règles de nettoyage (utilisées par le notebook **et** par l'interface) |
+| `modules/bdd1_indicators.py` | Calcul du Market Power Index (5 composantes) et du score de divergence régionale |
 | `modules/config.py` | Chemins, régions, table des plateformes (constructeur, génération...), couleurs |
 | `modules/viz.py` | Style commun des graphiques du notebook |
 | `app/` | Interface Streamlit de 8 pages, interactive (clic sur un jeu, une année, un genre...). Lancement : `python run_app.py` |
-| `BDD_states/` | `vgsales.csv` (brut), `vgsales_clean.csv`, `market_power_index.csv`, `divergence_regionale.csv` |
+| `BDD_states/` | `bdd1_vgsales.csv` (brut), `bdd1_vgsales_clean.csv`, `bdd1_market_power_index.csv`, `bdd1_divergence_regionale.csv` |
 | `figures/` | Les 24 graphiques du notebook en PNG (réutilisables pour les diapos) |
 | `README.md` | Installation, lancement, résumé du nettoyage |
 
@@ -54,7 +54,7 @@ Suivre **la même structure que le sujet** (voir `Projet_Etudiant.docx`), dans l
 ### 2.3 Relier la nouvelle base à la base actuelle (si possible)
 
 - Faire la jointure sur `Name` + `Platform` (+ `Year` si besoin). Les noms ne sont jamais écrits pareil d'une source à l'autre : normaliser avant de joindre (minuscules, ponctuation, espaces, « The », chiffres romains...).
-- **Mesurer le taux de correspondance** : combien de jeux de `vgsales_clean.csv` retrouvent un partenaire, et quelle part des ventes cela représente. Si les jeux reliés sont surtout des gros titres, le signaler (biais).
+- **Mesurer le taux de correspondance** : combien de jeux de `bdd1_vgsales_clean.csv` retrouvent un partenaire, et quelle part des ventes cela représente. Si les jeux reliés sont surtout des gros titres, le signaler (biais).
 - Vérifier quelques correspondances à la main pour éviter les fausses jointures (remakes, rééditions, homonymes).
 - Ensuite, **croiser** : la nouvelle information explique-t-elle les ventes ? Change-t-elle le classement des éditeurs (MPI) ? Les différences régionales ?
 - Si la jointure n'est pas possible, l'expliquer et comparer les deux bases au niveau agrégé (par année, genre, plateforme).
@@ -63,7 +63,7 @@ Suivre **la même structure que le sujet** (voir `Projet_Etudiant.docx`), dans l
 
 Chiffrer la prestation pour le client :
 
-- **Avant** : le travail sur `vgsales.csv` seul (nettoyage, EDA, indicateurs, notebook, interface).
+- **Avant** : le travail sur `bdd1_vgsales.csv` seul (nettoyage, EDA, indicateurs, notebook, interface).
 - **Après** : le même travail avec la deuxième base (recherche de la source, nettoyage, jointure, nouvelles analyses, mise à jour de l'interface et de la doc).
 - Détailler par poste (jours ou heures × taux journalier), dire quelles hypothèses on prend et justifier l'écart entre les deux prix.
 
@@ -85,9 +85,9 @@ Règles à respecter :
   ```
 - **Ne pas écraser les fichiers existants.** On ajoute des fichiers, on ne remplace pas :
   - données : `BDD_states/<nom_bdd2>.csv` (brut) et `BDD_states/<nom_bdd2>_clean.csv`
-  - nettoyage : un nouveau module `modules/cleaning_bdd2.py` (ne pas modifier les règles de `cleaning.py`)
+  - nettoyage : un nouveau module `modules/bdd2_cleaning.py` (ne pas modifier les règles de `bdd1_cleaning.py`)
   - chemins : ajouter les nouvelles constantes **à la suite** dans `modules/config.py`
-  - notebook : une **nouvelle partie** à la fin de `projet_final.ipynb` (ou un notebook séparé `bdd2.ipynb`), sans modifier les cellules existantes
+  - notebook : une **nouvelle partie** à la fin de `bdd1_vgsales.ipynb` (ou un notebook séparé `bdd2_metacritic.ipynb`), sans modifier les cellules existantes
   - figures : continuer la numérotation (`25_...png`, `26_...png`)
 - **Vérifier que rien n'est cassé avant de pousser** : le notebook tourne en entier (*Run All*) et `python run_app.py` démarre sans erreur, sur toutes les pages.
 - Pousser la branche et ouvrir une **Pull Request** vers `main` ; quelqu'un d'autre la relit avant le merge.

@@ -1,17 +1,17 @@
-"""Jointure des ventes (vgsales_clean) et des notes Metacritic (video_games_ratings_clean),
+"""Jointure des ventes (bdd1_vgsales_clean) et des notes Metacritic (bdd2_metacritic_clean),
 puis Market Power Index enrichi d'une composante "qualité perçue".
 
 Les deux bases sortent du même scraping VGChartz : la clé de nettoyage (nom normalisé,
 plateforme, année) est donc aussi la clé de jointure. Les ventes viennent toujours de
-vgsales_clean, les notes de la deuxième base.
+bdd1_vgsales_clean, les notes de la deuxième base.
 """
 
 from __future__ import annotations
 
 import pandas as pd
 
-from . import indicators as I
-from .cleaning import cle_jeu
+from . import bdd1_indicators as I
+from .bdd1_cleaning import cle_jeu
 
 CLE = ["_cle", "Platform", "Year"]
 COLONNES_NOTES = ["Critic_Score", "Critic_Count", "User_Score_100", "User_Count", "Ecart_Presse_Joueurs",
@@ -27,7 +27,7 @@ NOTES_MIN = 5
 
 
 def joindre(ventes: pd.DataFrame, notes: pd.DataFrame) -> pd.DataFrame:
-    """Jointure à gauche : tous les jeux de vgsales_clean, enrichis des notes quand elles existent."""
+    """Jointure à gauche : tous les jeux de bdd1_vgsales_clean, enrichis des notes quand elles existent."""
     v = ventes.assign(_cle=cle_jeu(ventes["Name"].astype(str)))
     n = notes.assign(_cle=cle_jeu(notes["Name"].astype(str)))[CLE + COLONNES_NOTES]
     joint = v.merge(n, on=CLE, how="left", indicator="_m", validate="one_to_one")
@@ -42,7 +42,7 @@ def bilan_jointure(joint: pd.DataFrame, notes: pd.DataFrame) -> pd.DataFrame:
     """Taux de correspondance en nombre de jeux et en part des ventes."""
     total = joint["Global_Sales"].sum()
     lignes = {
-        "Jeux de vgsales_clean": (len(joint), total),
+        "Jeux de bdd1_vgsales_clean": (len(joint), total),
         "reliés à la base Metacritic": (joint["Relie"].sum(), joint.loc[joint["Relie"], "Global_Sales"].sum()),
         "dont avec une note presse": (joint["Note_Presse"].sum(), joint.loc[joint["Note_Presse"], "Global_Sales"].sum()),
         "non reliés": ((~joint["Relie"]).sum(), joint.loc[~joint["Relie"], "Global_Sales"].sum()),
@@ -50,7 +50,7 @@ def bilan_jointure(joint: pd.DataFrame, notes: pd.DataFrame) -> pd.DataFrame:
     bilan = pd.DataFrame(lignes, index=["Jeux", "Ventes (M)"]).T
     bilan["Part des jeux"] = bilan["Jeux"] / len(joint)
     bilan["Part des ventes"] = bilan["Ventes (M)"] / total
-    bilan.loc["Jeux Metacritic absents de vgsales_clean"] = [len(notes) - joint["Relie"].sum(), None, None, None]
+    bilan.loc["Jeux Metacritic absents de bdd1_vgsales_clean"] = [len(notes) - joint["Relie"].sum(), None, None, None]
     return bilan
 
 
@@ -71,7 +71,7 @@ def qualite_editeurs(joint: pd.DataFrame) -> pd.DataFrame:
 
 def market_power_index_qualite(joint: pd.DataFrame, poids: dict | None = None, min_titres: int = 20,
                                seuil_leader: float = 0.30) -> pd.DataFrame:
-    """MPI à 6 composantes : les 5 de indicators.py + la qualité perçue. Même normalisation min-max."""
+    """MPI à 6 composantes : les 5 de bdd1_indicators.py + la qualité perçue. Même normalisation min-max."""
     poids = poids or POIDS_QUALITE
     total = sum(poids.values())
     res = I.composantes_mpi(joint, min_titres, seuil_leader).join(qualite_editeurs(joint))

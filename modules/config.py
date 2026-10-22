@@ -4,10 +4,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "BDD_states"
-RAW_FILE = DATA_DIR / "vgsales.csv"
-CLEAN_FILE = DATA_DIR / "vgsales_clean.csv"
-MPI_FILE = DATA_DIR / "market_power_index.csv"
-DIVERGENCE_FILE = DATA_DIR / "divergence_regionale.csv"
+RAW_FILE = DATA_DIR / "bdd1_vgsales.csv"
+CLEAN_FILE = DATA_DIR / "bdd1_vgsales_clean.csv"
+MPI_FILE = DATA_DIR / "bdd1_market_power_index.csv"
+DIVERGENCE_FILE = DATA_DIR / "bdd1_divergence_regionale.csv"
 FIGURES_DIR = ROOT / "figures"
 
 # Le fichier provient d'un scraping VGChartz réalisé fin 2016 : l'année 2016 est incomplète.
@@ -109,9 +109,9 @@ ORDRE_CONSTRUCTEURS = ["Atari", "Sega", "Nintendo", "Sony", "Microsoft", "PC", "
 # --------------------------------------------------------------------------------------
 # Deuxième base : notes Metacritic (Kaggle rush4ratio, scraping du 22/12/2016)
 # --------------------------------------------------------------------------------------
-RATINGS_RAW_FILE = DATA_DIR / "video_games_ratings.csv"
-RATINGS_CLEAN_FILE = DATA_DIR / "video_games_ratings_clean.csv"
-JOINTURE_FILE = DATA_DIR / "vgsales_ratings_joint.csv"
+RATINGS_RAW_FILE = DATA_DIR / "bdd2_metacritic.csv"
+RATINGS_CLEAN_FILE = DATA_DIR / "bdd2_metacritic_clean.csv"
+JOINTURE_FILE = DATA_DIR / "bdd2_jointure_ventes_notes.csv"
 
 # Classification d'âge ESRB : code -> libellé (K-A est l'ancien nom de E, avant 1998).
 ESRB_LABELS = {

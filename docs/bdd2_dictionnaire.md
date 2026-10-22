@@ -12,10 +12,10 @@
 | Date de téléchargement | 22/10/2026 |
 | Date des données | scraping du 22/12/2016 |
 | Licence | non précisée par l'auteur (« Unknown » sur la page Kaggle, vérifié le 22/10/2026). Usage limité à ce projet pédagogique, avec la source citée |
-| Fichier dans le projet | `BDD_states/video_games_ratings.csv` |
+| Fichier dans le projet | `BDD_states/bdd2_metacritic.csv` |
 | Taille | 16 719 lignes × 16 colonnes |
 
-Construction : l'auteur a repris le scraping de ventes VGChartz (la même source que `vgsales.csv`), puis l'a complété par un second scraping de **Metacritic**, qui ajoute les notes de la presse et des joueurs, le développeur et la classification d'âge ESRB. Metacritic ne couvre qu'une partie des plateformes, celles des années 2000 et après, d'où les nombreuses valeurs manquantes sur les colonnes de notes.
+Construction : l'auteur a repris le scraping de ventes VGChartz (la même source que `bdd1_vgsales.csv`), puis l'a complété par un second scraping de **Metacritic**, qui ajoute les notes de la presse et des joueurs, le développeur et la classification d'âge ESRB. Metacritic ne couvre qu'une partie des plateformes, celles des années 2000 et après, d'où les nombreuses valeurs manquantes sur les colonnes de notes.
 
 ## Colonnes
 
@@ -24,11 +24,11 @@ Les valeurs manquantes sont comptées sur le fichier brut, avant nettoyage.
 | Colonne | Type brut | Signification | Manquants | Remarques |
 |---|---|---|---|---|
 | `Name` | texte | Titre du jeu | 2 (0,0 %) | 11 562 titres distincts |
-| `Platform` | texte | Code de la plateforme (Wii, PS2, X360...) | 0 | 31 plateformes, mêmes codes que `vgsales.csv` |
+| `Platform` | texte | Code de la plateforme (Wii, PS2, X360...) | 0 | 31 plateformes, mêmes codes que `bdd1_vgsales.csv` |
 | `Year_of_Release` | décimal | Année de sortie | 269 (1,6 %) | Équivalent de `Year`. 1980-2020 : 4 dates après 2016 sont incohérentes |
-| `Genre` | texte | Genre du jeu | 2 (0,0 %) | 12 genres, mêmes modalités que `vgsales.csv` |
+| `Genre` | texte | Genre du jeu | 2 (0,0 %) | 12 genres, mêmes modalités que `bdd1_vgsales.csv` |
 | `Publisher` | texte | Éditeur | 54 (0,3 %) | 581 éditeurs |
-| `NA_Sales` | décimal | Ventes en Amérique du Nord (millions d'exemplaires) | 0 | Même source que `vgsales.csv` (VGChartz) |
+| `NA_Sales` | décimal | Ventes en Amérique du Nord (millions d'exemplaires) | 0 | Même source que `bdd1_vgsales.csv` (VGChartz) |
 | `EU_Sales` | décimal | Ventes en Europe (millions) | 0 | idem |
 | `JP_Sales` | décimal | Ventes au Japon (millions) | 0 | idem |
 | `Other_Sales` | décimal | Ventes dans le reste du monde (millions) | 0 | idem |
@@ -40,7 +40,7 @@ Les valeurs manquantes sont comptées sur le fichier brut, avant nettoyage.
 | **`Developer`** | texte | Studio qui a développé le jeu (différent de l'éditeur, qui le finance et le distribue) | 6 623 (39,6 %) | 1 696 studios ; parfois plusieurs studios séparés par une virgule |
 | **`Rating`** | texte | Classification d'âge ESRB (organisme nord-américain) | 6 769 (40,5 %) | E 3 991 · T 2 961 · M 1 563 · E10+ 1 420 · EC 8 · K-A 3 · RP 3 · AO 1 |
 
-En **gras** : les colonnes que `vgsales.csv` n'a pas. C'est ce qu'apporte la deuxième base.
+En **gras** : les colonnes que `bdd1_vgsales.csv` n'a pas. C'est ce qu'apporte la deuxième base.
 
 ## Codes ESRB
 

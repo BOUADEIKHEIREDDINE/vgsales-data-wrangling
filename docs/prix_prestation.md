@@ -11,12 +11,12 @@
 | Hors périmètre | hébergement de l'interface, maintenance, mises à jour des données après livraison |
 | TVA | 20 % |
 
-## Avant : analyse des ventes seule (`vgsales.csv`)
+## Avant : analyse des ventes seule (`bdd1_vgsales.csv`)
 
 | Poste | Contenu | Jours | Montant HT |
 |---|---|---:|---:|
 | Cadrage | compréhension du besoin, lecture du sujet, plan d'analyse | 0,5 | 225 € |
-| Audit et nettoyage | diagnostic qualité, 5 familles de problèmes, module `cleaning.py` réutilisable, contrôle de reproductibilité | 2,5 | 1 125 € |
+| Audit et nettoyage | diagnostic qualité, 5 familles de problèmes, module `bdd1_cleaning.py` réutilisable, contrôle de reproductibilité | 2,5 | 1 125 € |
 | Analyse exploratoire | statistiques, tendances, genres, plateformes, régions, éditeurs | 2 | 900 € |
 | Indicateurs avancés | *Market Power Index* (5 composantes, test de robustesse), divergences régionales | 3 | 1 350 € |
 | Visualisation et storytelling | 24 figures commentées, Partie III | 1,5 | 675 € |
@@ -33,7 +33,7 @@ Le travail de la colonne « Avant » est conservé tel quel. On ajoute :
 | Poste | Contenu | Jours | Montant HT |
 |---|---|---:|---:|
 | Recherche de la source | comparaison des sources possibles, vérification des critères (période, clé commune, apport), licence, dictionnaire des données | 1 | 450 € |
-| Nettoyage de la base 2 | module `cleaning_bdd2.py`, valeurs `tbd`, classification ESRB, fausses correspondances (homonymes), journal | 1,5 | 675 € |
+| Nettoyage de la base 2 | module `bdd2_cleaning.py`, valeurs `tbd`, classification ESRB, fausses correspondances (homonymes), journal | 1,5 | 675 € |
 | Analyse exploratoire de la base 2 | notes par année, genre, plateforme, éditeur ; presse contre joueurs ; 10 figures commentées | 1,5 | 675 € |
 | Jointure et contrôles | normalisation des noms, taux de correspondance, mesure du biais, vérifications manuelles | 1 | 450 € |
 | Analyses croisées | notes et ventes, MPI à 6 composantes, sensibilité des régions aux notes | 1,5 | 675 € |

@@ -1,18 +1,18 @@
 # Jointure des ventes et des notes Metacritic
 
-Code : `modules/jointure.py`. Analyse détaillée : `bdd2.ipynb`, Partie V.
+Code : `modules/bdd2_jointure.py`. Analyse détaillée : `bdd2_metacritic.ipynb`, Partie V.
 
 ## Les deux bases
 
 | | Base 1 : ventes | Base 2 : notes |
 |---|---|---|
-| Fichier brut | `BDD_states/vgsales.csv` | `BDD_states/video_games_ratings.csv` |
-| Fichier propre | `BDD_states/vgsales_clean.csv` | `BDD_states/video_games_ratings_clean.csv` |
+| Fichier brut | `BDD_states/bdd1_vgsales.csv` | `BDD_states/bdd2_metacritic.csv` |
+| Fichier propre | `BDD_states/bdd1_vgsales_clean.csv` | `BDD_states/bdd2_metacritic_clean.csv` |
 | Source | VGChartz (scraping fin 2016) | VGChartz + Metacritic (scraping du 22/12/2016), Kaggle rush4ratio |
 | Jeux après nettoyage | 16 326 | 16 447 |
 | Apport | ventes par région | note presse, note joueurs, studio, classification ESRB |
 
-Les ventes de la base 2 ne sont **pas utilisées**. Elles proviennent d'un autre relevé VGChartz : 75 % des jeux ont exactement les mêmes ventes, mais 186 jeux diffèrent de plus de 0,1 M (*Wii Sports* : 82,74 M contre 82,53 M). `vgsales_clean.csv` reste la seule source de vérité pour les ventes.
+Les ventes de la base 2 ne sont **pas utilisées**. Elles proviennent d'un autre relevé VGChartz : 75 % des jeux ont exactement les mêmes ventes, mais 186 jeux diffèrent de plus de 0,1 M (*Wii Sports* : 82,74 M contre 82,53 M). `bdd1_vgsales_clean.csv` reste la seule source de vérité pour les ventes.
 
 ## Clé de jointure
 
@@ -24,7 +24,7 @@ Les ventes de la base 2 ne sont **pas utilisées**. Elles proviennent d'un autre
 | Plateforme | un même jeu n'a pas la même note sur PS3 et sur Wii |
 | Année | sépare un jeu de son remake : *Need for Speed: Most Wanted* 2005 et 2012 |
 
-**Règles de normalisation** (fonction `cle_jeu` de `modules/cleaning.py`, la même que pour le nettoyage) :
+**Règles de normalisation** (fonction `cle_jeu` de `modules/bdd1_cleaning.py`, la même que pour le nettoyage) :
 
 1. retirer les suffixes de fiches partielles : `(JP sales)`, `(US sales)`, `(Weekly american sales)`... ;
 2. passer en minuscules ;
@@ -34,22 +34,22 @@ Exemple : `"WWE SmackDown! vs. RAW 2006"` -> `wwesmackdownvsraw2006`.
 
 Les règles plus poussées citées dans les consignes (article « The », chiffres romains) n'ont pas été nécessaires : les deux bases viennent du même scraping et écrivent les titres de la même façon. Elles deviendraient indispensables avec une source indépendante (IGDB, Steam).
 
-**Type de jointure** : à gauche depuis `vgsales_clean.csv`, avec `validate="one_to_one"`. On garde tous les jeux de l'analyse des ventes, et pandas lève une erreur si un jeu était dupliqué.
+**Type de jointure** : à gauche depuis `bdd1_vgsales_clean.csv`, avec `validate="one_to_one"`. On garde tous les jeux de l'analyse des ventes, et pandas lève une erreur si un jeu était dupliqué.
 
 ## Taux de correspondance
 
 | | Jeux | Part des jeux | Part des ventes |
 |---|---:|---:|---:|
-| Jeux de `vgsales_clean.csv` | 16 326 | 100 % | 100 % |
+| Jeux de `bdd1_vgsales_clean.csv` | 16 326 | 100 % | 100 % |
 | reliés à Metacritic | 16 282 | **99,7 %** | 99,99 % |
 | dont avec une note presse | 7 974 | **48,8 %** | **63,0 %** |
 | non reliés | 44 | 0,3 % | 0,01 % |
-| Jeux Metacritic absents de `vgsales_clean.csv` | 165 | | |
+| Jeux Metacritic absents de `bdd1_vgsales_clean.csv` | 165 | | |
 
 ## Vérifications
 
 - **Jeux non reliés (44)** : tous de très petits jeux (0,03 M au plus, 0,56 M au total), probablement retirés ou renommés sur VGChartz entre les deux relevés.
-- **Jeux présents seulement dans Metacritic (165)** : 158 sont sortis en 2016. Ce sont des sorties de fin 2016 (*Battlefield 1*, *Titanfall 2*...) que `vgsales.csv`, extrait plus tôt, ne contenait pas encore.
+- **Jeux présents seulement dans Metacritic (165)** : 158 sont sortis en 2016. Ce sont des sorties de fin 2016 (*Battlefield 1*, *Titanfall 2*...) que `bdd1_vgsales.csv`, extrait plus tôt, ne contenait pas encore.
 - **Échantillon tiré au hasard** : éditeur, studio et titre cohérents ; aucune fausse jointure.
 - **Homonymes** : les remakes sont séparés par l'année. Lorsque la source avait attribué la même note à l'original et au remake, la note a été retirée au nettoyage (6 lignes).
 

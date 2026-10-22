@@ -1,4 +1,4 @@
-"""Pipeline de nettoyage du fichier vgsales.csv.
+"""Pipeline de nettoyage du fichier bdd1_vgsales.csv.
 
 Le notebook détaille chaque étape cellule par cellule, dans l'ordre du sujet
 (valeurs manquantes -> types -> doublons -> préparation). Ce module rejoue exactement

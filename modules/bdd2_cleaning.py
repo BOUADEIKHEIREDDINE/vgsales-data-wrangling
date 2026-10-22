@@ -1,10 +1,10 @@
-"""Pipeline de nettoyage de la deuxième base : video_games_ratings.csv (notes Metacritic).
+"""Pipeline de nettoyage de la deuxième base : bdd2_metacritic.csv (notes Metacritic).
 
-Même ordre que cleaning.py (structure -> valeurs manquantes -> types -> doublons -> préparation).
-Les règles déjà écrites pour vgsales.csv (années, éditeurs, fiches partielles) sont réutilisées
+Même ordre que bdd1_cleaning.py (structure -> valeurs manquantes -> types -> doublons -> préparation).
+Les règles déjà écrites pour bdd1_vgsales.csv (années, éditeurs, fiches partielles) sont réutilisées
 telles quelles : les deux bases sortent du même scraping VGChartz et ont les mêmes défauts.
 
-Les ventes de cette base ne sont pas conservées : elles font doublon avec vgsales_clean.csv,
+Les ventes de cette base ne sont pas conservées : elles font doublon avec bdd1_vgsales_clean.csv,
 qui reste la seule source de vérité pour les ventes. Le fichier propre garde l'identité du jeu
 (nom, plateforme, année, genre, éditeur) et l'apport de Metacritic.
 """
@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from .cleaning import (
+from .bdd1_cleaning import (
     EDITEURS_ALIAS,
     MOTIF_FICHE_PARTIELLE,
     cle_jeu,
@@ -64,7 +64,7 @@ def traiter_classification(df: pd.DataFrame) -> tuple[pd.DataFrame, int, int]:
 # --------------------------------------------------------------------------------------
 
 def fusionner_fiches(df: pd.DataFrame) -> tuple[pd.DataFrame, int, int]:
-    """Une ligne par jeu (clé normalisée, plateforme, année), comme dans cleaning.py.
+    """Une ligne par jeu (clé normalisée, plateforme, année), comme dans bdd1_cleaning.py.
 
     Les fiches sont triées pour que la fiche principale passe en premier (sans suffixe
     "(... sales)", éditeur connu, ventes les plus fortes). Pour chaque colonne Metacritic,

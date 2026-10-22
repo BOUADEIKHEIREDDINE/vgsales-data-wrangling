@@ -12,8 +12,8 @@ import pandas as pd
 import streamlit as st
 
 from modules import config as C
-from modules import indicators as I
-from modules import jointure as J
+from modules import bdd1_indicators as I
+from modules import bdd2_jointure as J
 
 from . import charts as G
 from . import donnees as D
@@ -602,7 +602,7 @@ def _mpi_corps(ctx: dict) -> None:
         return
 
     defaut = all(v == 20 for v in poids.values()) and min_titres == 20 and normalisation == "minmax" and not ctx["filtre_actif"]
-    texte_defaut = " Paramètres du notebook bdd2.ipynb (Partie V) : les résultats sont identiques." if qualite else \
+    texte_defaut = " Paramètres du notebook bdd2_metacritic.ipynb (Partie V) : les résultats sont identiques." if qualite else \
         " Paramètres du notebook : les résultats sont identiques."
     st.caption(f"{len(mpi)} éditeurs classés." + (texte_defaut if defaut else "")
                + (f" Qualité non représentative (note médiane attribuée) pour {int((~mpi['qualite_representative']).sum())} éditeurs."
@@ -680,7 +680,7 @@ def _mpi_corps(ctx: dict) -> None:
         "n_titres": "Titres", "genre_principal": "Genre principal",
     })
     astuce("Cliquez sur une ligne pour afficher la fiche de cet éditeur plus haut.")
-    st.download_button("Télécharger le classement (CSV)", classement.to_csv().encode("utf-8"), "market_power_index.csv", "text/csv")
+    st.download_button("Télécharger le classement (CSV)", classement.to_csv().encode("utf-8"), "bdd1_market_power_index.csv", "text/csv")
 
 
 # --------------------------------------------------------------------------------------
@@ -892,10 +892,10 @@ def _notes_presse_joueurs(ctx: dict) -> None:
 def vue_qualite(ctx: dict) -> None:
     raw, df_all, journal = ctx["raw"], ctx["df_all"], ctx["journal"]
     entete("Qualité des données", "Du fichier brut au jeu d'analyse : chaque correction est tracée")
-    onglet_ventes, onglet_notes = st.tabs(["Ventes (vgsales.csv)", "Notes (Metacritic)"])
+    onglet_ventes, onglet_notes = st.tabs(["Ventes (bdd1_vgsales.csv)", "Notes (Metacritic)"])
     with onglet_ventes:
         tuiles([
-            ("Lignes brutes", fr(len(raw)), "vgsales.csv"),
+            ("Lignes brutes", fr(len(raw)), "bdd1_vgsales.csv"),
             ("Jeux propres", fr(len(df_all)), "Après nettoyage"),
             ("Volume conservé", pct(df_all["Global_Sales"].sum() / raw["Global_Sales"].sum()), "Part des ventes du fichier brut"),
             ("Valeurs manquantes", "0", f"contre {int(raw.isna().sum().sum())} dans le brut"),
@@ -916,7 +916,7 @@ def vue_qualite(ctx: dict) -> None:
         """)
         st.subheader("Données nettoyées")
         _qualite_apercu(df_all)
-        st.download_button("Télécharger le jeu nettoyé (CSV)", df_all.to_csv(index=False).encode("utf-8"), "vgsales_clean.csv", "text/csv")
+        st.download_button("Télécharger le jeu nettoyé (CSV)", df_all.to_csv(index=False).encode("utf-8"), "bdd1_vgsales_clean.csv", "text/csv")
     with onglet_notes:
         _qualite_notes()
     suite(ctx, "qualite")
@@ -926,7 +926,7 @@ def _qualite_notes() -> None:
     raw2, notes, journal2 = D.charger_notes()
     bilan = J.bilan_jointure(D.joint_complet(), notes)
     tuiles([
-        ("Lignes brutes", fr(len(raw2)), "video_games_ratings.csv (Kaggle, scraping Metacritic du 22/12/2016)"),
+        ("Lignes brutes", fr(len(raw2)), "bdd2_metacritic.csv (Kaggle, scraping Metacritic du 22/12/2016)"),
         ("Jeux propres", fr(len(notes)), "Après nettoyage, une ligne par jeu et par plateforme"),
         ("Notes presse", fr(notes["Critic_Score"].notna().sum()), f"{pct(notes['Critic_Score'].notna().mean(), 0)} des jeux : non imputées"),
         ("Jeux reliés aux ventes", pct(bilan.loc["reliés à la base Metacritic", "Part des jeux"]),
@@ -947,11 +947,11 @@ def _qualite_notes() -> None:
     <li><b>2 425 notes joueurs « tbd »</b> (pas assez de votes) : remplacées par des valeurs manquantes, la colonne devient numérique.</li>
     <li><b>Notes manquantes non imputées</b> : elles ne manquent pas au hasard (1 % de jeux notés dans les années 80, 61 % dans les années 2000).</li>
     <li><b>Fausses correspondances de la source</b> : <i>Need for Speed: Most Wanted</i> 2005 et son remake de 2012 avaient la même note. Note retirée plutôt qu'attribuée au hasard.</li>
-    <li><b>Deux relevés de ventes différents</b> (<i>Wii Sports</i> : 82,74 M contre 82,53 M) : les ventes viennent toujours de vgsales.csv, la seule source de vérité.</li>
+    <li><b>Deux relevés de ventes différents</b> (<i>Wii Sports</i> : 82,74 M contre 82,53 M) : les ventes viennent toujours de bdd1_vgsales.csv, la seule source de vérité.</li>
     </ul>
     """)
     st.download_button("Télécharger les notes nettoyées (CSV)", notes.to_csv(index=False).encode("utf-8"),
-                       "video_games_ratings_clean.csv", "text/csv")
+                       "bdd2_metacritic_clean.csv", "text/csv")
 
 
 @st.fragment
@@ -973,13 +973,17 @@ def _qualite_apercu(df_all: pd.DataFrame) -> None:
 # 9. Synthèse et conclusion
 # --------------------------------------------------------------------------------------
 
+def _num(prefixe: str, debut: int, fin: int) -> list[str]:
+    return [f"{prefixe}_{i:02d}" for i in range(debut, fin + 1)]
+
+
 GALERIE = {
-    "I. Nettoyage": ["01"],
-    "II. Analyse exploratoire": ["02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
-    "II. Indicateurs avancés": ["13", "14", "15", "16", "17", "18", "19"],
-    "III. Storytelling": ["20", "21", "22", "23", "24"],
-    "IV. Notes Metacritic": ["25", "26", "27", "28", "29", "30", "31", "32", "33", "34"],
-    "V. Jointure": ["35", "36", "37", "38"],
+    "I. Nettoyage": _num("bdd1", 1, 1),
+    "II. Analyse exploratoire": _num("bdd1", 2, 12),
+    "II. Indicateurs avancés": _num("bdd1", 13, 19),
+    "III. Storytelling": _num("bdd1", 20, 24),
+    "IV. Notes Metacritic": _num("bdd2", 1, 10),
+    "V. Jointure": _num("bdd2", 11, 14),
 }
 
 
@@ -1099,7 +1103,7 @@ def vue_conclusion(ctx: dict) -> None:
         """)
 
     st.subheader("Galerie des figures du notebook")
-    st.caption("Les graphiques interprétés des notebooks (projet_final.ipynb et bdd2.ipynb), exportés en PNG dans le dossier figures/. "
+    st.caption("Les graphiques interprétés des notebooks (bdd1_vgsales.ipynb et bdd2_metacritic.ipynb), exportés en PNG dans le dossier figures/. "
                "Survolez une figure et cliquez sur l'icône plein écran pour l'agrandir.")
     _galerie()
 
@@ -1107,7 +1111,7 @@ def vue_conclusion(ctx: dict) -> None:
 @st.fragment
 def _galerie() -> None:
     # Une seule partie affichée à la fois (et non des onglets) : la page ne charge que les images regardées.
-    fichiers = {f.name[:2]: f for f in sorted(C.FIGURES_DIR.glob("*.png"))}
+    fichiers = {f.stem[:7]: f for f in sorted(C.FIGURES_DIR.glob("bdd[12]_*.png"))}
     if not fichiers:
         st.info("Aucune figure trouvée : exécutez le notebook pour les générer dans figures/.")
         return
@@ -1116,5 +1120,5 @@ def _galerie() -> None:
     presentes = [fichiers[n] for n in GALERIE[partie] if n in fichiers]
     for i in range(0, len(presentes), 2):
         for col, f in zip(st.columns(2), presentes[i:i + 2]):
-            legende = f.stem[3:].replace("_", " ").replace("story ", "").replace("bdd2 ", "").replace("jointure ", "").capitalize()
-            col.image(str(f), caption=f"Figure {f.name[:2]} · {legende}", width="stretch")
+            legende = f.stem[8:].replace("_", " ").replace("story ", "").replace("jointure ", "").capitalize()
+            col.image(str(f), caption=f"BDD {f.stem[3]} · figure {f.stem[5:7]} · {legende}", width="stretch")

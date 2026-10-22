@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>projet_final</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>bdd1_vgsales</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7802,7 +7802,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="Ventes-mondiales-de-jeux-vid%C3%A9o,-1980-2016">Ventes mondiales de jeux vidéo, 1980-2016<a class="anchor-link" href="#Ventes-mondiales-de-jeux-vid%C3%A9o,-1980-2016">¶</a></h1><h3 id="Projet-final-de-Data-Wrangling-:-nettoyage,-analyse-exploratoire-et-storytelling">Projet final de Data Wrangling : nettoyage, analyse exploratoire et storytelling<a class="anchor-link" href="#Projet-final-de-Data-Wrangling-:-nettoyage,-analyse-exploratoire-et-storytelling">¶</a></h3><p>Ce notebook se place dans le rôle d'un·e Data Analyst du secteur gaming. On part du fichier <code>vgsales.csv</code>, qui recense les ventes en <strong>millions d'exemplaires</strong> de 16 598 jeux par plateforme et par région, pour comprendre comment l'industrie a évolué, ce qui se vend et où, et quels éditeurs pèsent réellement sur le marché.</p>
+<h1 id="Ventes-mondiales-de-jeux-vid%C3%A9o,-1980-2016">Ventes mondiales de jeux vidéo, 1980-2016<a class="anchor-link" href="#Ventes-mondiales-de-jeux-vid%C3%A9o,-1980-2016">¶</a></h1><h3 id="Projet-final-de-Data-Wrangling-:-nettoyage,-analyse-exploratoire-et-storytelling">Projet final de Data Wrangling : nettoyage, analyse exploratoire et storytelling<a class="anchor-link" href="#Projet-final-de-Data-Wrangling-:-nettoyage,-analyse-exploratoire-et-storytelling">¶</a></h3><p>Ce notebook se place dans le rôle d'un·e Data Analyst du secteur gaming. On part du fichier <code>bdd1_vgsales.csv</code>, qui recense les ventes en <strong>millions d'exemplaires</strong> de 16 598 jeux par plateforme et par région, pour comprendre comment l'industrie a évolué, ce qui se vend et où, et quels éditeurs pèsent réellement sur le marché.</p>
 <table>
 <thead>
 <tr>
@@ -7856,9 +7856,9 @@ a.anchor-link {
 <span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">modules</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span> <span class="k">as</span> <span class="n">C</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">modules</span><span class="w"> </span><span class="kn">import</span> <span class="n">indicators</span> <span class="k">as</span> <span class="n">I</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">modules</span><span class="w"> </span><span class="kn">import</span> <span class="n">bdd1_indicators</span> <span class="k">as</span> <span class="n">I</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">modules</span><span class="w"> </span><span class="kn">import</span> <span class="n">viz</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">modules.cleaning</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">EDITEURS_ALIAS</span><span class="p">,</span> <span class="n">MOTIF_FICHE_PARTIELLE</span><span class="p">,</span> <span class="n">annees_de_reference</span><span class="p">,</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">modules.bdd1_cleaning</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">EDITEURS_ALIAS</span><span class="p">,</span> <span class="n">MOTIF_FICHE_PARTIELLE</span><span class="p">,</span> <span class="n">annees_de_reference</span><span class="p">,</span>
                               <span class="n">cle_jeu</span><span class="p">,</span> <span class="n">nettoyer</span><span class="p">,</span> <span class="n">nom_sans_suffixe</span><span class="p">)</span>
 
 <span class="n">viz</span><span class="o">.</span><span class="n">appliquer_style</span><span class="p">()</span>
@@ -9823,7 +9823,13 @@ Doublons sur nom + plateforme + année : 2
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>16440 lignes -&gt; 16326 jeux uniques (114 fiches fusionnées)
-Doublons restants (nom + plateforme + année) : 0
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Doublons restants (nom + plateforme + année) : 0
 </pre>
 </div>
 </div>
@@ -10219,7 +10225,7 @@ Doublons restants (nom + plateforme + année) : 0
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Contrôle de reproductibilité.</strong> Le module <code>modules/cleaning.py</code>, utilisé par l'interface, doit produire exactement le même tableau que les cellules ci-dessus. <code>assert_frame_equal</code> lève une erreur à la moindre différence (valeur, type ou ordre).</p>
+<p><strong>Contrôle de reproductibilité.</strong> Le module <code>modules/bdd1_cleaning.py</code>, utilisé par l'interface, doit produire exactement le même tableau que les cellules ci-dessus. <code>assert_frame_equal</code> lève une erreur à la moindre différence (valeur, type ou ordre).</p>
 </div>
 </div>
 </div>
@@ -10373,7 +10379,7 @@ Doublons restants (nom + plateforme + année) : 0
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"Où sont passées les 272 lignes retirées ?"</span><span class="p">,</span>
           <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">viz</span><span class="o">.</span><span class="n">fr</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s2"> lignes brutes -&gt; </span><span class="si">{</span><span class="n">viz</span><span class="o">.</span><span class="n">fr</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s2"> jeux propres ; "</span>
           <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">viz</span><span class="o">.</span><span class="n">pct</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">'Global_Sales'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">raw</span><span class="p">[</span><span class="s1">'Global_Sales'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2"> du volume de ventes conservé"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"01_nettoyage"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_01_nettoyage"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -10434,7 +10440,7 @@ Doublons restants (nom + plateforme + année) : 0
 </tr>
 </tbody>
 </table>
-<p>Le fichier propre est enregistré dans <code>BDD_states/vgsales_clean.csv</code>.</p>
+<p>Le fichier propre est enregistré dans <code>BDD_states/bdd1_vgsales_clean.csv</code>.</p>
 </div>
 </div>
 </div>
@@ -10656,7 +10662,7 @@ Doublons restants (nom + plateforme + année) : 0
 <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Part cumulée des ventes mondiales"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax2</span><span class="p">,</span> <span class="s2">"Quelques succès font le marché"</span><span class="p">,</span> <span class="s2">"Courbe de concentration des ventes"</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"02_distribution_ventes"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_02_distribution_ventes"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -10873,7 +10879,7 @@ Doublons restants (nom + plateforme + année) : 0
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Ventes mondiales cumulées (M d'exemplaires)"</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="p">[</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">PALETTE</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Nintendo"</span><span class="p">),</span> <span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">GRIS</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Autres éditeurs"</span><span class="p">)],</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"lower right"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"7 des 10 titres les plus vendus sont des jeux Nintendo"</span><span class="p">,</span> <span class="s2">"Top 10 des titres, toutes plateformes confondues"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"03_top10_titres"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_03_top10_titres"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -11051,7 +11057,7 @@ Doublons restants (nom + plateforme + année) : 0
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="p">[</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">PALETTE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Année complète"</span><span class="p">),</span> <span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">GRIS</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"2016 : année incomplète"</span><span class="p">)],</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">"Une croissance jusqu'en 2008, puis un marché physique qui se resserre"</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"left"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"04_tendances_temporelles"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_04_tendances_temporelles"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -11361,7 +11367,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Part des ventes mondiales"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax2</span><span class="p">,</span> <span class="s2">"Plates-formes et Tir sur-performent"</span><span class="p">,</span> <span class="s2">"Au-dessus de la diagonale : le genre vend plus que sa fréquence"</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"05_genres"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_05_genres"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -11618,7 +11624,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">constructeurs</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">C</span><span class="o">.</span><span class="n">ORDRE_CONSTRUCTEURS</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">top15</span><span class="p">[</span><span class="s2">"constructeur"</span><span class="p">])]</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="p">[</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">COULEURS_CONSTRUCTEUR</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">constructeurs</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"lower right"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Constructeur"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"La PS2 reste la plateforme la plus rentable pour les éditeurs"</span><span class="p">,</span> <span class="s2">"15 plateformes ayant généré le plus de ventes de jeux, 1980-2016"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"06_plateformes_top"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_06_plateformes_top"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -11690,7 +11696,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">cb</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">"Ventes de l'année (M)"</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Année de sortie des jeux"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"Chaque console vit environ 6 à 8 ans"</span><span class="p">,</span> <span class="s2">"Ventes de jeux par plateforme et par année (valeurs affichées au-delà de 100 M)"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"07_cycle_de_vie_plateformes"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_07_cycle_de_vie_plateformes"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -11734,7 +11740,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">txt</span> <span class="ow">in</span> <span class="p">[(</span><span class="mi">1988</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">"Nintendo"</span><span class="p">),</span> <span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="s2">"Sony"</span><span class="p">),</span> <span class="p">(</span><span class="mf">2012.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s2">"Microsoft"</span><span class="p">),</span> <span class="p">(</span><span class="mi">1981</span><span class="p">,</span> <span class="mf">0.45</span><span class="p">,</span> <span class="s2">"Atari"</span><span class="p">)]:</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">txt</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"white"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"Trois époques : Atari, puis Nintendo, puis le duel Sony-Nintendo"</span><span class="p">,</span> <span class="s2">"Part de chaque constructeur dans les ventes de jeux de l'année"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"08_constructeurs"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_08_constructeurs"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -11892,7 +11898,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"Le Japon passe de premier marché à troisième, l'Europe rattrape l'Amérique"</span><span class="p">,</span>
           <span class="s2">"Part de chaque région dans les ventes de l'année (moyenne mobile sur 3 ans ; 2016 incomplète en gris)"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"09_regions_evolution"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_09_regions_evolution"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -11968,7 +11974,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
     <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">titre_ax</span><span class="p">,</span> <span class="n">sous_titre</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Région"</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"10_genres_regions"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_10_genres_regions"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -12296,7 +12302,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2100</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Ventes mondiales cumulées (M d'exemplaires)"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"Nintendo vend 1,6 fois plus que le n°2, Electronic Arts"</span><span class="p">,</span> <span class="s2">"Top 10 des éditeurs par ventes mondiales, 1980-2016"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"11_top10_editeurs"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_11_top10_editeurs"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -12374,15 +12380,15 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
 </style>
-<table id="T_9c1e6">
+<table id="T_4defa">
 <thead>
 <tr>
 <th class="blank level0"> </th>
-<th class="col_heading level0 col0" id="T_9c1e6_level0_col0">Leader</th>
-<th class="col_heading level0 col1" id="T_9c1e6_level0_col1">Part du leader</th>
-<th class="col_heading level0 col2" id="T_9c1e6_level0_col2">N°2</th>
-<th class="col_heading level0 col3" id="T_9c1e6_level0_col3">Part du n°2</th>
-<th class="col_heading level0 col4" id="T_9c1e6_level0_col4">Leader &gt; 30 %</th>
+<th class="col_heading level0 col0" id="T_4defa_level0_col0">Leader</th>
+<th class="col_heading level0 col1" id="T_4defa_level0_col1">Part du leader</th>
+<th class="col_heading level0 col2" id="T_4defa_level0_col2">N°2</th>
+<th class="col_heading level0 col3" id="T_4defa_level0_col3">Part du n°2</th>
+<th class="col_heading level0 col4" id="T_4defa_level0_col4">Leader &gt; 30 %</th>
 </tr>
 <tr>
 <th class="index_name level0">Genre</th>
@@ -12395,100 +12401,100 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 </thead>
 <tbody>
 <tr>
-<th class="row_heading level0 row0" id="T_9c1e6_level0_row0">Puzzle</th>
-<td class="data row0 col0" id="T_9c1e6_row0_col0">Nintendo</td>
-<td class="data row0 col1" id="T_9c1e6_row0_col1">51.7%</td>
-<td class="data row0 col2" id="T_9c1e6_row0_col2">Atari</td>
-<td class="data row0 col3" id="T_9c1e6_row0_col3">8.6%</td>
-<td class="data row0 col4" id="T_9c1e6_row0_col4">oui</td>
+<th class="row_heading level0 row0" id="T_4defa_level0_row0">Puzzle</th>
+<td class="data row0 col0" id="T_4defa_row0_col0">Nintendo</td>
+<td class="data row0 col1" id="T_4defa_row0_col1">51.7%</td>
+<td class="data row0 col2" id="T_4defa_row0_col2">Atari</td>
+<td class="data row0 col3" id="T_4defa_row0_col3">8.6%</td>
+<td class="data row0 col4" id="T_4defa_row0_col4">oui</td>
 </tr>
 <tr>
-<th class="row_heading level0 row1" id="T_9c1e6_level0_row1">Plates-formes</th>
-<td class="data row1 col0" id="T_9c1e6_row1_col0">Nintendo</td>
-<td class="data row1 col1" id="T_9c1e6_row1_col1">51.5%</td>
-<td class="data row1 col2" id="T_9c1e6_row1_col2">Sony Computer Entertainment</td>
-<td class="data row1 col3" id="T_9c1e6_row1_col3">12.7%</td>
-<td class="data row1 col4" id="T_9c1e6_row1_col4">oui</td>
+<th class="row_heading level0 row1" id="T_4defa_level0_row1">Plates-formes</th>
+<td class="data row1 col0" id="T_4defa_row1_col0">Nintendo</td>
+<td class="data row1 col1" id="T_4defa_row1_col1">51.5%</td>
+<td class="data row1 col2" id="T_4defa_row1_col2">Sony Computer Entertainment</td>
+<td class="data row1 col3" id="T_4defa_row1_col3">12.7%</td>
+<td class="data row1 col4" id="T_4defa_row1_col4">oui</td>
 </tr>
 <tr>
-<th class="row_heading level0 row2" id="T_9c1e6_level0_row2">Sport</th>
-<td class="data row2 col0" id="T_9c1e6_row2_col0">Electronic Arts</td>
-<td class="data row2 col1" id="T_9c1e6_row2_col1">36.3%</td>
-<td class="data row2 col2" id="T_9c1e6_row2_col2">Nintendo</td>
-<td class="data row2 col3" id="T_9c1e6_row2_col3">16.5%</td>
-<td class="data row2 col4" id="T_9c1e6_row2_col4">oui</td>
+<th class="row_heading level0 row2" id="T_4defa_level0_row2">Sport</th>
+<td class="data row2 col0" id="T_4defa_row2_col0">Electronic Arts</td>
+<td class="data row2 col1" id="T_4defa_row2_col1">36.3%</td>
+<td class="data row2 col2" id="T_4defa_row2_col2">Nintendo</td>
+<td class="data row2 col3" id="T_4defa_row2_col3">16.5%</td>
+<td class="data row2 col4" id="T_4defa_row2_col4">oui</td>
 </tr>
 <tr>
-<th class="row_heading level0 row3" id="T_9c1e6_level0_row3">RPG</th>
-<td class="data row3 col0" id="T_9c1e6_row3_col0">Nintendo</td>
-<td class="data row3 col1" id="T_9c1e6_row3_col1">31.0%</td>
-<td class="data row3 col2" id="T_9c1e6_row3_col2">Square Enix</td>
-<td class="data row3 col3" id="T_9c1e6_row3_col3">10.5%</td>
-<td class="data row3 col4" id="T_9c1e6_row3_col4">oui</td>
+<th class="row_heading level0 row3" id="T_4defa_level0_row3">RPG</th>
+<td class="data row3 col0" id="T_4defa_row3_col0">Nintendo</td>
+<td class="data row3 col1" id="T_4defa_row3_col1">31.0%</td>
+<td class="data row3 col2" id="T_4defa_row3_col2">Square Enix</td>
+<td class="data row3 col3" id="T_4defa_row3_col3">10.5%</td>
+<td class="data row3 col4" id="T_4defa_row3_col4">oui</td>
 </tr>
 <tr>
-<th class="row_heading level0 row4" id="T_9c1e6_level0_row4">Tir</th>
-<td class="data row4 col0" id="T_9c1e6_row4_col0">Activision</td>
-<td class="data row4 col1" id="T_9c1e6_row4_col1">29.1%</td>
-<td class="data row4 col2" id="T_9c1e6_row4_col2">Electronic Arts</td>
-<td class="data row4 col3" id="T_9c1e6_row4_col3">15.3%</td>
-<td class="data row4 col4" id="T_9c1e6_row4_col4"></td>
+<th class="row_heading level0 row4" id="T_4defa_level0_row4">Tir</th>
+<td class="data row4 col0" id="T_4defa_row4_col0">Activision</td>
+<td class="data row4 col1" id="T_4defa_row4_col1">29.1%</td>
+<td class="data row4 col2" id="T_4defa_row4_col2">Electronic Arts</td>
+<td class="data row4 col3" id="T_4defa_row4_col3">15.3%</td>
+<td class="data row4 col4" id="T_4defa_row4_col4"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row5" id="T_9c1e6_level0_row5">Divers</th>
-<td class="data row5 col0" id="T_9c1e6_row5_col0">Nintendo</td>
-<td class="data row5 col1" id="T_9c1e6_row5_col1">22.9%</td>
-<td class="data row5 col2" id="T_9c1e6_row5_col2">Ubisoft</td>
-<td class="data row5 col3" id="T_9c1e6_row5_col3">12.4%</td>
-<td class="data row5 col4" id="T_9c1e6_row5_col4"></td>
+<th class="row_heading level0 row5" id="T_4defa_level0_row5">Divers</th>
+<td class="data row5 col0" id="T_4defa_row5_col0">Nintendo</td>
+<td class="data row5 col1" id="T_4defa_row5_col1">22.9%</td>
+<td class="data row5 col2" id="T_4defa_row5_col2">Ubisoft</td>
+<td class="data row5 col3" id="T_4defa_row5_col3">12.4%</td>
+<td class="data row5 col4" id="T_4defa_row5_col4"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row6" id="T_9c1e6_level0_row6">Simulation</th>
-<td class="data row6 col0" id="T_9c1e6_row6_col0">Electronic Arts</td>
-<td class="data row6 col1" id="T_9c1e6_row6_col1">22.9%</td>
-<td class="data row6 col2" id="T_9c1e6_row6_col2">Nintendo</td>
-<td class="data row6 col3" id="T_9c1e6_row6_col3">21.9%</td>
-<td class="data row6 col4" id="T_9c1e6_row6_col4"></td>
+<th class="row_heading level0 row6" id="T_4defa_level0_row6">Simulation</th>
+<td class="data row6 col0" id="T_4defa_row6_col0">Electronic Arts</td>
+<td class="data row6 col1" id="T_4defa_row6_col1">22.9%</td>
+<td class="data row6 col2" id="T_4defa_row6_col2">Nintendo</td>
+<td class="data row6 col3" id="T_4defa_row6_col3">21.9%</td>
+<td class="data row6 col4" id="T_4defa_row6_col4"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row7" id="T_9c1e6_level0_row7">Course</th>
-<td class="data row7 col0" id="T_9c1e6_row7_col0">Nintendo</td>
-<td class="data row7 col1" id="T_9c1e6_row7_col1">20.8%</td>
-<td class="data row7 col2" id="T_9c1e6_row7_col2">Electronic Arts</td>
-<td class="data row7 col3" id="T_9c1e6_row7_col3">20.1%</td>
-<td class="data row7 col4" id="T_9c1e6_row7_col4"></td>
+<th class="row_heading level0 row7" id="T_4defa_level0_row7">Course</th>
+<td class="data row7 col0" id="T_4defa_row7_col0">Nintendo</td>
+<td class="data row7 col1" id="T_4defa_row7_col1">20.8%</td>
+<td class="data row7 col2" id="T_4defa_row7_col2">Electronic Arts</td>
+<td class="data row7 col3" id="T_4defa_row7_col3">20.1%</td>
+<td class="data row7 col4" id="T_4defa_row7_col4"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row8" id="T_9c1e6_level0_row8">Combat</th>
-<td class="data row8 col0" id="T_9c1e6_row8_col0">THQ</td>
-<td class="data row8 col1" id="T_9c1e6_row8_col1">16.4%</td>
-<td class="data row8 col2" id="T_9c1e6_row8_col2">Namco Bandai Games</td>
-<td class="data row8 col3" id="T_9c1e6_row8_col3">13.8%</td>
-<td class="data row8 col4" id="T_9c1e6_row8_col4"></td>
+<th class="row_heading level0 row8" id="T_4defa_level0_row8">Combat</th>
+<td class="data row8 col0" id="T_4defa_row8_col0">THQ</td>
+<td class="data row8 col1" id="T_4defa_row8_col1">16.4%</td>
+<td class="data row8 col2" id="T_4defa_row8_col2">Namco Bandai Games</td>
+<td class="data row8 col3" id="T_4defa_row8_col3">13.8%</td>
+<td class="data row8 col4" id="T_4defa_row8_col4"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row9" id="T_9c1e6_level0_row9">Stratégie</th>
-<td class="data row9 col0" id="T_9c1e6_row9_col0">Nintendo</td>
-<td class="data row9 col1" id="T_9c1e6_row9_col1">15.3%</td>
-<td class="data row9 col2" id="T_9c1e6_row9_col2">Activision</td>
-<td class="data row9 col3" id="T_9c1e6_row9_col3">10.2%</td>
-<td class="data row9 col4" id="T_9c1e6_row9_col4"></td>
+<th class="row_heading level0 row9" id="T_4defa_level0_row9">Stratégie</th>
+<td class="data row9 col0" id="T_4defa_row9_col0">Nintendo</td>
+<td class="data row9 col1" id="T_4defa_row9_col1">15.3%</td>
+<td class="data row9 col2" id="T_4defa_row9_col2">Activision</td>
+<td class="data row9 col3" id="T_4defa_row9_col3">10.2%</td>
+<td class="data row9 col4" id="T_4defa_row9_col4"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row10" id="T_9c1e6_level0_row10">Aventure</th>
-<td class="data row10 col0" id="T_9c1e6_row10_col0">Nintendo</td>
-<td class="data row10 col1" id="T_9c1e6_row10_col1">15.3%</td>
-<td class="data row10 col2" id="T_9c1e6_row10_col2">Ubisoft</td>
-<td class="data row10 col3" id="T_9c1e6_row10_col3">9.5%</td>
-<td class="data row10 col4" id="T_9c1e6_row10_col4"></td>
+<th class="row_heading level0 row10" id="T_4defa_level0_row10">Aventure</th>
+<td class="data row10 col0" id="T_4defa_row10_col0">Nintendo</td>
+<td class="data row10 col1" id="T_4defa_row10_col1">15.3%</td>
+<td class="data row10 col2" id="T_4defa_row10_col2">Ubisoft</td>
+<td class="data row10 col3" id="T_4defa_row10_col3">9.5%</td>
+<td class="data row10 col4" id="T_4defa_row10_col4"></td>
 </tr>
 <tr>
-<th class="row_heading level0 row11" id="T_9c1e6_level0_row11">Action</th>
-<td class="data row11 col0" id="T_9c1e6_row11_col0">Take-Two Interactive</td>
-<td class="data row11 col1" id="T_9c1e6_row11_col1">12.2%</td>
-<td class="data row11 col2" id="T_9c1e6_row11_col2">Ubisoft</td>
-<td class="data row11 col3" id="T_9c1e6_row11_col3">8.4%</td>
-<td class="data row11 col4" id="T_9c1e6_row11_col4"></td>
+<th class="row_heading level0 row11" id="T_4defa_level0_row11">Action</th>
+<td class="data row11 col0" id="T_4defa_row11_col0">Take-Two Interactive</td>
+<td class="data row11 col1" id="T_4defa_row11_col1">12.2%</td>
+<td class="data row11 col2" id="T_4defa_row11_col2">Ubisoft</td>
+<td class="data row11 col3" id="T_4defa_row11_col3">8.4%</td>
+<td class="data row11 col4" id="T_4defa_row11_col4"></td>
 </tr>
 </tbody>
 </table>
@@ -12517,7 +12523,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">cb</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="k">lambda</span> <span class="n">v</span><span class="p">,</span> <span class="n">_</span><span class="p">:</span> <span class="n">viz</span><span class="o">.</span><span class="n">pct</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
 <span class="n">cb</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">"Part des ventes mondiales du genre"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"Chaque grand éditeur règne sur un ou deux genres"</span><span class="p">,</span> <span class="s2">"Part de marché des 10 premiers éditeurs dans chaque genre (valeurs affichées au-delà de 5 %)"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"12_editeurs_genres"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_12_editeurs_genres"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -12651,78 +12657,78 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[52]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
-#T_f4310_row0_col1 {
+#T_db4f1_row0_col1 {
   background-color: #0d366b;
   color: #f1f1f1;
 }
-#T_f4310_row1_col1 {
+#T_db4f1_row1_col1 {
   background-color: #2d75cd;
   color: #f1f1f1;
 }
-#T_f4310_row2_col1 {
+#T_db4f1_row2_col1 {
   background-color: #6ba5ec;
   color: #f1f1f1;
 }
-#T_f4310_row3_col1 {
+#T_db4f1_row3_col1 {
   background-color: #74abed;
   color: #f1f1f1;
 }
-#T_f4310_row4_col1 {
+#T_db4f1_row4_col1 {
   background-color: #a1c7f4;
   color: #000000;
 }
-#T_f4310_row5_col1 {
+#T_db4f1_row5_col1 {
   background-color: #a4c9f5;
   color: #000000;
 }
-#T_f4310_row6_col1 {
+#T_db4f1_row6_col1 {
   background-color: #abcdf6;
   color: #000000;
 }
-#T_f4310_row7_col1 {
+#T_db4f1_row7_col1 {
   background-color: #aecff6;
   color: #000000;
 }
-#T_f4310_row8_col1, #T_f4310_row9_col1 {
+#T_db4f1_row8_col1, #T_db4f1_row9_col1 {
   background-color: #b4d2f7;
   color: #000000;
 }
-#T_f4310_row10_col1 {
+#T_db4f1_row10_col1 {
   background-color: #b6d4f8;
   color: #000000;
 }
-#T_f4310_row11_col1 {
+#T_db4f1_row11_col1 {
   background-color: #b7d4f8;
   color: #000000;
 }
-#T_f4310_row12_col1 {
+#T_db4f1_row12_col1 {
   background-color: #bcd8f9;
   color: #000000;
 }
-#T_f4310_row13_col1 {
+#T_db4f1_row13_col1 {
   background-color: #c9dffa;
   color: #000000;
 }
-#T_f4310_row14_col1 {
+#T_db4f1_row14_col1 {
   background-color: #cde2fb;
   color: #000000;
 }
 </style>
-<table id="T_f4310">
+<table id="T_db4f1">
 <thead>
 <tr>
 <th class="blank level0"> </th>
-<th class="col_heading level0 col0" id="T_f4310_level0_col0">rang</th>
-<th class="col_heading level0 col1" id="T_f4310_level0_col1">MPI</th>
-<th class="col_heading level0 col2" id="T_f4310_level0_col2">ventes</th>
-<th class="col_heading level0 col3" id="T_f4310_level0_col3">part_marche</th>
-<th class="col_heading level0 col4" id="T_f4310_level0_col4">genres_leader</th>
-<th class="col_heading level0 col5" id="T_f4310_level0_col5">leadership</th>
-<th class="col_heading level0 col6" id="T_f4310_level0_col6">diversite</th>
-<th class="col_heading level0 col7" id="T_f4310_level0_col7">constance</th>
-<th class="col_heading level0 col8" id="T_f4310_level0_col8">taux_hits</th>
-<th class="col_heading level0 col9" id="T_f4310_level0_col9">n_titres</th>
-<th class="col_heading level0 col10" id="T_f4310_level0_col10">genre_principal</th>
+<th class="col_heading level0 col0" id="T_db4f1_level0_col0">rang</th>
+<th class="col_heading level0 col1" id="T_db4f1_level0_col1">MPI</th>
+<th class="col_heading level0 col2" id="T_db4f1_level0_col2">ventes</th>
+<th class="col_heading level0 col3" id="T_db4f1_level0_col3">part_marche</th>
+<th class="col_heading level0 col4" id="T_db4f1_level0_col4">genres_leader</th>
+<th class="col_heading level0 col5" id="T_db4f1_level0_col5">leadership</th>
+<th class="col_heading level0 col6" id="T_db4f1_level0_col6">diversite</th>
+<th class="col_heading level0 col7" id="T_db4f1_level0_col7">constance</th>
+<th class="col_heading level0 col8" id="T_db4f1_level0_col8">taux_hits</th>
+<th class="col_heading level0 col9" id="T_db4f1_level0_col9">n_titres</th>
+<th class="col_heading level0 col10" id="T_db4f1_level0_col10">genre_principal</th>
 </tr>
 <tr>
 <th class="index_name level0">Publisher</th>
@@ -12741,214 +12747,214 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 </thead>
 <tbody>
 <tr>
-<th class="row_heading level0 row0" id="T_f4310_level0_row0">Nintendo</th>
-<td class="data row0 col0" id="T_f4310_row0_col0">1</td>
-<td class="data row0 col1" id="T_f4310_row0_col1">95.5</td>
-<td class="data row0 col2" id="T_f4310_row0_col2">1784</td>
-<td class="data row0 col3" id="T_f4310_row0_col3">29.6%</td>
-<td class="data row0 col4" id="T_f4310_row0_col4">3</td>
-<td class="data row0 col5" id="T_f4310_row0_col5">77</td>
-<td class="data row0 col6" id="T_f4310_row0_col6">0.90</td>
-<td class="data row0 col7" id="T_f4310_row0_col7">0.76</td>
-<td class="data row0 col8" id="T_f4310_row0_col8">48.7%</td>
-<td class="data row0 col9" id="T_f4310_row0_col9">653</td>
-<td class="data row0 col10" id="T_f4310_row0_col10">Platform</td>
+<th class="row_heading level0 row0" id="T_db4f1_level0_row0">Nintendo</th>
+<td class="data row0 col0" id="T_db4f1_row0_col0">1</td>
+<td class="data row0 col1" id="T_db4f1_row0_col1">95.5</td>
+<td class="data row0 col2" id="T_db4f1_row0_col2">1784</td>
+<td class="data row0 col3" id="T_db4f1_row0_col3">29.6%</td>
+<td class="data row0 col4" id="T_db4f1_row0_col4">3</td>
+<td class="data row0 col5" id="T_db4f1_row0_col5">77</td>
+<td class="data row0 col6" id="T_db4f1_row0_col6">0.90</td>
+<td class="data row0 col7" id="T_db4f1_row0_col7">0.76</td>
+<td class="data row0 col8" id="T_db4f1_row0_col8">48.7%</td>
+<td class="data row0 col9" id="T_db4f1_row0_col9">653</td>
+<td class="data row0 col10" id="T_db4f1_row0_col10">Platform</td>
 </tr>
 <tr>
-<th class="row_heading level0 row1" id="T_f4310_level0_row1">Electronic Arts</th>
-<td class="data row1 col0" id="T_f4310_row1_col0">2</td>
-<td class="data row1 col1" id="T_f4310_row1_col1">74.5</td>
-<td class="data row1 col2" id="T_f4310_row1_col2">1103</td>
-<td class="data row1 col3" id="T_f4310_row1_col3">23.6%</td>
-<td class="data row1 col4" id="T_f4310_row1_col4">1</td>
-<td class="data row1 col5" id="T_f4310_row1_col5">34</td>
-<td class="data row1 col6" id="T_f4310_row1_col6">0.71</td>
-<td class="data row1 col7" id="T_f4310_row1_col7">0.69</td>
-<td class="data row1 col8" id="T_f4310_row1_col8">49.0%</td>
-<td class="data row1 col9" id="T_f4310_row1_col9">594</td>
-<td class="data row1 col10" id="T_f4310_row1_col10">Sports</td>
+<th class="row_heading level0 row1" id="T_db4f1_level0_row1">Electronic Arts</th>
+<td class="data row1 col0" id="T_db4f1_row1_col0">2</td>
+<td class="data row1 col1" id="T_db4f1_row1_col1">74.5</td>
+<td class="data row1 col2" id="T_db4f1_row1_col2">1103</td>
+<td class="data row1 col3" id="T_db4f1_row1_col3">23.6%</td>
+<td class="data row1 col4" id="T_db4f1_row1_col4">1</td>
+<td class="data row1 col5" id="T_db4f1_row1_col5">34</td>
+<td class="data row1 col6" id="T_db4f1_row1_col6">0.71</td>
+<td class="data row1 col7" id="T_db4f1_row1_col7">0.69</td>
+<td class="data row1 col8" id="T_db4f1_row1_col8">49.0%</td>
+<td class="data row1 col9" id="T_db4f1_row1_col9">594</td>
+<td class="data row1 col10" id="T_db4f1_row1_col10">Sports</td>
 </tr>
 <tr>
-<th class="row_heading level0 row2" id="T_f4310_level0_row2">Sony Computer Entertainment</th>
-<td class="data row2 col0" id="T_f4310_row2_col0">3</td>
-<td class="data row2 col1" id="T_f4310_row2_col1">60.5</td>
-<td class="data row2 col2" id="T_f4310_row2_col2">631</td>
-<td class="data row2 col3" id="T_f4310_row2_col3">9.1%</td>
-<td class="data row2 col4" id="T_f4310_row2_col4">0</td>
-<td class="data row2 col5" id="T_f4310_row2_col5">22</td>
-<td class="data row2 col6" id="T_f4310_row2_col6">0.87</td>
-<td class="data row2 col7" id="T_f4310_row2_col7">0.86</td>
-<td class="data row2 col8" id="T_f4310_row2_col8">26.4%</td>
-<td class="data row2 col9" id="T_f4310_row2_col9">626</td>
-<td class="data row2 col10" id="T_f4310_row2_col10">Racing</td>
+<th class="row_heading level0 row2" id="T_db4f1_level0_row2">Sony Computer Entertainment</th>
+<td class="data row2 col0" id="T_db4f1_row2_col0">3</td>
+<td class="data row2 col1" id="T_db4f1_row2_col1">60.5</td>
+<td class="data row2 col2" id="T_db4f1_row2_col2">631</td>
+<td class="data row2 col3" id="T_db4f1_row2_col3">9.1%</td>
+<td class="data row2 col4" id="T_db4f1_row2_col4">0</td>
+<td class="data row2 col5" id="T_db4f1_row2_col5">22</td>
+<td class="data row2 col6" id="T_db4f1_row2_col6">0.87</td>
+<td class="data row2 col7" id="T_db4f1_row2_col7">0.86</td>
+<td class="data row2 col8" id="T_db4f1_row2_col8">26.4%</td>
+<td class="data row2 col9" id="T_db4f1_row2_col9">626</td>
+<td class="data row2 col10" id="T_db4f1_row2_col10">Racing</td>
 </tr>
 <tr>
-<th class="row_heading level0 row3" id="T_f4310_level0_row3">Activision</th>
-<td class="data row3 col0" id="T_f4310_row3_col0">4</td>
-<td class="data row3 col1" id="T_f4310_row3_col1">58.8</td>
-<td class="data row3 col2" id="T_f4310_row3_col2">733</td>
-<td class="data row3 col3" id="T_f4310_row3_col3">16.1%</td>
-<td class="data row3 col4" id="T_f4310_row3_col4">0</td>
-<td class="data row3 col5" id="T_f4310_row3_col5">13</td>
-<td class="data row3 col6" id="T_f4310_row3_col6">0.71</td>
-<td class="data row3 col7" id="T_f4310_row3_col7">0.69</td>
-<td class="data row3 col8" id="T_f4310_row3_col8">35.7%</td>
-<td class="data row3 col9" id="T_f4310_row3_col9">423</td>
-<td class="data row3 col10" id="T_f4310_row3_col10">Shooter</td>
+<th class="row_heading level0 row3" id="T_db4f1_level0_row3">Activision</th>
+<td class="data row3 col0" id="T_db4f1_row3_col0">4</td>
+<td class="data row3 col1" id="T_db4f1_row3_col1">58.8</td>
+<td class="data row3 col2" id="T_db4f1_row3_col2">733</td>
+<td class="data row3 col3" id="T_db4f1_row3_col3">16.1%</td>
+<td class="data row3 col4" id="T_db4f1_row3_col4">0</td>
+<td class="data row3 col5" id="T_db4f1_row3_col5">13</td>
+<td class="data row3 col6" id="T_db4f1_row3_col6">0.71</td>
+<td class="data row3 col7" id="T_db4f1_row3_col7">0.69</td>
+<td class="data row3 col8" id="T_db4f1_row3_col8">35.7%</td>
+<td class="data row3 col9" id="T_db4f1_row3_col9">423</td>
+<td class="data row3 col10" id="T_db4f1_row3_col10">Shooter</td>
 </tr>
 <tr>
-<th class="row_heading level0 row4" id="T_f4310_level0_row4">THQ</th>
-<td class="data row4 col0" id="T_f4310_row4_col0">5</td>
-<td class="data row4 col1" id="T_f4310_row4_col1">50.8</td>
-<td class="data row4 col2" id="T_f4310_row4_col2">340</td>
-<td class="data row4 col3" id="T_f4310_row4_col3">7.2%</td>
-<td class="data row4 col4" id="T_f4310_row4_col4">0</td>
-<td class="data row4 col5" id="T_f4310_row4_col5">8</td>
-<td class="data row4 col6" id="T_f4310_row4_col6">0.84</td>
-<td class="data row4 col7" id="T_f4310_row4_col7">0.70</td>
-<td class="data row4 col8" id="T_f4310_row4_col8">25.4%</td>
-<td class="data row4 col9" id="T_f4310_row4_col9">405</td>
-<td class="data row4 col10" id="T_f4310_row4_col10">Action</td>
+<th class="row_heading level0 row4" id="T_db4f1_level0_row4">THQ</th>
+<td class="data row4 col0" id="T_db4f1_row4_col0">5</td>
+<td class="data row4 col1" id="T_db4f1_row4_col1">50.8</td>
+<td class="data row4 col2" id="T_db4f1_row4_col2">340</td>
+<td class="data row4 col3" id="T_db4f1_row4_col3">7.2%</td>
+<td class="data row4 col4" id="T_db4f1_row4_col4">0</td>
+<td class="data row4 col5" id="T_db4f1_row4_col5">8</td>
+<td class="data row4 col6" id="T_db4f1_row4_col6">0.84</td>
+<td class="data row4 col7" id="T_db4f1_row4_col7">0.70</td>
+<td class="data row4 col8" id="T_db4f1_row4_col8">25.4%</td>
+<td class="data row4 col9" id="T_db4f1_row4_col9">405</td>
+<td class="data row4 col10" id="T_db4f1_row4_col10">Action</td>
 </tr>
 <tr>
-<th class="row_heading level0 row5" id="T_f4310_level0_row5">Take-Two Interactive</th>
-<td class="data row5 col0" id="T_f4310_row5_col0">6</td>
-<td class="data row5 col1" id="T_f4310_row5_col1">50.0</td>
-<td class="data row5 col2" id="T_f4310_row5_col2">400</td>
-<td class="data row5 col3" id="T_f4310_row5_col3">8.6%</td>
-<td class="data row5 col4" id="T_f4310_row5_col4">0</td>
-<td class="data row5 col5" id="T_f4310_row5_col5">5</td>
-<td class="data row5 col6" id="T_f4310_row5_col6">0.58</td>
-<td class="data row5 col7" id="T_f4310_row5_col7">0.68</td>
-<td class="data row5 col8" id="T_f4310_row5_col8">40.0%</td>
-<td class="data row5 col9" id="T_f4310_row5_col9">200</td>
-<td class="data row5 col10" id="T_f4310_row5_col10">Action</td>
+<th class="row_heading level0 row5" id="T_db4f1_level0_row5">Take-Two Interactive</th>
+<td class="data row5 col0" id="T_db4f1_row5_col0">6</td>
+<td class="data row5 col1" id="T_db4f1_row5_col1">50.0</td>
+<td class="data row5 col2" id="T_db4f1_row5_col2">400</td>
+<td class="data row5 col3" id="T_db4f1_row5_col3">8.6%</td>
+<td class="data row5 col4" id="T_db4f1_row5_col4">0</td>
+<td class="data row5 col5" id="T_db4f1_row5_col5">5</td>
+<td class="data row5 col6" id="T_db4f1_row5_col6">0.58</td>
+<td class="data row5 col7" id="T_db4f1_row5_col7">0.68</td>
+<td class="data row5 col8" id="T_db4f1_row5_col8">40.0%</td>
+<td class="data row5 col9" id="T_db4f1_row5_col9">200</td>
+<td class="data row5 col10" id="T_db4f1_row5_col10">Action</td>
 </tr>
 <tr>
-<th class="row_heading level0 row6" id="T_f4310_level0_row6">Sega</th>
-<td class="data row6 col0" id="T_f4310_row6_col0">7</td>
-<td class="data row6 col1" id="T_f4310_row6_col1">48.8</td>
-<td class="data row6 col2" id="T_f4310_row6_col2">272</td>
-<td class="data row6 col3" id="T_f4310_row6_col3">4.3%</td>
-<td class="data row6 col4" id="T_f4310_row6_col4">0</td>
-<td class="data row6 col5" id="T_f4310_row6_col5">5</td>
-<td class="data row6 col6" id="T_f4310_row6_col6">0.85</td>
-<td class="data row6 col7" id="T_f4310_row6_col7">0.88</td>
-<td class="data row6 col8" id="T_f4310_row6_col8">16.2%</td>
-<td class="data row6 col9" id="T_f4310_row6_col9">474</td>
-<td class="data row6 col10" id="T_f4310_row6_col10">Sports</td>
+<th class="row_heading level0 row6" id="T_db4f1_level0_row6">Sega</th>
+<td class="data row6 col0" id="T_db4f1_row6_col0">7</td>
+<td class="data row6 col1" id="T_db4f1_row6_col1">48.8</td>
+<td class="data row6 col2" id="T_db4f1_row6_col2">272</td>
+<td class="data row6 col3" id="T_db4f1_row6_col3">4.3%</td>
+<td class="data row6 col4" id="T_db4f1_row6_col4">0</td>
+<td class="data row6 col5" id="T_db4f1_row6_col5">5</td>
+<td class="data row6 col6" id="T_db4f1_row6_col6">0.85</td>
+<td class="data row6 col7" id="T_db4f1_row6_col7">0.88</td>
+<td class="data row6 col8" id="T_db4f1_row6_col8">16.2%</td>
+<td class="data row6 col9" id="T_db4f1_row6_col9">474</td>
+<td class="data row6 col10" id="T_db4f1_row6_col10">Sports</td>
 </tr>
 <tr>
-<th class="row_heading level0 row7" id="T_f4310_level0_row7">Ubisoft</th>
-<td class="data row7 col0" id="T_f4310_row7_col0">8</td>
-<td class="data row7 col1" id="T_f4310_row7_col1">48.2</td>
-<td class="data row7 col2" id="T_f4310_row7_col2">479</td>
-<td class="data row7 col3" id="T_f4310_row7_col3">8.0%</td>
-<td class="data row7 col4" id="T_f4310_row7_col4">0</td>
-<td class="data row7 col5" id="T_f4310_row7_col5">6</td>
-<td class="data row7 col6" id="T_f4310_row7_col6">0.82</td>
-<td class="data row7 col7" id="T_f4310_row7_col7">0.71</td>
-<td class="data row7 col8" id="T_f4310_row7_col8">19.0%</td>
-<td class="data row7 col9" id="T_f4310_row7_col9">573</td>
-<td class="data row7 col10" id="T_f4310_row7_col10">Action</td>
+<th class="row_heading level0 row7" id="T_db4f1_level0_row7">Ubisoft</th>
+<td class="data row7 col0" id="T_db4f1_row7_col0">8</td>
+<td class="data row7 col1" id="T_db4f1_row7_col1">48.2</td>
+<td class="data row7 col2" id="T_db4f1_row7_col2">479</td>
+<td class="data row7 col3" id="T_db4f1_row7_col3">8.0%</td>
+<td class="data row7 col4" id="T_db4f1_row7_col4">0</td>
+<td class="data row7 col5" id="T_db4f1_row7_col5">6</td>
+<td class="data row7 col6" id="T_db4f1_row7_col6">0.82</td>
+<td class="data row7 col7" id="T_db4f1_row7_col7">0.71</td>
+<td class="data row7 col8" id="T_db4f1_row7_col8">19.0%</td>
+<td class="data row7 col9" id="T_db4f1_row7_col9">573</td>
+<td class="data row7 col10" id="T_db4f1_row7_col10">Action</td>
 </tr>
 <tr>
-<th class="row_heading level0 row8" id="T_f4310_level0_row8">Bethesda Softworks</th>
-<td class="data row8 col0" id="T_f4310_row8_col0">9</td>
-<td class="data row8 col1" id="T_f4310_row8_col1">47.2</td>
-<td class="data row8 col2" id="T_f4310_row8_col2">82</td>
-<td class="data row8 col3" id="T_f4310_row8_col3">4.2%</td>
-<td class="data row8 col4" id="T_f4310_row8_col4">0</td>
-<td class="data row8 col5" id="T_f4310_row8_col5">2</td>
-<td class="data row8 col6" id="T_f4310_row8_col6">0.42</td>
-<td class="data row8 col7" id="T_f4310_row8_col7">0.69</td>
-<td class="data row8 col8" id="T_f4310_row8_col8">51.7%</td>
-<td class="data row8 col9" id="T_f4310_row8_col9">29</td>
-<td class="data row8 col10" id="T_f4310_row8_col10">Role-Playing</td>
+<th class="row_heading level0 row8" id="T_db4f1_level0_row8">Bethesda Softworks</th>
+<td class="data row8 col0" id="T_db4f1_row8_col0">9</td>
+<td class="data row8 col1" id="T_db4f1_row8_col1">47.2</td>
+<td class="data row8 col2" id="T_db4f1_row8_col2">82</td>
+<td class="data row8 col3" id="T_db4f1_row8_col3">4.2%</td>
+<td class="data row8 col4" id="T_db4f1_row8_col4">0</td>
+<td class="data row8 col5" id="T_db4f1_row8_col5">2</td>
+<td class="data row8 col6" id="T_db4f1_row8_col6">0.42</td>
+<td class="data row8 col7" id="T_db4f1_row8_col7">0.69</td>
+<td class="data row8 col8" id="T_db4f1_row8_col8">51.7%</td>
+<td class="data row8 col9" id="T_db4f1_row8_col9">29</td>
+<td class="data row8 col10" id="T_db4f1_row8_col10">Role-Playing</td>
 </tr>
 <tr>
-<th class="row_heading level0 row9" id="T_f4310_level0_row9">Microsoft Game Studios</th>
-<td class="data row9 col0" id="T_f4310_row9_col0">10</td>
-<td class="data row9 col1" id="T_f4310_row9_col1">47.2</td>
-<td class="data row9 col2" id="T_f4310_row9_col2">246</td>
-<td class="data row9 col3" id="T_f4310_row9_col3">5.8%</td>
-<td class="data row9 col4" id="T_f4310_row9_col4">0</td>
-<td class="data row9 col5" id="T_f4310_row9_col5">3</td>
-<td class="data row9 col6" id="T_f4310_row9_col6">0.73</td>
-<td class="data row9 col7" id="T_f4310_row9_col7">0.68</td>
-<td class="data row9 col8" id="T_f4310_row9_col8">29.4%</td>
-<td class="data row9 col9" id="T_f4310_row9_col9">177</td>
-<td class="data row9 col10" id="T_f4310_row9_col10">Shooter</td>
+<th class="row_heading level0 row9" id="T_db4f1_level0_row9">Microsoft Game Studios</th>
+<td class="data row9 col0" id="T_db4f1_row9_col0">10</td>
+<td class="data row9 col1" id="T_db4f1_row9_col1">47.2</td>
+<td class="data row9 col2" id="T_db4f1_row9_col2">246</td>
+<td class="data row9 col3" id="T_db4f1_row9_col3">5.8%</td>
+<td class="data row9 col4" id="T_db4f1_row9_col4">0</td>
+<td class="data row9 col5" id="T_db4f1_row9_col5">3</td>
+<td class="data row9 col6" id="T_db4f1_row9_col6">0.73</td>
+<td class="data row9 col7" id="T_db4f1_row9_col7">0.68</td>
+<td class="data row9 col8" id="T_db4f1_row9_col8">29.4%</td>
+<td class="data row9 col9" id="T_db4f1_row9_col9">177</td>
+<td class="data row9 col10" id="T_db4f1_row9_col10">Shooter</td>
 </tr>
 <tr>
-<th class="row_heading level0 row10" id="T_f4310_level0_row10">Atari</th>
-<td class="data row10 col0" id="T_f4310_row10_col0">11</td>
-<td class="data row10 col1" id="T_f4310_row10_col1">46.8</td>
-<td class="data row10 col2" id="T_f4310_row10_col2">147</td>
-<td class="data row10 col3" id="T_f4310_row10_col3">3.2%</td>
-<td class="data row10 col4" id="T_f4310_row10_col4">0</td>
-<td class="data row10 col5" id="T_f4310_row10_col5">7</td>
-<td class="data row10 col6" id="T_f4310_row10_col6">0.92</td>
-<td class="data row10 col7" id="T_f4310_row10_col7">0.75</td>
-<td class="data row10 col8" id="T_f4310_row10_col8">15.2%</td>
-<td class="data row10 col9" id="T_f4310_row10_col9">263</td>
-<td class="data row10 col10" id="T_f4310_row10_col10">Fighting</td>
+<th class="row_heading level0 row10" id="T_db4f1_level0_row10">Atari</th>
+<td class="data row10 col0" id="T_db4f1_row10_col0">11</td>
+<td class="data row10 col1" id="T_db4f1_row10_col1">46.8</td>
+<td class="data row10 col2" id="T_db4f1_row10_col2">147</td>
+<td class="data row10 col3" id="T_db4f1_row10_col3">3.2%</td>
+<td class="data row10 col4" id="T_db4f1_row10_col4">0</td>
+<td class="data row10 col5" id="T_db4f1_row10_col5">7</td>
+<td class="data row10 col6" id="T_db4f1_row10_col6">0.92</td>
+<td class="data row10 col7" id="T_db4f1_row10_col7">0.75</td>
+<td class="data row10 col8" id="T_db4f1_row10_col8">15.2%</td>
+<td class="data row10 col9" id="T_db4f1_row10_col9">263</td>
+<td class="data row10 col10" id="T_db4f1_row10_col10">Fighting</td>
 </tr>
 <tr>
-<th class="row_heading level0 row11" id="T_f4310_level0_row11">Disney Interactive Studios</th>
-<td class="data row11 col0" id="T_f4310_row11_col0">12</td>
-<td class="data row11 col1" id="T_f4310_row11_col1">46.6</td>
-<td class="data row11 col2" id="T_f4310_row11_col2">120</td>
-<td class="data row11 col3" id="T_f4310_row11_col3">3.3%</td>
-<td class="data row11 col4" id="T_f4310_row11_col4">0</td>
-<td class="data row11 col5" id="T_f4310_row11_col5">0</td>
-<td class="data row11 col6" id="T_f4310_row11_col6">0.64</td>
-<td class="data row11 col7" id="T_f4310_row11_col7">0.68</td>
-<td class="data row11 col8" id="T_f4310_row11_col8">40.4%</td>
-<td class="data row11 col9" id="T_f4310_row11_col9">109</td>
-<td class="data row11 col10" id="T_f4310_row11_col10">Action</td>
+<th class="row_heading level0 row11" id="T_db4f1_level0_row11">Disney Interactive Studios</th>
+<td class="data row11 col0" id="T_db4f1_row11_col0">12</td>
+<td class="data row11 col1" id="T_db4f1_row11_col1">46.6</td>
+<td class="data row11 col2" id="T_db4f1_row11_col2">120</td>
+<td class="data row11 col3" id="T_db4f1_row11_col3">3.3%</td>
+<td class="data row11 col4" id="T_db4f1_row11_col4">0</td>
+<td class="data row11 col5" id="T_db4f1_row11_col5">0</td>
+<td class="data row11 col6" id="T_db4f1_row11_col6">0.64</td>
+<td class="data row11 col7" id="T_db4f1_row11_col7">0.68</td>
+<td class="data row11 col8" id="T_db4f1_row11_col8">40.4%</td>
+<td class="data row11 col9" id="T_db4f1_row11_col9">109</td>
+<td class="data row11 col10" id="T_db4f1_row11_col10">Action</td>
 </tr>
 <tr>
-<th class="row_heading level0 row12" id="T_f4310_level0_row12">Warner Bros. Interactive Entertainment</th>
-<td class="data row12 col0" id="T_f4310_row12_col0">13</td>
-<td class="data row12 col1" id="T_f4310_row12_col1">45.6</td>
-<td class="data row12 col2" id="T_f4310_row12_col2">154</td>
-<td class="data row12 col3" id="T_f4310_row12_col3">5.7%</td>
-<td class="data row12 col4" id="T_f4310_row12_col4">0</td>
-<td class="data row12 col5" id="T_f4310_row12_col5">2</td>
-<td class="data row12 col6" id="T_f4310_row12_col6">0.38</td>
-<td class="data row12 col7" id="T_f4310_row12_col7">0.68</td>
-<td class="data row12 col8" id="T_f4310_row12_col8">48.6%</td>
-<td class="data row12 col9" id="T_f4310_row12_col9">72</td>
-<td class="data row12 col10" id="T_f4310_row12_col10">Action</td>
+<th class="row_heading level0 row12" id="T_db4f1_level0_row12">Warner Bros. Interactive Entertainment</th>
+<td class="data row12 col0" id="T_db4f1_row12_col0">13</td>
+<td class="data row12 col1" id="T_db4f1_row12_col1">45.6</td>
+<td class="data row12 col2" id="T_db4f1_row12_col2">154</td>
+<td class="data row12 col3" id="T_db4f1_row12_col3">5.7%</td>
+<td class="data row12 col4" id="T_db4f1_row12_col4">0</td>
+<td class="data row12 col5" id="T_db4f1_row12_col5">2</td>
+<td class="data row12 col6" id="T_db4f1_row12_col6">0.38</td>
+<td class="data row12 col7" id="T_db4f1_row12_col7">0.68</td>
+<td class="data row12 col8" id="T_db4f1_row12_col8">48.6%</td>
+<td class="data row12 col9" id="T_db4f1_row12_col9">72</td>
+<td class="data row12 col10" id="T_db4f1_row12_col10">Action</td>
 </tr>
 <tr>
-<th class="row_heading level0 row13" id="T_f4310_level0_row13">Virgin Interactive</th>
-<td class="data row13 col0" id="T_f4310_row13_col0">14</td>
-<td class="data row13 col1" id="T_f4310_row13_col1">43.1</td>
-<td class="data row13 col2" id="T_f4310_row13_col2">44</td>
-<td class="data row13 col3" id="T_f4310_row13_col3">1.2%</td>
-<td class="data row13 col4" id="T_f4310_row13_col4">0</td>
-<td class="data row13 col5" id="T_f4310_row13_col5">3</td>
-<td class="data row13 col6" id="T_f4310_row13_col6">0.65</td>
-<td class="data row13 col7" id="T_f4310_row13_col7">0.87</td>
-<td class="data row13 col8" id="T_f4310_row13_col8">21.4%</td>
-<td class="data row13 col9" id="T_f4310_row13_col9">56</td>
-<td class="data row13 col10" id="T_f4310_row13_col10">Action</td>
+<th class="row_heading level0 row13" id="T_db4f1_level0_row13">Virgin Interactive</th>
+<td class="data row13 col0" id="T_db4f1_row13_col0">14</td>
+<td class="data row13 col1" id="T_db4f1_row13_col1">43.1</td>
+<td class="data row13 col2" id="T_db4f1_row13_col2">44</td>
+<td class="data row13 col3" id="T_db4f1_row13_col3">1.2%</td>
+<td class="data row13 col4" id="T_db4f1_row13_col4">0</td>
+<td class="data row13 col5" id="T_db4f1_row13_col5">3</td>
+<td class="data row13 col6" id="T_db4f1_row13_col6">0.65</td>
+<td class="data row13 col7" id="T_db4f1_row13_col7">0.87</td>
+<td class="data row13 col8" id="T_db4f1_row13_col8">21.4%</td>
+<td class="data row13 col9" id="T_db4f1_row13_col9">56</td>
+<td class="data row13 col10" id="T_db4f1_row13_col10">Action</td>
 </tr>
 <tr>
-<th class="row_heading level0 row14" id="T_f4310_level0_row14">LucasArts</th>
-<td class="data row14 col0" id="T_f4310_row14_col0">15</td>
-<td class="data row14 col1" id="T_f4310_row14_col1">42.3</td>
-<td class="data row14 col2" id="T_f4310_row14_col2">87</td>
-<td class="data row14 col3" id="T_f4310_row14_col3">2.9%</td>
-<td class="data row14 col4" id="T_f4310_row14_col4">0</td>
-<td class="data row14 col5" id="T_f4310_row14_col5">0</td>
-<td class="data row14 col6" id="T_f4310_row14_col6">0.36</td>
-<td class="data row14 col7" id="T_f4310_row14_col7">0.67</td>
-<td class="data row14 col8" id="T_f4310_row14_col8">47.6%</td>
-<td class="data row14 col9" id="T_f4310_row14_col9">42</td>
-<td class="data row14 col10" id="T_f4310_row14_col10">Action</td>
+<th class="row_heading level0 row14" id="T_db4f1_level0_row14">LucasArts</th>
+<td class="data row14 col0" id="T_db4f1_row14_col0">15</td>
+<td class="data row14 col1" id="T_db4f1_row14_col1">42.3</td>
+<td class="data row14 col2" id="T_db4f1_row14_col2">87</td>
+<td class="data row14 col3" id="T_db4f1_row14_col3">2.9%</td>
+<td class="data row14 col4" id="T_db4f1_row14_col4">0</td>
+<td class="data row14 col5" id="T_db4f1_row14_col5">0</td>
+<td class="data row14 col6" id="T_db4f1_row14_col6">0.36</td>
+<td class="data row14 col7" id="T_db4f1_row14_col7">0.67</td>
+<td class="data row14 col8" id="T_db4f1_row14_col8">47.6%</td>
+<td class="data row14 col9" id="T_db4f1_row14_col9">42</td>
+<td class="data row14 col10" id="T_db4f1_row14_col10">Action</td>
 </tr>
 </tbody>
 </table>
@@ -12984,7 +12990,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"Nintendo est le seul éditeur à cumuler les cinq formes de pouvoir"</span><span class="p">,</span>
           <span class="s2">"Top 15 du Market Power Index, contribution de chaque composante (poids égaux)"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"13_mpi_decomposition"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_13_mpi_decomposition"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -13179,7 +13185,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Rang au MPI (1 = plus puissant)"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"Le top 4 ne dépend pas des poids, la suite oui"</span><span class="p">,</span>
           <span class="s2">"Rang médian (point) et intervalle 10 %-90 % (trait) sur 2 000 pondérations aléatoires"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"14_mpi_robustesse"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_14_mpi_robustesse"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -13456,7 +13462,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">"Nombre de titres"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"La plupart des titres se vendent comme le marché, une longue traîne non"</span><span class="p">,</span>
           <span class="s2">"Distribution du score de divergence régionale, titres de 0,5 M d'exemplaires ou plus"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"15_divergence_distribution"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_15_divergence_distribution"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -13509,141 +13515,141 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
 </style>
-<table id="T_c8637">
+<table id="T_bd0e4">
 <thead>
 <tr>
-<th class="col_heading level0 col0" id="T_c8637_level0_col0">Name</th>
-<th class="col_heading level0 col1" id="T_c8637_level0_col1">Year</th>
-<th class="col_heading level0 col2" id="T_c8637_level0_col2">Genre</th>
-<th class="col_heading level0 col3" id="T_c8637_level0_col3">Publisher</th>
-<th class="col_heading level0 col4" id="T_c8637_level0_col4">Global_Sales</th>
-<th class="col_heading level0 col5" id="T_c8637_level0_col5">part_NA_Sales</th>
-<th class="col_heading level0 col6" id="T_c8637_level0_col6">part_EU_Sales</th>
-<th class="col_heading level0 col7" id="T_c8637_level0_col7">part_JP_Sales</th>
-<th class="col_heading level0 col8" id="T_c8637_level0_col8">part_Other_Sales</th>
-<th class="col_heading level0 col9" id="T_c8637_level0_col9">divergence</th>
+<th class="col_heading level0 col0" id="T_bd0e4_level0_col0">Name</th>
+<th class="col_heading level0 col1" id="T_bd0e4_level0_col1">Year</th>
+<th class="col_heading level0 col2" id="T_bd0e4_level0_col2">Genre</th>
+<th class="col_heading level0 col3" id="T_bd0e4_level0_col3">Publisher</th>
+<th class="col_heading level0 col4" id="T_bd0e4_level0_col4">Global_Sales</th>
+<th class="col_heading level0 col5" id="T_bd0e4_level0_col5">part_NA_Sales</th>
+<th class="col_heading level0 col6" id="T_bd0e4_level0_col6">part_EU_Sales</th>
+<th class="col_heading level0 col7" id="T_bd0e4_level0_col7">part_JP_Sales</th>
+<th class="col_heading level0 col8" id="T_bd0e4_level0_col8">part_Other_Sales</th>
+<th class="col_heading level0 col9" id="T_bd0e4_level0_col9">divergence</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="data row0 col0" id="T_c8637_row0_col0">New Super Mario Bros. Wii</td>
-<td class="data row0 col1" id="T_c8637_row0_col1">2009</td>
-<td class="data row0 col2" id="T_c8637_row0_col2">Platform</td>
-<td class="data row0 col3" id="T_c8637_row0_col3">Nintendo</td>
-<td class="data row0 col4" id="T_c8637_row0_col4">28.6</td>
-<td class="data row0 col5" id="T_c8637_row0_col5">51%</td>
-<td class="data row0 col6" id="T_c8637_row0_col6">25%</td>
-<td class="data row0 col7" id="T_c8637_row0_col7">16%</td>
-<td class="data row0 col8" id="T_c8637_row0_col8">8%</td>
-<td class="data row0 col9" id="T_c8637_row0_col9">0.001</td>
+<td class="data row0 col0" id="T_bd0e4_row0_col0">New Super Mario Bros. Wii</td>
+<td class="data row0 col1" id="T_bd0e4_row0_col1">2009</td>
+<td class="data row0 col2" id="T_bd0e4_row0_col2">Platform</td>
+<td class="data row0 col3" id="T_bd0e4_row0_col3">Nintendo</td>
+<td class="data row0 col4" id="T_bd0e4_row0_col4">28.6</td>
+<td class="data row0 col5" id="T_bd0e4_row0_col5">51%</td>
+<td class="data row0 col6" id="T_bd0e4_row0_col6">25%</td>
+<td class="data row0 col7" id="T_bd0e4_row0_col7">16%</td>
+<td class="data row0 col8" id="T_bd0e4_row0_col8">8%</td>
+<td class="data row0 col9" id="T_bd0e4_row0_col9">0.001</td>
 </tr>
 <tr>
-<td class="data row1 col0" id="T_c8637_row1_col0">Gran Turismo 3: A-Spec</td>
-<td class="data row1 col1" id="T_c8637_row1_col1">2001</td>
-<td class="data row1 col2" id="T_c8637_row1_col2">Racing</td>
-<td class="data row1 col3" id="T_c8637_row1_col3">Sony Computer Entertainment</td>
-<td class="data row1 col4" id="T_c8637_row1_col4">15.0</td>
-<td class="data row1 col5" id="T_c8637_row1_col5">46%</td>
-<td class="data row1 col6" id="T_c8637_row1_col6">34%</td>
-<td class="data row1 col7" id="T_c8637_row1_col7">12%</td>
-<td class="data row1 col8" id="T_c8637_row1_col8">8%</td>
-<td class="data row1 col9" id="T_c8637_row1_col9">0.004</td>
+<td class="data row1 col0" id="T_bd0e4_row1_col0">Gran Turismo 3: A-Spec</td>
+<td class="data row1 col1" id="T_bd0e4_row1_col1">2001</td>
+<td class="data row1 col2" id="T_bd0e4_row1_col2">Racing</td>
+<td class="data row1 col3" id="T_bd0e4_row1_col3">Sony Computer Entertainment</td>
+<td class="data row1 col4" id="T_bd0e4_row1_col4">15.0</td>
+<td class="data row1 col5" id="T_bd0e4_row1_col5">46%</td>
+<td class="data row1 col6" id="T_bd0e4_row1_col6">34%</td>
+<td class="data row1 col7" id="T_bd0e4_row1_col7">12%</td>
+<td class="data row1 col8" id="T_bd0e4_row1_col8">8%</td>
+<td class="data row1 col9" id="T_bd0e4_row1_col9">0.004</td>
 </tr>
 <tr>
-<td class="data row2 col0" id="T_c8637_row2_col0">Super Mario 64</td>
-<td class="data row2 col1" id="T_c8637_row2_col1">1996</td>
-<td class="data row2 col2" id="T_c8637_row2_col2">Platform</td>
-<td class="data row2 col3" id="T_c8637_row2_col3">Nintendo</td>
-<td class="data row2 col4" id="T_c8637_row2_col4">22.3</td>
-<td class="data row2 col5" id="T_c8637_row2_col5">54%</td>
-<td class="data row2 col6" id="T_c8637_row2_col6">27%</td>
-<td class="data row2 col7" id="T_c8637_row2_col7">14%</td>
-<td class="data row2 col8" id="T_c8637_row2_col8">5%</td>
-<td class="data row2 col9" id="T_c8637_row2_col9">0.004</td>
+<td class="data row2 col0" id="T_bd0e4_row2_col0">Super Mario 64</td>
+<td class="data row2 col1" id="T_bd0e4_row2_col1">1996</td>
+<td class="data row2 col2" id="T_bd0e4_row2_col2">Platform</td>
+<td class="data row2 col3" id="T_bd0e4_row2_col3">Nintendo</td>
+<td class="data row2 col4" id="T_bd0e4_row2_col4">22.3</td>
+<td class="data row2 col5" id="T_bd0e4_row2_col5">54%</td>
+<td class="data row2 col6" id="T_bd0e4_row2_col6">27%</td>
+<td class="data row2 col7" id="T_bd0e4_row2_col7">14%</td>
+<td class="data row2 col8" id="T_bd0e4_row2_col8">5%</td>
+<td class="data row2 col9" id="T_bd0e4_row2_col9">0.004</td>
 </tr>
 <tr>
-<td class="data row3 col0" id="T_c8637_row3_col0">Super Mario 3D Land</td>
-<td class="data row3 col1" id="T_c8637_row3_col1">2011</td>
-<td class="data row3 col2" id="T_c8637_row3_col2">Platform</td>
-<td class="data row3 col3" id="T_c8637_row3_col3">Nintendo</td>
-<td class="data row3 col4" id="T_c8637_row3_col4">10.8</td>
-<td class="data row3 col5" id="T_c8637_row3_col5">45%</td>
-<td class="data row3 col6" id="T_c8637_row3_col6">28%</td>
-<td class="data row3 col7" id="T_c8637_row3_col7">20%</td>
-<td class="data row3 col8" id="T_c8637_row3_col8">7%</td>
-<td class="data row3 col9" id="T_c8637_row3_col9">0.004</td>
+<td class="data row3 col0" id="T_bd0e4_row3_col0">Super Mario 3D Land</td>
+<td class="data row3 col1" id="T_bd0e4_row3_col1">2011</td>
+<td class="data row3 col2" id="T_bd0e4_row3_col2">Platform</td>
+<td class="data row3 col3" id="T_bd0e4_row3_col3">Nintendo</td>
+<td class="data row3 col4" id="T_bd0e4_row3_col4">10.8</td>
+<td class="data row3 col5" id="T_bd0e4_row3_col5">45%</td>
+<td class="data row3 col6" id="T_bd0e4_row3_col6">28%</td>
+<td class="data row3 col7" id="T_bd0e4_row3_col7">20%</td>
+<td class="data row3 col8" id="T_bd0e4_row3_col8">7%</td>
+<td class="data row3 col9" id="T_bd0e4_row3_col9">0.004</td>
 </tr>
 <tr>
-<td class="data row4 col0" id="T_c8637_row4_col0">Wii Play</td>
-<td class="data row4 col1" id="T_c8637_row4_col1">2006</td>
-<td class="data row4 col2" id="T_c8637_row4_col2">Misc</td>
-<td class="data row4 col3" id="T_c8637_row4_col3">Nintendo</td>
-<td class="data row4 col4" id="T_c8637_row4_col4">29.0</td>
-<td class="data row4 col5" id="T_c8637_row4_col5">48%</td>
-<td class="data row4 col6" id="T_c8637_row4_col6">32%</td>
-<td class="data row4 col7" id="T_c8637_row4_col7">10%</td>
-<td class="data row4 col8" id="T_c8637_row4_col8">10%</td>
-<td class="data row4 col9" id="T_c8637_row4_col9">0.004</td>
+<td class="data row4 col0" id="T_bd0e4_row4_col0">Wii Play</td>
+<td class="data row4 col1" id="T_bd0e4_row4_col1">2006</td>
+<td class="data row4 col2" id="T_bd0e4_row4_col2">Misc</td>
+<td class="data row4 col3" id="T_bd0e4_row4_col3">Nintendo</td>
+<td class="data row4 col4" id="T_bd0e4_row4_col4">29.0</td>
+<td class="data row4 col5" id="T_bd0e4_row4_col5">48%</td>
+<td class="data row4 col6" id="T_bd0e4_row4_col6">32%</td>
+<td class="data row4 col7" id="T_bd0e4_row4_col7">10%</td>
+<td class="data row4 col8" id="T_bd0e4_row4_col8">10%</td>
+<td class="data row4 col9" id="T_bd0e4_row4_col9">0.004</td>
 </tr>
 <tr>
-<td class="data row5 col0" id="T_c8637_row5_col0">Gran Turismo 4</td>
-<td class="data row5 col1" id="T_c8637_row5_col1">2004</td>
-<td class="data row5 col2" id="T_c8637_row5_col2">Racing</td>
-<td class="data row5 col3" id="T_c8637_row5_col3">Sony Computer Entertainment</td>
-<td class="data row5 col4" id="T_c8637_row5_col4">11.7</td>
-<td class="data row5 col5" id="T_c8637_row5_col5">26%</td>
-<td class="data row5 col6" id="T_c8637_row5_col6">0%</td>
-<td class="data row5 col7" id="T_c8637_row5_col7">9%</td>
-<td class="data row5 col8" id="T_c8637_row5_col8">65%</td>
-<td class="data row5 col9" id="T_c8637_row5_col9">0.335</td>
+<td class="data row5 col0" id="T_bd0e4_row5_col0">Gran Turismo 4</td>
+<td class="data row5 col1" id="T_bd0e4_row5_col1">2004</td>
+<td class="data row5 col2" id="T_bd0e4_row5_col2">Racing</td>
+<td class="data row5 col3" id="T_bd0e4_row5_col3">Sony Computer Entertainment</td>
+<td class="data row5 col4" id="T_bd0e4_row5_col4">11.7</td>
+<td class="data row5 col5" id="T_bd0e4_row5_col5">26%</td>
+<td class="data row5 col6" id="T_bd0e4_row5_col6">0%</td>
+<td class="data row5 col7" id="T_bd0e4_row5_col7">9%</td>
+<td class="data row5 col8" id="T_bd0e4_row5_col8">65%</td>
+<td class="data row5 col9" id="T_bd0e4_row5_col9">0.335</td>
 </tr>
 <tr>
-<td class="data row6 col0" id="T_c8637_row6_col0">Duck Hunt</td>
-<td class="data row6 col1" id="T_c8637_row6_col1">1984</td>
-<td class="data row6 col2" id="T_c8637_row6_col2">Shooter</td>
-<td class="data row6 col3" id="T_c8637_row6_col3">Nintendo</td>
-<td class="data row6 col4" id="T_c8637_row6_col4">28.3</td>
-<td class="data row6 col5" id="T_c8637_row6_col5">95%</td>
-<td class="data row6 col6" id="T_c8637_row6_col6">2%</td>
-<td class="data row6 col7" id="T_c8637_row6_col7">1%</td>
-<td class="data row6 col8" id="T_c8637_row6_col8">2%</td>
-<td class="data row6 col9" id="T_c8637_row6_col9">0.216</td>
+<td class="data row6 col0" id="T_bd0e4_row6_col0">Duck Hunt</td>
+<td class="data row6 col1" id="T_bd0e4_row6_col1">1984</td>
+<td class="data row6 col2" id="T_bd0e4_row6_col2">Shooter</td>
+<td class="data row6 col3" id="T_bd0e4_row6_col3">Nintendo</td>
+<td class="data row6 col4" id="T_bd0e4_row6_col4">28.3</td>
+<td class="data row6 col5" id="T_bd0e4_row6_col5">95%</td>
+<td class="data row6 col6" id="T_bd0e4_row6_col6">2%</td>
+<td class="data row6 col7" id="T_bd0e4_row6_col7">1%</td>
+<td class="data row6 col8" id="T_bd0e4_row6_col8">2%</td>
+<td class="data row6 col9" id="T_bd0e4_row6_col9">0.216</td>
 </tr>
 <tr>
-<td class="data row7 col0" id="T_c8637_row7_col0">FIFA Soccer 11</td>
-<td class="data row7 col1" id="T_c8637_row7_col1">2010</td>
-<td class="data row7 col2" id="T_c8637_row7_col2">Sports</td>
-<td class="data row7 col3" id="T_c8637_row7_col3">Electronic Arts</td>
-<td class="data row7 col4" id="T_c8637_row7_col4">12.6</td>
-<td class="data row7 col5" id="T_c8637_row7_col5">15%</td>
-<td class="data row7 col6" id="T_c8637_row7_col6">64%</td>
-<td class="data row7 col7" id="T_c8637_row7_col7">1%</td>
-<td class="data row7 col8" id="T_c8637_row7_col8">20%</td>
-<td class="data row7 col9" id="T_c8637_row7_col9">0.192</td>
+<td class="data row7 col0" id="T_bd0e4_row7_col0">FIFA Soccer 11</td>
+<td class="data row7 col1" id="T_bd0e4_row7_col1">2010</td>
+<td class="data row7 col2" id="T_bd0e4_row7_col2">Sports</td>
+<td class="data row7 col3" id="T_bd0e4_row7_col3">Electronic Arts</td>
+<td class="data row7 col4" id="T_bd0e4_row7_col4">12.6</td>
+<td class="data row7 col5" id="T_bd0e4_row7_col5">15%</td>
+<td class="data row7 col6" id="T_bd0e4_row7_col6">64%</td>
+<td class="data row7 col7" id="T_bd0e4_row7_col7">1%</td>
+<td class="data row7 col8" id="T_bd0e4_row7_col8">20%</td>
+<td class="data row7 col9" id="T_bd0e4_row7_col9">0.192</td>
 </tr>
 <tr>
-<td class="data row8 col0" id="T_c8637_row8_col0">FIFA 15</td>
-<td class="data row8 col1" id="T_c8637_row8_col1">2014</td>
-<td class="data row8 col2" id="T_c8637_row8_col2">Sports</td>
-<td class="data row8 col3" id="T_c8637_row8_col3">Electronic Arts</td>
-<td class="data row8 col4" id="T_c8637_row8_col4">19.0</td>
-<td class="data row8 col5" id="T_c8637_row8_col5">17%</td>
-<td class="data row8 col6" id="T_c8637_row8_col6">65%</td>
-<td class="data row8 col7" id="T_c8637_row8_col7">1%</td>
-<td class="data row8 col8" id="T_c8637_row8_col8">17%</td>
-<td class="data row8 col9" id="T_c8637_row8_col9">0.183</td>
+<td class="data row8 col0" id="T_bd0e4_row8_col0">FIFA 15</td>
+<td class="data row8 col1" id="T_bd0e4_row8_col1">2014</td>
+<td class="data row8 col2" id="T_bd0e4_row8_col2">Sports</td>
+<td class="data row8 col3" id="T_bd0e4_row8_col3">Electronic Arts</td>
+<td class="data row8 col4" id="T_bd0e4_row8_col4">19.0</td>
+<td class="data row8 col5" id="T_bd0e4_row8_col5">17%</td>
+<td class="data row8 col6" id="T_bd0e4_row8_col6">65%</td>
+<td class="data row8 col7" id="T_bd0e4_row8_col7">1%</td>
+<td class="data row8 col8" id="T_bd0e4_row8_col8">17%</td>
+<td class="data row8 col9" id="T_bd0e4_row8_col9">0.183</td>
 </tr>
 <tr>
-<td class="data row9 col0" id="T_c8637_row9_col0">FIFA 12</td>
-<td class="data row9 col1" id="T_c8637_row9_col1">2011</td>
-<td class="data row9 col2" id="T_c8637_row9_col2">Sports</td>
-<td class="data row9 col3" id="T_c8637_row9_col3">Electronic Arts</td>
-<td class="data row9 col4" id="T_c8637_row9_col4">13.2</td>
-<td class="data row9 col5" id="T_c8637_row9_col5">16%</td>
-<td class="data row9 col6" id="T_c8637_row9_col6">65%</td>
-<td class="data row9 col7" id="T_c8637_row9_col7">1%</td>
-<td class="data row9 col8" id="T_c8637_row9_col8">18%</td>
-<td class="data row9 col9" id="T_c8637_row9_col9">0.182</td>
+<td class="data row9 col0" id="T_bd0e4_row9_col0">FIFA 12</td>
+<td class="data row9 col1" id="T_bd0e4_row9_col1">2011</td>
+<td class="data row9 col2" id="T_bd0e4_row9_col2">Sports</td>
+<td class="data row9 col3" id="T_bd0e4_row9_col3">Electronic Arts</td>
+<td class="data row9 col4" id="T_bd0e4_row9_col4">13.2</td>
+<td class="data row9 col5" id="T_bd0e4_row9_col5">16%</td>
+<td class="data row9 col6" id="T_bd0e4_row9_col6">65%</td>
+<td class="data row9 col7" id="T_bd0e4_row9_col7">1%</td>
+<td class="data row9 col8" id="T_bd0e4_row9_col8">18%</td>
+<td class="data row9 col9" id="T_bd0e4_row9_col9">0.182</td>
 </tr>
 </tbody>
 </table>
@@ -13704,7 +13710,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">cb</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s2">"Affinité (poids régional / poids mondial)"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"Le Japon achète 2,6 fois plus de RPG, 4 fois moins de jeux de tir"</span><span class="p">,</span>
           <span class="s2">"Indice d'affinité genre-région ; rouge : sur-représenté, bleu : sous-représenté"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"16_affinites_genre_region"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_16_affinites_genre_region"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -13780,7 +13786,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"L'Occident parle d'une seule voix, le Japon s'en éloigne depuis 2012"</span><span class="p">,</span>
           <span class="s2">"Divergence de Jensen-Shannon entre les mix de genres de deux régions (moyenne mobile sur 3 ans)"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"17_convergence_regionale"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_17_convergence_regionale"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -13822,7 +13828,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">"Le Tir et l'Action montent partout, mais le Japon reste fidèle au RPG"</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"left"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s2">"bold"</span><span class="p">)</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"18_genres_par_periode"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_18_genres_par_periode"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -13866,13 +13872,13 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
 </style>
-<table id="T_16bb2">
+<table id="T_2f50d">
 <thead>
 <tr>
 <th class="blank level0"> </th>
-<th class="col_heading level0 col0" id="T_16bb2_level0_col0">titres</th>
-<th class="col_heading level0 col1" id="T_16bb2_level0_col1">divergence_mediane</th>
-<th class="col_heading level0 col2" id="T_16bb2_level0_col2">part_outliers</th>
+<th class="col_heading level0 col0" id="T_2f50d_level0_col0">titres</th>
+<th class="col_heading level0 col1" id="T_2f50d_level0_col1">divergence_mediane</th>
+<th class="col_heading level0 col2" id="T_2f50d_level0_col2">part_outliers</th>
 </tr>
 <tr>
 <th class="index_name level0">Periode</th>
@@ -13883,34 +13889,34 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 </thead>
 <tbody>
 <tr>
-<th class="row_heading level0 row0" id="T_16bb2_level0_row0">1980-1994</th>
-<td class="data row0 col0" id="T_16bb2_row0_col0">237</td>
-<td class="data row0 col1" id="T_16bb2_row0_col1">0.192</td>
-<td class="data row0 col2" id="T_16bb2_row0_col2">29.1%</td>
+<th class="row_heading level0 row0" id="T_2f50d_level0_row0">1980-1994</th>
+<td class="data row0 col0" id="T_2f50d_row0_col0">237</td>
+<td class="data row0 col1" id="T_2f50d_row0_col1">0.192</td>
+<td class="data row0 col2" id="T_2f50d_row0_col2">29.1%</td>
 </tr>
 <tr>
-<th class="row_heading level0 row1" id="T_16bb2_level0_row1">1995-1999</th>
-<td class="data row1 col0" id="T_16bb2_row1_col0">436</td>
-<td class="data row1 col1" id="T_16bb2_row1_col1">0.087</td>
-<td class="data row1 col2" id="T_16bb2_row1_col2">20.2%</td>
+<th class="row_heading level0 row1" id="T_2f50d_level0_row1">1995-1999</th>
+<td class="data row1 col0" id="T_2f50d_row1_col0">436</td>
+<td class="data row1 col1" id="T_2f50d_row1_col1">0.087</td>
+<td class="data row1 col2" id="T_2f50d_row1_col2">20.2%</td>
 </tr>
 <tr>
-<th class="row_heading level0 row2" id="T_16bb2_level0_row2">2000-2004</th>
-<td class="data row2 col0" id="T_16bb2_row2_col0">755</td>
-<td class="data row2 col1" id="T_16bb2_row2_col1">0.080</td>
-<td class="data row2 col2" id="T_16bb2_row2_col2">7.5%</td>
+<th class="row_heading level0 row2" id="T_2f50d_level0_row2">2000-2004</th>
+<td class="data row2 col0" id="T_2f50d_row2_col0">755</td>
+<td class="data row2 col1" id="T_2f50d_row2_col1">0.080</td>
+<td class="data row2 col2" id="T_2f50d_row2_col2">7.5%</td>
 </tr>
 <tr>
-<th class="row_heading level0 row3" id="T_16bb2_level0_row3">2005-2009</th>
-<td class="data row3 col0" id="T_16bb2_row3_col0">1066</td>
-<td class="data row3 col1" id="T_16bb2_row3_col1">0.092</td>
-<td class="data row3 col2" id="T_16bb2_row3_col2">6.8%</td>
+<th class="row_heading level0 row3" id="T_2f50d_level0_row3">2005-2009</th>
+<td class="data row3 col0" id="T_2f50d_row3_col0">1066</td>
+<td class="data row3 col1" id="T_2f50d_row3_col1">0.092</td>
+<td class="data row3 col2" id="T_2f50d_row3_col2">6.8%</td>
 </tr>
 <tr>
-<th class="row_heading level0 row4" id="T_16bb2_level0_row4">2010-2016</th>
-<td class="data row4 col0" id="T_16bb2_row4_col0">802</td>
-<td class="data row4 col1" id="T_16bb2_row4_col1">0.079</td>
-<td class="data row4 col2" id="T_16bb2_row4_col2">9.2%</td>
+<th class="row_heading level0 row4" id="T_2f50d_level0_row4">2010-2016</th>
+<td class="data row4 col0" id="T_2f50d_row4_col0">802</td>
+<td class="data row4 col1" id="T_2f50d_row4_col1">0.079</td>
+<td class="data row4 col2" id="T_2f50d_row4_col2">9.2%</td>
 </tr>
 </tbody>
 </table>
@@ -14053,282 +14059,282 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <style type="text/css">
 </style>
-<table id="T_b5350">
+<table id="T_d8d0c">
 <thead>
 <tr>
-<th class="col_heading level0 col0" id="T_b5350_level0_col0">Région</th>
-<th class="col_heading level0 col1" id="T_b5350_level0_col1">Name</th>
-<th class="col_heading level0 col2" id="T_b5350_level0_col2">Year</th>
-<th class="col_heading level0 col3" id="T_b5350_level0_col3">Genre</th>
-<th class="col_heading level0 col4" id="T_b5350_level0_col4">Publisher</th>
-<th class="col_heading level0 col5" id="T_b5350_level0_col5">Global_Sales</th>
-<th class="col_heading level0 col6" id="T_b5350_level0_col6">part_NA_Sales</th>
-<th class="col_heading level0 col7" id="T_b5350_level0_col7">part_EU_Sales</th>
-<th class="col_heading level0 col8" id="T_b5350_level0_col8">part_JP_Sales</th>
-<th class="col_heading level0 col9" id="T_b5350_level0_col9">part_Other_Sales</th>
-<th class="col_heading level0 col10" id="T_b5350_level0_col10">divergence</th>
+<th class="col_heading level0 col0" id="T_d8d0c_level0_col0">Région</th>
+<th class="col_heading level0 col1" id="T_d8d0c_level0_col1">Name</th>
+<th class="col_heading level0 col2" id="T_d8d0c_level0_col2">Year</th>
+<th class="col_heading level0 col3" id="T_d8d0c_level0_col3">Genre</th>
+<th class="col_heading level0 col4" id="T_d8d0c_level0_col4">Publisher</th>
+<th class="col_heading level0 col5" id="T_d8d0c_level0_col5">Global_Sales</th>
+<th class="col_heading level0 col6" id="T_d8d0c_level0_col6">part_NA_Sales</th>
+<th class="col_heading level0 col7" id="T_d8d0c_level0_col7">part_EU_Sales</th>
+<th class="col_heading level0 col8" id="T_d8d0c_level0_col8">part_JP_Sales</th>
+<th class="col_heading level0 col9" id="T_d8d0c_level0_col9">part_Other_Sales</th>
+<th class="col_heading level0 col10" id="T_d8d0c_level0_col10">divergence</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="data row0 col0" id="T_b5350_row0_col0">Amérique du Nord</td>
-<td class="data row0 col1" id="T_b5350_row0_col1">Wipeout: The Game</td>
-<td class="data row0 col2" id="T_b5350_row0_col2">2009</td>
-<td class="data row0 col3" id="T_b5350_row0_col3">Misc</td>
-<td class="data row0 col4" id="T_b5350_row0_col4">Mindscape</td>
-<td class="data row0 col5" id="T_b5350_row0_col5">2.7</td>
-<td class="data row0 col6" id="T_b5350_row0_col6">94%</td>
-<td class="data row0 col7" id="T_b5350_row0_col7">0%</td>
-<td class="data row0 col8" id="T_b5350_row0_col8">0%</td>
-<td class="data row0 col9" id="T_b5350_row0_col9">6%</td>
-<td class="data row0 col10" id="T_b5350_row0_col10">0.263</td>
+<td class="data row0 col0" id="T_d8d0c_row0_col0">Amérique du Nord</td>
+<td class="data row0 col1" id="T_d8d0c_row0_col1">Wipeout: The Game</td>
+<td class="data row0 col2" id="T_d8d0c_row0_col2">2009</td>
+<td class="data row0 col3" id="T_d8d0c_row0_col3">Misc</td>
+<td class="data row0 col4" id="T_d8d0c_row0_col4">Mindscape</td>
+<td class="data row0 col5" id="T_d8d0c_row0_col5">2.7</td>
+<td class="data row0 col6" id="T_d8d0c_row0_col6">94%</td>
+<td class="data row0 col7" id="T_d8d0c_row0_col7">0%</td>
+<td class="data row0 col8" id="T_d8d0c_row0_col8">0%</td>
+<td class="data row0 col9" id="T_d8d0c_row0_col9">6%</td>
+<td class="data row0 col10" id="T_d8d0c_row0_col10">0.263</td>
 </tr>
 <tr>
-<td class="data row1 col0" id="T_b5350_row1_col0">Amérique du Nord</td>
-<td class="data row1 col1" id="T_b5350_row1_col1">NCAA Football 13</td>
-<td class="data row1 col2" id="T_b5350_row1_col2">2012</td>
-<td class="data row1 col3" id="T_b5350_row1_col3">Action</td>
-<td class="data row1 col4" id="T_b5350_row1_col4">Electronic Arts</td>
-<td class="data row1 col5" id="T_b5350_row1_col5">2.0</td>
-<td class="data row1 col6" id="T_b5350_row1_col6">94%</td>
-<td class="data row1 col7" id="T_b5350_row1_col7">0%</td>
-<td class="data row1 col8" id="T_b5350_row1_col8">0%</td>
-<td class="data row1 col9" id="T_b5350_row1_col9">6%</td>
-<td class="data row1 col10" id="T_b5350_row1_col10">0.263</td>
+<td class="data row1 col0" id="T_d8d0c_row1_col0">Amérique du Nord</td>
+<td class="data row1 col1" id="T_d8d0c_row1_col1">NCAA Football 13</td>
+<td class="data row1 col2" id="T_d8d0c_row1_col2">2012</td>
+<td class="data row1 col3" id="T_d8d0c_row1_col3">Action</td>
+<td class="data row1 col4" id="T_d8d0c_row1_col4">Electronic Arts</td>
+<td class="data row1 col5" id="T_d8d0c_row1_col5">2.0</td>
+<td class="data row1 col6" id="T_d8d0c_row1_col6">94%</td>
+<td class="data row1 col7" id="T_d8d0c_row1_col7">0%</td>
+<td class="data row1 col8" id="T_d8d0c_row1_col8">0%</td>
+<td class="data row1 col9" id="T_d8d0c_row1_col9">6%</td>
+<td class="data row1 col10" id="T_d8d0c_row1_col10">0.263</td>
 </tr>
 <tr>
-<td class="data row2 col0" id="T_b5350_row2_col0">Amérique du Nord</td>
-<td class="data row2 col1" id="T_b5350_row2_col1">NCAA Football 14</td>
-<td class="data row2 col2" id="T_b5350_row2_col2">2013</td>
-<td class="data row2 col3" id="T_b5350_row2_col3">Sports</td>
-<td class="data row2 col4" id="T_b5350_row2_col4">Electronic Arts</td>
-<td class="data row2 col5" id="T_b5350_row2_col5">1.9</td>
-<td class="data row2 col6" id="T_b5350_row2_col6">94%</td>
-<td class="data row2 col7" id="T_b5350_row2_col7">0%</td>
-<td class="data row2 col8" id="T_b5350_row2_col8">0%</td>
-<td class="data row2 col9" id="T_b5350_row2_col9">6%</td>
-<td class="data row2 col10" id="T_b5350_row2_col10">0.262</td>
+<td class="data row2 col0" id="T_d8d0c_row2_col0">Amérique du Nord</td>
+<td class="data row2 col1" id="T_d8d0c_row2_col1">NCAA Football 14</td>
+<td class="data row2 col2" id="T_d8d0c_row2_col2">2013</td>
+<td class="data row2 col3" id="T_d8d0c_row2_col3">Sports</td>
+<td class="data row2 col4" id="T_d8d0c_row2_col4">Electronic Arts</td>
+<td class="data row2 col5" id="T_d8d0c_row2_col5">1.9</td>
+<td class="data row2 col6" id="T_d8d0c_row2_col6">94%</td>
+<td class="data row2 col7" id="T_d8d0c_row2_col7">0%</td>
+<td class="data row2 col8" id="T_d8d0c_row2_col8">0%</td>
+<td class="data row2 col9" id="T_d8d0c_row2_col9">6%</td>
+<td class="data row2 col10" id="T_d8d0c_row2_col10">0.262</td>
 </tr>
 <tr>
-<td class="data row3 col0" id="T_b5350_row3_col0">Amérique du Nord</td>
-<td class="data row3 col1" id="T_b5350_row3_col1">The Sims: Hot Date</td>
-<td class="data row3 col2" id="T_b5350_row3_col2">2001</td>
-<td class="data row3 col3" id="T_b5350_row3_col3">Simulation</td>
-<td class="data row3 col4" id="T_b5350_row3_col4">Electronic Arts</td>
-<td class="data row3 col5" id="T_b5350_row3_col5">1.8</td>
-<td class="data row3 col6" id="T_b5350_row3_col6">100%</td>
-<td class="data row3 col7" id="T_b5350_row3_col7">0%</td>
-<td class="data row3 col8" id="T_b5350_row3_col8">0%</td>
-<td class="data row3 col9" id="T_b5350_row3_col9">0%</td>
-<td class="data row3 col10" id="T_b5350_row3_col10">0.318</td>
+<td class="data row3 col0" id="T_d8d0c_row3_col0">Amérique du Nord</td>
+<td class="data row3 col1" id="T_d8d0c_row3_col1">The Sims: Hot Date</td>
+<td class="data row3 col2" id="T_d8d0c_row3_col2">2001</td>
+<td class="data row3 col3" id="T_d8d0c_row3_col3">Simulation</td>
+<td class="data row3 col4" id="T_d8d0c_row3_col4">Electronic Arts</td>
+<td class="data row3 col5" id="T_d8d0c_row3_col5">1.8</td>
+<td class="data row3 col6" id="T_d8d0c_row3_col6">100%</td>
+<td class="data row3 col7" id="T_d8d0c_row3_col7">0%</td>
+<td class="data row3 col8" id="T_d8d0c_row3_col8">0%</td>
+<td class="data row3 col9" id="T_d8d0c_row3_col9">0%</td>
+<td class="data row3 col10" id="T_d8d0c_row3_col10">0.318</td>
 </tr>
 <tr>
-<td class="data row4 col0" id="T_b5350_row4_col0">Amérique du Nord</td>
-<td class="data row4 col1" id="T_b5350_row4_col1">NCAA Football 12</td>
-<td class="data row4 col2" id="T_b5350_row4_col2">2011</td>
-<td class="data row4 col3" id="T_b5350_row4_col3">Sports</td>
-<td class="data row4 col4" id="T_b5350_row4_col4">Electronic Arts</td>
-<td class="data row4 col5" id="T_b5350_row4_col5">1.8</td>
-<td class="data row4 col6" id="T_b5350_row4_col6">94%</td>
-<td class="data row4 col7" id="T_b5350_row4_col7">0%</td>
-<td class="data row4 col8" id="T_b5350_row4_col8">0%</td>
-<td class="data row4 col9" id="T_b5350_row4_col9">6%</td>
-<td class="data row4 col10" id="T_b5350_row4_col10">0.263</td>
+<td class="data row4 col0" id="T_d8d0c_row4_col0">Amérique du Nord</td>
+<td class="data row4 col1" id="T_d8d0c_row4_col1">NCAA Football 12</td>
+<td class="data row4 col2" id="T_d8d0c_row4_col2">2011</td>
+<td class="data row4 col3" id="T_d8d0c_row4_col3">Sports</td>
+<td class="data row4 col4" id="T_d8d0c_row4_col4">Electronic Arts</td>
+<td class="data row4 col5" id="T_d8d0c_row4_col5">1.8</td>
+<td class="data row4 col6" id="T_d8d0c_row4_col6">94%</td>
+<td class="data row4 col7" id="T_d8d0c_row4_col7">0%</td>
+<td class="data row4 col8" id="T_d8d0c_row4_col8">0%</td>
+<td class="data row4 col9" id="T_d8d0c_row4_col9">6%</td>
+<td class="data row4 col10" id="T_d8d0c_row4_col10">0.263</td>
 </tr>
 <tr>
-<td class="data row5 col0" id="T_b5350_row5_col0">Europe</td>
-<td class="data row5 col1" id="T_b5350_row5_col1">FIFA 17</td>
-<td class="data row5 col2" id="T_b5350_row5_col2">2016</td>
-<td class="data row5 col3" id="T_b5350_row5_col3">Sports</td>
-<td class="data row5 col4" id="T_b5350_row5_col4">Electronic Arts</td>
-<td class="data row5 col5" id="T_b5350_row5_col5">6.9</td>
-<td class="data row5 col6" id="T_b5350_row5_col6">7%</td>
-<td class="data row5 col7" id="T_b5350_row5_col7">79%</td>
-<td class="data row5 col8" id="T_b5350_row5_col8">1%</td>
-<td class="data row5 col9" id="T_b5350_row5_col9">12%</td>
-<td class="data row5 col10" id="T_b5350_row5_col10">0.274</td>
+<td class="data row5 col0" id="T_d8d0c_row5_col0">Europe</td>
+<td class="data row5 col1" id="T_d8d0c_row5_col1">FIFA 17</td>
+<td class="data row5 col2" id="T_d8d0c_row5_col2">2016</td>
+<td class="data row5 col3" id="T_d8d0c_row5_col3">Sports</td>
+<td class="data row5 col4" id="T_d8d0c_row5_col4">Electronic Arts</td>
+<td class="data row5 col5" id="T_d8d0c_row5_col5">6.9</td>
+<td class="data row5 col6" id="T_d8d0c_row5_col6">7%</td>
+<td class="data row5 col7" id="T_d8d0c_row5_col7">79%</td>
+<td class="data row5 col8" id="T_d8d0c_row5_col8">1%</td>
+<td class="data row5 col9" id="T_d8d0c_row5_col9">12%</td>
+<td class="data row5 col10" id="T_d8d0c_row5_col10">0.274</td>
 </tr>
 <tr>
-<td class="data row6 col0" id="T_b5350_row6_col0">Europe</td>
-<td class="data row6 col1" id="T_b5350_row6_col1">World of Warcraft</td>
-<td class="data row6 col2" id="T_b5350_row6_col2">2004</td>
-<td class="data row6 col3" id="T_b5350_row6_col3">Role-Playing</td>
-<td class="data row6 col4" id="T_b5350_row6_col4">Activision</td>
-<td class="data row6 col5" id="T_b5350_row6_col5">6.3</td>
-<td class="data row6 col6" id="T_b5350_row6_col6">1%</td>
-<td class="data row6 col7" id="T_b5350_row6_col7">99%</td>
-<td class="data row6 col8" id="T_b5350_row6_col8">0%</td>
-<td class="data row6 col9" id="T_b5350_row6_col9">0%</td>
-<td class="data row6 col10" id="T_b5350_row6_col10">0.485</td>
+<td class="data row6 col0" id="T_d8d0c_row6_col0">Europe</td>
+<td class="data row6 col1" id="T_d8d0c_row6_col1">World of Warcraft</td>
+<td class="data row6 col2" id="T_d8d0c_row6_col2">2004</td>
+<td class="data row6 col3" id="T_d8d0c_row6_col3">Role-Playing</td>
+<td class="data row6 col4" id="T_d8d0c_row6_col4">Activision</td>
+<td class="data row6 col5" id="T_d8d0c_row6_col5">6.3</td>
+<td class="data row6 col6" id="T_d8d0c_row6_col6">1%</td>
+<td class="data row6 col7" id="T_d8d0c_row6_col7">99%</td>
+<td class="data row6 col8" id="T_d8d0c_row6_col8">0%</td>
+<td class="data row6 col9" id="T_d8d0c_row6_col9">0%</td>
+<td class="data row6 col10" id="T_d8d0c_row6_col10">0.485</td>
 </tr>
 <tr>
-<td class="data row7 col0" id="T_b5350_row7_col0">Europe</td>
-<td class="data row7 col1" id="T_b5350_row7_col1">Myst</td>
-<td class="data row7 col2" id="T_b5350_row7_col2">1994</td>
-<td class="data row7 col3" id="T_b5350_row7_col3">Adventure</td>
-<td class="data row7 col4" id="T_b5350_row7_col4">Red Orb</td>
-<td class="data row7 col5" id="T_b5350_row7_col5">3.1</td>
-<td class="data row7 col6" id="T_b5350_row7_col6">4%</td>
-<td class="data row7 col7" id="T_b5350_row7_col7">92%</td>
-<td class="data row7 col8" id="T_b5350_row7_col8">4%</td>
-<td class="data row7 col9" id="T_b5350_row7_col9">0%</td>
-<td class="data row7 col10" id="T_b5350_row7_col10">0.359</td>
+<td class="data row7 col0" id="T_d8d0c_row7_col0">Europe</td>
+<td class="data row7 col1" id="T_d8d0c_row7_col1">Myst</td>
+<td class="data row7 col2" id="T_d8d0c_row7_col2">1994</td>
+<td class="data row7 col3" id="T_d8d0c_row7_col3">Adventure</td>
+<td class="data row7 col4" id="T_d8d0c_row7_col4">Red Orb</td>
+<td class="data row7 col5" id="T_d8d0c_row7_col5">3.1</td>
+<td class="data row7 col6" id="T_d8d0c_row7_col6">4%</td>
+<td class="data row7 col7" id="T_d8d0c_row7_col7">92%</td>
+<td class="data row7 col8" id="T_d8d0c_row7_col8">4%</td>
+<td class="data row7 col9" id="T_d8d0c_row7_col9">0%</td>
+<td class="data row7 col10" id="T_d8d0c_row7_col10">0.359</td>
 </tr>
 <tr>
-<td class="data row8 col0" id="T_b5350_row8_col0">Europe</td>
-<td class="data row8 col1" id="T_b5350_row8_col1">Colin McRae Rally</td>
-<td class="data row8 col2" id="T_b5350_row8_col2">1998</td>
-<td class="data row8 col3" id="T_b5350_row8_col3">Racing</td>
-<td class="data row8 col4" id="T_b5350_row8_col4">Codemasters</td>
-<td class="data row8 col5" id="T_b5350_row8_col5">2.9</td>
-<td class="data row8 col6" id="T_b5350_row8_col6">3%</td>
-<td class="data row8 col7" id="T_b5350_row8_col7">85%</td>
-<td class="data row8 col8" id="T_b5350_row8_col8">4%</td>
-<td class="data row8 col9" id="T_b5350_row8_col9">8%</td>
-<td class="data row8 col10" id="T_b5350_row8_col10">0.310</td>
+<td class="data row8 col0" id="T_d8d0c_row8_col0">Europe</td>
+<td class="data row8 col1" id="T_d8d0c_row8_col1">Colin McRae Rally</td>
+<td class="data row8 col2" id="T_d8d0c_row8_col2">1998</td>
+<td class="data row8 col3" id="T_d8d0c_row8_col3">Racing</td>
+<td class="data row8 col4" id="T_d8d0c_row8_col4">Codemasters</td>
+<td class="data row8 col5" id="T_d8d0c_row8_col5">2.9</td>
+<td class="data row8 col6" id="T_d8d0c_row8_col6">3%</td>
+<td class="data row8 col7" id="T_d8d0c_row8_col7">85%</td>
+<td class="data row8 col8" id="T_d8d0c_row8_col8">4%</td>
+<td class="data row8 col9" id="T_d8d0c_row8_col9">8%</td>
+<td class="data row8 col10" id="T_d8d0c_row8_col10">0.310</td>
 </tr>
 <tr>
-<td class="data row9 col0" id="T_b5350_row9_col0">Europe</td>
-<td class="data row9 col1" id="T_b5350_row9_col1">TOCA Touring Car Championship</td>
-<td class="data row9 col2" id="T_b5350_row9_col2">1997</td>
-<td class="data row9 col3" id="T_b5350_row9_col3">Racing</td>
-<td class="data row9 col4" id="T_b5350_row9_col4">Codemasters</td>
-<td class="data row9 col5" id="T_b5350_row9_col5">2.3</td>
-<td class="data row9 col6" id="T_b5350_row9_col6">3%</td>
-<td class="data row9 col7" id="T_b5350_row9_col7">88%</td>
-<td class="data row9 col8" id="T_b5350_row9_col8">1%</td>
-<td class="data row9 col9" id="T_b5350_row9_col9">8%</td>
-<td class="data row9 col10" id="T_b5350_row9_col10">0.351</td>
+<td class="data row9 col0" id="T_d8d0c_row9_col0">Europe</td>
+<td class="data row9 col1" id="T_d8d0c_row9_col1">TOCA Touring Car Championship</td>
+<td class="data row9 col2" id="T_d8d0c_row9_col2">1997</td>
+<td class="data row9 col3" id="T_d8d0c_row9_col3">Racing</td>
+<td class="data row9 col4" id="T_d8d0c_row9_col4">Codemasters</td>
+<td class="data row9 col5" id="T_d8d0c_row9_col5">2.3</td>
+<td class="data row9 col6" id="T_d8d0c_row9_col6">3%</td>
+<td class="data row9 col7" id="T_d8d0c_row9_col7">88%</td>
+<td class="data row9 col8" id="T_d8d0c_row9_col8">1%</td>
+<td class="data row9 col9" id="T_d8d0c_row9_col9">8%</td>
+<td class="data row9 col10" id="T_d8d0c_row9_col10">0.351</td>
 </tr>
 <tr>
-<td class="data row10 col0" id="T_b5350_row10_col0">Japon</td>
-<td class="data row10 col1" id="T_b5350_row10_col1">Final Fantasy III</td>
-<td class="data row10 col2" id="T_b5350_row10_col2">1990</td>
-<td class="data row10 col3" id="T_b5350_row10_col3">Role-Playing</td>
-<td class="data row10 col4" id="T_b5350_row10_col4">SquareSoft</td>
-<td class="data row10 col5" id="T_b5350_row10_col5">7.0</td>
-<td class="data row10 col6" id="T_b5350_row10_col6">25%</td>
-<td class="data row10 col7" id="T_b5350_row10_col7">1%</td>
-<td class="data row10 col8" id="T_b5350_row10_col8">73%</td>
-<td class="data row10 col9" id="T_b5350_row10_col9">2%</td>
-<td class="data row10 col10" id="T_b5350_row10_col10">0.317</td>
+<td class="data row10 col0" id="T_d8d0c_row10_col0">Japon</td>
+<td class="data row10 col1" id="T_d8d0c_row10_col1">Final Fantasy III</td>
+<td class="data row10 col2" id="T_d8d0c_row10_col2">1990</td>
+<td class="data row10 col3" id="T_d8d0c_row10_col3">Role-Playing</td>
+<td class="data row10 col4" id="T_d8d0c_row10_col4">SquareSoft</td>
+<td class="data row10 col5" id="T_d8d0c_row10_col5">7.0</td>
+<td class="data row10 col6" id="T_d8d0c_row10_col6">25%</td>
+<td class="data row10 col7" id="T_d8d0c_row10_col7">1%</td>
+<td class="data row10 col8" id="T_d8d0c_row10_col8">73%</td>
+<td class="data row10 col9" id="T_d8d0c_row10_col9">2%</td>
+<td class="data row10 col10" id="T_d8d0c_row10_col10">0.317</td>
 </tr>
 <tr>
-<td class="data row11 col0" id="T_b5350_row11_col0">Japon</td>
-<td class="data row11 col1" id="T_b5350_row11_col1">Dragon Quest VIII: Journey of the Cursed King</td>
-<td class="data row11 col2" id="T_b5350_row11_col2">2004</td>
-<td class="data row11 col3" id="T_b5350_row11_col3">Role-Playing</td>
-<td class="data row11 col4" id="T_b5350_row11_col4">Square Enix</td>
-<td class="data row11 col5" id="T_b5350_row11_col5">6.1</td>
-<td class="data row11 col6" id="T_b5350_row11_col6">11%</td>
-<td class="data row11 col7" id="T_b5350_row11_col7">12%</td>
-<td class="data row11 col8" id="T_b5350_row11_col8">74%</td>
-<td class="data row11 col9" id="T_b5350_row11_col9">3%</td>
-<td class="data row11 col10" id="T_b5350_row11_col10">0.284</td>
+<td class="data row11 col0" id="T_d8d0c_row11_col0">Japon</td>
+<td class="data row11 col1" id="T_d8d0c_row11_col1">Dragon Quest VIII: Journey of the Cursed King</td>
+<td class="data row11 col2" id="T_d8d0c_row11_col2">2004</td>
+<td class="data row11 col3" id="T_d8d0c_row11_col3">Role-Playing</td>
+<td class="data row11 col4" id="T_d8d0c_row11_col4">Square Enix</td>
+<td class="data row11 col5" id="T_d8d0c_row11_col5">6.1</td>
+<td class="data row11 col6" id="T_d8d0c_row11_col6">11%</td>
+<td class="data row11 col7" id="T_d8d0c_row11_col7">12%</td>
+<td class="data row11 col8" id="T_d8d0c_row11_col8">74%</td>
+<td class="data row11 col9" id="T_d8d0c_row11_col9">3%</td>
+<td class="data row11 col10" id="T_d8d0c_row11_col10">0.284</td>
 </tr>
 <tr>
-<td class="data row12 col0" id="T_b5350_row12_col0">Japon</td>
-<td class="data row12 col1" id="T_b5350_row12_col1">Dragon Quest VII: Warriors of Eden</td>
-<td class="data row12 col2" id="T_b5350_row12_col2">2000</td>
-<td class="data row12 col3" id="T_b5350_row12_col3">Role-Playing</td>
-<td class="data row12 col4" id="T_b5350_row12_col4">Enix Corporation</td>
-<td class="data row12 col5" id="T_b5350_row12_col5">5.9</td>
-<td class="data row12 col6" id="T_b5350_row12_col6">5%</td>
-<td class="data row12 col7" id="T_b5350_row12_col7">3%</td>
-<td class="data row12 col8" id="T_b5350_row12_col8">92%</td>
-<td class="data row12 col9" id="T_b5350_row12_col9">1%</td>
-<td class="data row12 col10" id="T_b5350_row12_col10">0.495</td>
+<td class="data row12 col0" id="T_d8d0c_row12_col0">Japon</td>
+<td class="data row12 col1" id="T_d8d0c_row12_col1">Dragon Quest VII: Warriors of Eden</td>
+<td class="data row12 col2" id="T_d8d0c_row12_col2">2000</td>
+<td class="data row12 col3" id="T_d8d0c_row12_col3">Role-Playing</td>
+<td class="data row12 col4" id="T_d8d0c_row12_col4">Enix Corporation</td>
+<td class="data row12 col5" id="T_d8d0c_row12_col5">5.9</td>
+<td class="data row12 col6" id="T_d8d0c_row12_col6">5%</td>
+<td class="data row12 col7" id="T_d8d0c_row12_col7">3%</td>
+<td class="data row12 col8" id="T_d8d0c_row12_col8">92%</td>
+<td class="data row12 col9" id="T_d8d0c_row12_col9">1%</td>
+<td class="data row12 col10" id="T_d8d0c_row12_col10">0.495</td>
 </tr>
 <tr>
-<td class="data row13 col0" id="T_b5350_row13_col0">Japon</td>
-<td class="data row13 col1" id="T_b5350_row13_col1">Dragon Quest IX: Sentinels of the Starry Skies</td>
-<td class="data row13 col2" id="T_b5350_row13_col2">2009</td>
-<td class="data row13 col3" id="T_b5350_row13_col3">Role-Playing</td>
-<td class="data row13 col4" id="T_b5350_row13_col4">Nintendo</td>
-<td class="data row13 col5" id="T_b5350_row13_col5">5.8</td>
-<td class="data row13 col6" id="T_b5350_row13_col6">11%</td>
-<td class="data row13 col7" id="T_b5350_row13_col7">12%</td>
-<td class="data row13 col8" id="T_b5350_row13_col8">74%</td>
-<td class="data row13 col9" id="T_b5350_row13_col9">3%</td>
-<td class="data row13 col10" id="T_b5350_row13_col10">0.288</td>
+<td class="data row13 col0" id="T_d8d0c_row13_col0">Japon</td>
+<td class="data row13 col1" id="T_d8d0c_row13_col1">Dragon Quest IX: Sentinels of the Starry Skies</td>
+<td class="data row13 col2" id="T_d8d0c_row13_col2">2009</td>
+<td class="data row13 col3" id="T_d8d0c_row13_col3">Role-Playing</td>
+<td class="data row13 col4" id="T_d8d0c_row13_col4">Nintendo</td>
+<td class="data row13 col5" id="T_d8d0c_row13_col5">5.8</td>
+<td class="data row13 col6" id="T_d8d0c_row13_col6">11%</td>
+<td class="data row13 col7" id="T_d8d0c_row13_col7">12%</td>
+<td class="data row13 col8" id="T_d8d0c_row13_col8">74%</td>
+<td class="data row13 col9" id="T_d8d0c_row13_col9">3%</td>
+<td class="data row13 col10" id="T_d8d0c_row13_col10">0.288</td>
 </tr>
 <tr>
-<td class="data row14 col0" id="T_b5350_row14_col0">Japon</td>
-<td class="data row14 col1" id="T_b5350_row14_col1">Monster Hunter Freedom Unite</td>
-<td class="data row14 col2" id="T_b5350_row14_col2">2008</td>
-<td class="data row14 col3" id="T_b5350_row14_col3">Role-Playing</td>
-<td class="data row14 col4" id="T_b5350_row14_col4">Capcom</td>
-<td class="data row14 col5" id="T_b5350_row14_col5">5.5</td>
-<td class="data row14 col6" id="T_b5350_row14_col6">9%</td>
-<td class="data row14 col7" id="T_b5350_row14_col7">10%</td>
-<td class="data row14 col8" id="T_b5350_row14_col8">75%</td>
-<td class="data row14 col9" id="T_b5350_row14_col9">6%</td>
-<td class="data row14 col10" id="T_b5350_row14_col10">0.306</td>
+<td class="data row14 col0" id="T_d8d0c_row14_col0">Japon</td>
+<td class="data row14 col1" id="T_d8d0c_row14_col1">Monster Hunter Freedom Unite</td>
+<td class="data row14 col2" id="T_d8d0c_row14_col2">2008</td>
+<td class="data row14 col3" id="T_d8d0c_row14_col3">Role-Playing</td>
+<td class="data row14 col4" id="T_d8d0c_row14_col4">Capcom</td>
+<td class="data row14 col5" id="T_d8d0c_row14_col5">5.5</td>
+<td class="data row14 col6" id="T_d8d0c_row14_col6">9%</td>
+<td class="data row14 col7" id="T_d8d0c_row14_col7">10%</td>
+<td class="data row14 col8" id="T_d8d0c_row14_col8">75%</td>
+<td class="data row14 col9" id="T_d8d0c_row14_col9">6%</td>
+<td class="data row14 col10" id="T_d8d0c_row14_col10">0.306</td>
 </tr>
 <tr>
-<td class="data row15 col0" id="T_b5350_row15_col0">Reste du monde</td>
-<td class="data row15 col1" id="T_b5350_row15_col1">Gran Turismo 4</td>
-<td class="data row15 col2" id="T_b5350_row15_col2">2004</td>
-<td class="data row15 col3" id="T_b5350_row15_col3">Racing</td>
-<td class="data row15 col4" id="T_b5350_row15_col4">Sony Computer Entertainment</td>
-<td class="data row15 col5" id="T_b5350_row15_col5">11.7</td>
-<td class="data row15 col6" id="T_b5350_row15_col6">26%</td>
-<td class="data row15 col7" id="T_b5350_row15_col7">0%</td>
-<td class="data row15 col8" id="T_b5350_row15_col8">9%</td>
-<td class="data row15 col9" id="T_b5350_row15_col9">65%</td>
-<td class="data row15 col10" id="T_b5350_row15_col10">0.335</td>
+<td class="data row15 col0" id="T_d8d0c_row15_col0">Reste du monde</td>
+<td class="data row15 col1" id="T_d8d0c_row15_col1">Gran Turismo 4</td>
+<td class="data row15 col2" id="T_d8d0c_row15_col2">2004</td>
+<td class="data row15 col3" id="T_d8d0c_row15_col3">Racing</td>
+<td class="data row15 col4" id="T_d8d0c_row15_col4">Sony Computer Entertainment</td>
+<td class="data row15 col5" id="T_d8d0c_row15_col5">11.7</td>
+<td class="data row15 col6" id="T_d8d0c_row15_col6">26%</td>
+<td class="data row15 col7" id="T_d8d0c_row15_col7">0%</td>
+<td class="data row15 col8" id="T_d8d0c_row15_col8">9%</td>
+<td class="data row15 col9" id="T_d8d0c_row15_col9">65%</td>
+<td class="data row15 col10" id="T_d8d0c_row15_col10">0.335</td>
 </tr>
 <tr>
-<td class="data row16 col0" id="T_b5350_row16_col0">Reste du monde</td>
-<td class="data row16 col1" id="T_b5350_row16_col1">Pro Evolution Soccer 2008</td>
-<td class="data row16 col2" id="T_b5350_row16_col2">2007</td>
-<td class="data row16 col3" id="T_b5350_row16_col3">Sports</td>
-<td class="data row16 col4" id="T_b5350_row16_col4">Konami Digital Entertainment</td>
-<td class="data row16 col5" id="T_b5350_row16_col5">8.6</td>
-<td class="data row16 col6" id="T_b5350_row16_col6">3%</td>
-<td class="data row16 col7" id="T_b5350_row16_col7">40%</td>
-<td class="data row16 col8" id="T_b5350_row16_col8">16%</td>
-<td class="data row16 col9" id="T_b5350_row16_col9">41%</td>
-<td class="data row16 col10" id="T_b5350_row16_col10">0.263</td>
+<td class="data row16 col0" id="T_d8d0c_row16_col0">Reste du monde</td>
+<td class="data row16 col1" id="T_d8d0c_row16_col1">Pro Evolution Soccer 2008</td>
+<td class="data row16 col2" id="T_d8d0c_row16_col2">2007</td>
+<td class="data row16 col3" id="T_d8d0c_row16_col3">Sports</td>
+<td class="data row16 col4" id="T_d8d0c_row16_col4">Konami Digital Entertainment</td>
+<td class="data row16 col5" id="T_d8d0c_row16_col5">8.6</td>
+<td class="data row16 col6" id="T_d8d0c_row16_col6">3%</td>
+<td class="data row16 col7" id="T_d8d0c_row16_col7">40%</td>
+<td class="data row16 col8" id="T_d8d0c_row16_col8">16%</td>
+<td class="data row16 col9" id="T_d8d0c_row16_col9">41%</td>
+<td class="data row16 col10" id="T_d8d0c_row16_col10">0.263</td>
 </tr>
 <tr>
-<td class="data row17 col0" id="T_b5350_row17_col0">Reste du monde</td>
-<td class="data row17 col1" id="T_b5350_row17_col1">Dragon Warrior</td>
-<td class="data row17 col2" id="T_b5350_row17_col2">1986</td>
-<td class="data row17 col3" id="T_b5350_row17_col3">Role-Playing</td>
-<td class="data row17 col4" id="T_b5350_row17_col4">Capcom</td>
-<td class="data row17 col5" id="T_b5350_row17_col5">2.5</td>
-<td class="data row17 col6" id="T_b5350_row17_col6">19%</td>
-<td class="data row17 col7" id="T_b5350_row17_col7">0%</td>
-<td class="data row17 col8" id="T_b5350_row17_col8">21%</td>
-<td class="data row17 col9" id="T_b5350_row17_col9">60%</td>
-<td class="data row17 col10" id="T_b5350_row17_col10">0.341</td>
+<td class="data row17 col0" id="T_d8d0c_row17_col0">Reste du monde</td>
+<td class="data row17 col1" id="T_d8d0c_row17_col1">Dragon Warrior</td>
+<td class="data row17 col2" id="T_d8d0c_row17_col2">1986</td>
+<td class="data row17 col3" id="T_d8d0c_row17_col3">Role-Playing</td>
+<td class="data row17 col4" id="T_d8d0c_row17_col4">Capcom</td>
+<td class="data row17 col5" id="T_d8d0c_row17_col5">2.5</td>
+<td class="data row17 col6" id="T_d8d0c_row17_col6">19%</td>
+<td class="data row17 col7" id="T_d8d0c_row17_col7">0%</td>
+<td class="data row17 col8" id="T_d8d0c_row17_col8">21%</td>
+<td class="data row17 col9" id="T_d8d0c_row17_col9">60%</td>
+<td class="data row17 col10" id="T_d8d0c_row17_col10">0.341</td>
 </tr>
 <tr>
-<td class="data row18 col0" id="T_b5350_row18_col0">Reste du monde</td>
-<td class="data row18 col1" id="T_b5350_row18_col1">World of Warcraft: Wrath of the Lich King</td>
-<td class="data row18 col2" id="T_b5350_row18_col2">2008</td>
-<td class="data row18 col3" id="T_b5350_row18_col3">Role-Playing</td>
-<td class="data row18 col4" id="T_b5350_row18_col4">Activision</td>
-<td class="data row18 col5" id="T_b5350_row18_col5">1.3</td>
-<td class="data row18 col6" id="T_b5350_row18_col6">1%</td>
-<td class="data row18 col7" id="T_b5350_row18_col7">10%</td>
-<td class="data row18 col8" id="T_b5350_row18_col8">0%</td>
-<td class="data row18 col9" id="T_b5350_row18_col9">89%</td>
-<td class="data row18 col10" id="T_b5350_row18_col10">0.600</td>
+<td class="data row18 col0" id="T_d8d0c_row18_col0">Reste du monde</td>
+<td class="data row18 col1" id="T_d8d0c_row18_col1">World of Warcraft: Wrath of the Lich King</td>
+<td class="data row18 col2" id="T_d8d0c_row18_col2">2008</td>
+<td class="data row18 col3" id="T_d8d0c_row18_col3">Role-Playing</td>
+<td class="data row18 col4" id="T_d8d0c_row18_col4">Activision</td>
+<td class="data row18 col5" id="T_d8d0c_row18_col5">1.3</td>
+<td class="data row18 col6" id="T_d8d0c_row18_col6">1%</td>
+<td class="data row18 col7" id="T_d8d0c_row18_col7">10%</td>
+<td class="data row18 col8" id="T_d8d0c_row18_col8">0%</td>
+<td class="data row18 col9" id="T_d8d0c_row18_col9">89%</td>
+<td class="data row18 col10" id="T_d8d0c_row18_col10">0.600</td>
 </tr>
 <tr>
-<td class="data row19 col0" id="T_b5350_row19_col0">Reste du monde</td>
-<td class="data row19 col1" id="T_b5350_row19_col1">SingStar '80s</td>
-<td class="data row19 col2" id="T_b5350_row19_col2">2005</td>
-<td class="data row19 col3" id="T_b5350_row19_col3">Misc</td>
-<td class="data row19 col4" id="T_b5350_row19_col4">Sony Computer Entertainment</td>
-<td class="data row19 col5" id="T_b5350_row19_col5">1.3</td>
-<td class="data row19 col6" id="T_b5350_row19_col6">21%</td>
-<td class="data row19 col7" id="T_b5350_row19_col7">2%</td>
-<td class="data row19 col8" id="T_b5350_row19_col8">0%</td>
-<td class="data row19 col9" id="T_b5350_row19_col9">78%</td>
-<td class="data row19 col10" id="T_b5350_row19_col10">0.443</td>
+<td class="data row19 col0" id="T_d8d0c_row19_col0">Reste du monde</td>
+<td class="data row19 col1" id="T_d8d0c_row19_col1">SingStar '80s</td>
+<td class="data row19 col2" id="T_d8d0c_row19_col2">2005</td>
+<td class="data row19 col3" id="T_d8d0c_row19_col3">Misc</td>
+<td class="data row19 col4" id="T_d8d0c_row19_col4">Sony Computer Entertainment</td>
+<td class="data row19 col5" id="T_d8d0c_row19_col5">1.3</td>
+<td class="data row19 col6" id="T_d8d0c_row19_col6">21%</td>
+<td class="data row19 col7" id="T_d8d0c_row19_col7">2%</td>
+<td class="data row19 col8" id="T_d8d0c_row19_col8">0%</td>
+<td class="data row19 col9" id="T_d8d0c_row19_col9">78%</td>
+<td class="data row19 col10" id="T_d8d0c_row19_col10">0.443</td>
 </tr>
 </tbody>
 </table>
@@ -14366,7 +14372,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper right"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mf">8.5</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"Les outliers culturels sont surtout japonais, et rarement des blockbusters"</span><span class="p">,</span>
           <span class="s2">"Chaque point est un titre ; au-dessus du trait : outlier culturel (couleur = région sur-représentée)"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"19_outliers_culturels"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_19_outliers_culturels"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -14451,7 +14457,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Constructeur de la plateforme"</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"Trente ans de croissance portée par les consoles, avant le basculement vers le numérique"</span><span class="p">,</span>
           <span class="s2">"Ventes mondiales de jeux physiques par année et par constructeur de la plateforme, 1980-2015 (2016 incomplète, exclue)"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"20_story_tendance"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_20_story_tendance"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -14517,7 +14523,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">"Période de sortie"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"Le Japon pèse encore 30 </span><span class="si">% d</span><span class="s2">u RPG mondial, moins de 5 </span><span class="si">% d</span><span class="s2">u Tir"</span><span class="p">,</span>
           <span class="s2">"Part du Japon dans les ventes mondiales de chaque genre, par période"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"21_story_heatmap_japon"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_21_story_heatmap_japon"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -14585,7 +14591,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"La 7e génération, un sommet dont la 8e est très loin dans les données physiques"</span><span class="p">,</span>
           <span class="s2">"Ventes cumulées de jeux sur consoles de salon, par génération (8e génération : données jusqu'en 2016)"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"22_story_generations"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_22_story_generations"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -14658,7 +14664,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
                    <span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">GRIS</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Stable"</span><span class="p">)],</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"lower center"</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">),</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mf">8.5</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"En quinze ans, le Tir a triplé sa part de marché et l'Action l'a doublée"</span><span class="p">,</span>
           <span class="s2">"Part de chaque genre dans les ventes mondiales, 1995-1999 contre 2010-2016"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"23_story_genres"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_23_story_genres"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -14726,7 +14732,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">handles</span><span class="o">=</span><span class="p">[</span><span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">PALETTE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Top 10 du MPI"</span><span class="p">),</span> <span class="n">Patch</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="n">C</span><span class="o">.</span><span class="n">GRIS</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Autres éditeurs (taille = nombre de titres)"</span><span class="p">)],</span> <span class="n">loc</span><span class="o">=</span><span class="s2">"upper left"</span><span class="p">)</span>
 <span class="n">viz</span><span class="o">.</span><span class="n">titre</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="s2">"Bethesda pèse moins de 1 </span><span class="si">% d</span><span class="s2">es ventes mais devance Konami et ses 600 titres"</span><span class="p">,</span>
           <span class="s2">"Pouvoir de marché (MPI) et taille (part des ventes mondiales) des 73 éditeurs classés"</span><span class="p">)</span>
-<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"24_story_pouvoir_marche"</span><span class="p">)</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">sauver</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="s2">"bdd1_24_story_pouvoir_marche"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -14778,7 +14784,7 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <li><strong>Fusionner sans double compter.</strong> Additionner deux fiches d'un même jeu peut compter deux fois les mêmes ventes (<em>Ratchet &amp; Clank</em>). La règle du <strong>maximum par région</strong> traite à la fois les fiches complémentaires et celles qui se recouvrent.</li>
 <li><strong>Des choix qui engagent l'analyse.</strong> Rattacher les filiales à leur groupe sans fusionner SquareSoft et Enix, borner la période à 2016, fixer un seuil de 20 titres pour le MPI ou de 0,5 M pour la divergence : chaque choix est justifié et documenté, car il modifie les résultats.</li>
 <li><strong>Ce que le nettoyage ne peut pas corriger.</strong> Les ventes européennes saisies en « reste du monde » (<em>Gran Turismo 4</em>), l'année 2016 incomplète et l'absence du dématérialisé sont des <strong>limites de la source</strong>. On les signale au lieu de les masquer.</li>
-<li><strong>La reproductibilité.</strong> Les règles sont centralisées dans <code>modules/cleaning.py</code>, et un <code>assert_frame_equal</code> garantit que le notebook et l'interface travaillent sur des données strictement identiques.</li>
+<li><strong>La reproductibilité.</strong> Les règles sont centralisées dans <code>modules/bdd1_cleaning.py</code>, et un <code>assert_frame_equal</code> garantit que le notebook et l'interface travaillent sur des données strictement identiques.</li>
 </ul>
 <h2 id="Apport-des-visualisations">Apport des visualisations<a class="anchor-link" href="#Apport-des-visualisations">¶</a></h2><ul>
 <li><strong>Révéler ce que les tableaux cachent.</strong> La courbe de concentration rend visible l'économie de blockbusters ; la carte de chaleur des plateformes rend le cycle de vie des consoles évident en un coup d'œil.</li>
@@ -14788,6 +14794,26 @@ Part des 20 meilleurs jeux dans les ventes de l'année : {2008: 0.22, 2013: 0.38
 <li><strong>Raconter.</strong> En partie III, chaque titre énonce un message, et le graphique en apporte la preuve. Un comité de direction peut ainsi lire l'analyse sans entrer dans le code.</li>
 </ul>
 <p><strong>Pour aller plus loin</strong> : l'interface interactive (<code>python run_app.py</code>) permet d'explorer ces résultats avec des filtres, de modifier les poids du Market Power Index et d'analyser le profil régional de n'importe quel jeu.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bdd2-prolongement">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<hr/>
+<h2 id="Prolongement-:-une-deuxi%C3%A8me-source,-les-notes-Metacritic">Prolongement : une deuxième source, les notes Metacritic<a class="anchor-link" href="#Prolongement-:-une-deuxi%C3%A8me-source,-les-notes-Metacritic">¶</a></h2><p>À la demande du client, l'analyse a été complétée par une deuxième base : <em>Video Game Sales with Ratings</em> (Kaggle), qui ajoute les <strong>notes de la presse et des joueurs</strong> (Metacritic), le <strong>studio</strong> et la <strong>classification d'âge ESRB</strong>. Le nettoyage, l'analyse exploratoire, la jointure et les croisements sont dans le notebook <strong><code>bdd2_metacritic.ipynb</code></strong> (Parties IV et V, figures 25 à 38). Les nouvelles analyses sont aussi dans l'interface (page « Notes Metacritic » et options des autres pages).</p>
+<p><strong>Nouveaux insights</strong></p>
+<ol start="7">
+<li><strong>Une bonne note va avec de bonnes ventes.</strong> Un jeu noté 90 et plus se vend en médiane 13 fois plus qu'un jeu noté moins de 50 (62 % de hits contre 4 %). C'est un lien, pas une preuve de cause : le budget marketing explique sans doute les deux, et les jeux familiaux de Nintendo (<em>Wii Play</em> : 58/100, 29 M d'exemplaires) se vendent sans la critique.</li>
+<li><strong>La qualité reclasse les éditeurs.</strong> Ajoutée comme 6e composante du MPI, elle ne change pas le podium (Nintendo, EA, Sony), mais elle fait monter les éditeurs premium (Take-Two, Bethesda, Microsoft) et descendre les éditeurs de volume (THQ, Sega).</li>
+<li><strong>Les régions ne réagissent pas pareil aux notes.</strong> Les jeux mal notés se vendent surtout en Amérique du Nord (68 % de leurs ventes, contre 49 % pour un jeu noté 90 et plus). L'Europe est la plus sensible aux notes et le Japon la moins.</li>
+<li><strong>Presse et joueurs divergent depuis 2010.</strong> Les joueurs, plus généreux que la critique dans les années 2000, deviennent plus sévères qu'elle à partir de 2010.</li>
+</ol>
+<p><strong>Nouvelles difficultés de data wrangling</strong> : des valeurs <code>tbd</code> dans une colonne numérique, des remakes notés comme l'original par la source, deux relevés de ventes différents (on garde une seule source de vérité : ce notebook), et des notes qui ne couvrent que 49 % des jeux, surtout récents et visibles.</p>
 </div>
 </div>
 </div>
