@@ -37,14 +37,7 @@ CSS = f"""
 @font-face {{font-family: 'Press Start 2P'; src: url(data:font/ttf;base64,{_POLICE}) format('truetype');}}
 .block-container {{padding-top: 2.2rem; max-width: 1350px;}}
 h1.titre {{font-family: {PIXEL}; font-size: 1.45rem; line-height: 1.6; font-weight: 400; color: {TEXTE}; margin-bottom: 0;}}
-p.sous-titre {{color: {TEXTE_2}; font-size: 1.0rem; margin: 0.5rem 0 0.4rem 0;}}
-/* Pac-Man et sa rangée de pac-gommes, sous chaque titre */
-.pac-ligne {{position: relative; height: 18px; margin: 0.3rem 0 1.4rem 0;
-  background: radial-gradient(circle, {PECHE} 2px, transparent 2.6px) 26px 50% / 18px 18px repeat-x;}}
-.pac-ligne::before {{content: ""; position: absolute; left: 0; top: 0; width: 18px; height: 18px; border-radius: 50%;
-  background: conic-gradient(from 90deg, transparent 0 40deg, {JAUNE} 40deg 320deg, transparent 320deg);
-  animation: croque .45s steps(2) infinite;}}
-@keyframes croque {{50% {{background: {JAUNE};}}}}
+p.sous-titre {{color: {TEXTE_2}; font-size: 1.0rem; margin: 0.5rem 0 1.4rem 0;}}
 h2, h3 {{font-family: {PIXEL}; font-weight: 400 !important; letter-spacing: 0; line-height: 1.6;}}
 h2 {{font-size: 1.05rem !important;}} h3 {{font-size: 0.85rem !important;}}
 h2 span, h3 span {{font-family: {PIXEL};}}

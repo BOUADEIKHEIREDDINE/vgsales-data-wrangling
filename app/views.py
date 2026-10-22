@@ -37,8 +37,7 @@ def pct(v: float, d: int = 1) -> str:
 
 
 def entete(titre: str, sous_titre: str) -> None:
-    st.markdown(f"<h1 class='titre'>{titre}</h1><p class='sous-titre'>{sous_titre}</p>"
-                f"<div class='pac-ligne'></div>", unsafe_allow_html=True)
+    st.markdown(f"<h1 class='titre'>{titre}</h1><p class='sous-titre'>{sous_titre}</p>", unsafe_allow_html=True)
 
 
 def encart(texte: str) -> None:
