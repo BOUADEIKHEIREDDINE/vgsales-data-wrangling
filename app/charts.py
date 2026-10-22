@@ -174,14 +174,15 @@ def lignes(df_large: pd.DataFrame, couleurs: dict, noms: dict, titre_y: str, fmt
 # Market Power Index et profil d'un jeu
 # --------------------------------------------------------------------------------------
 
-def decomposition_mpi(mpi: pd.DataFrame, poids: dict, n: int = 15, editeur: str | None = None) -> go.Figure:
+def decomposition_mpi(mpi: pd.DataFrame, poids: dict, n: int = 15, editeur: str | None = None,
+                      composantes: dict = I.COMPOSANTES) -> go.Figure:
     top = mpi.head(n).iloc[::-1]
     total = sum(poids.values()) or 1
     fig = go.Figure()
     if editeur in top.index:
         i = list(top.index).index(editeur)
         fig.add_hrect(y0=i - 0.5, y1=i + 0.5, fillcolor=C.GRILLE, opacity=0.8, line_width=0, layer="below")
-    for i, (k, label) in enumerate(I.COMPOSANTES.items()):
+    for i, (k, label) in enumerate(composantes.items()):
         contrib = 100 * poids[k] / total * top[f"{k}_norm"]
         fig.add_trace(go.Bar(
             y=top.index, x=contrib, name=label, orientation="h", marker=dict(color=C.PALETTE[i], line=dict(color="white", width=1.5)),
@@ -235,6 +236,7 @@ def nuage_outliers(div: pd.DataFrame, seuil: float) -> go.Figure:
 
 COURTS = {"part_marche": "Part de marché", "leadership": "Leadership", "diversite": "Diversité",
           "constance": "Constance", "taux_hits": "Taux de hits"}
+COURTS_QUALITE = COURTS | {"qualite": "Qualité perçue"}
 
 
 def _rgba(hexa: str, alpha: float) -> str:
@@ -242,16 +244,16 @@ def _rgba(hexa: str, alpha: float) -> str:
     return f"rgba({r},{g},{b},{alpha})"
 
 
-def radar_editeurs(mpi: pd.DataFrame, editeurs: list[str]) -> go.Figure:
-    """Profil des 5 composantes normalisées d'un ou deux éditeurs, face à la médiane des éditeurs classés."""
-    axes = list(COURTS.values()) + [list(COURTS.values())[0]]
+def radar_editeurs(mpi: pd.DataFrame, editeurs: list[str], courts: dict = COURTS) -> go.Figure:
+    """Profil des composantes normalisées d'un ou deux éditeurs, face à la médiane des éditeurs classés."""
+    axes = list(courts.values()) + [list(courts.values())[0]]
     fig = go.Figure()
-    mediane = [mpi[f"{k}_norm"].median() for k in COURTS]
+    mediane = [mpi[f"{k}_norm"].median() for k in courts]
     fig.add_trace(go.Scatterpolar(r=mediane + mediane[:1], theta=axes, name="Médiane des éditeurs", mode="lines",
                                   line=dict(color=C.GRIS, dash="dot", width=1.5),
                                   hovertemplate="Médiane · %{theta}<br>%{r:.2f}<extra></extra>"))
     for e, couleur in zip(editeurs, [C.PALETTE[0], C.PALETTE[1]]):
-        v = [float(mpi.loc[e, f"{k}_norm"]) for k in COURTS]
+        v = [float(mpi.loc[e, f"{k}_norm"]) for k in courts]
         fig.add_trace(go.Scatterpolar(r=v + v[:1], theta=axes, name=e, mode="lines+markers", fill="toself",
                                       fillcolor=_rgba(couleur, 0.15), line=dict(color=couleur, width=2.5), marker=dict(size=6),
                                       hovertemplate=f"<b>{e}</b> · %{{theta}}<br>%{{r:.2f}}<extra></extra>"))
@@ -260,4 +262,70 @@ def radar_editeurs(mpi: pd.DataFrame, editeurs: list[str]) -> go.Figure:
                                  radialaxis=dict(range=[0, 1], gridcolor=C.GRILLE, linecolor=C.GRILLE, tickfont=dict(size=10),
                                                  tickvals=[0.25, 0.5, 0.75, 1]),
                                  angularaxis=dict(gridcolor=C.GRILLE, linecolor="#c3c2b7")))
+    return fig
+
+
+# --------------------------------------------------------------------------------------
+# Deuxième base : notes Metacritic
+# --------------------------------------------------------------------------------------
+
+PRESSE, JOUEURS = C.PALETTE[0], C.PALETTE[1]
+
+
+def ventes_par_note(t: pd.DataFrame, mesure: str, focus: str | None = None) -> go.Figure:
+    """Barres par tranche de note : ventes médianes ou taux de hits (colonnes de `t`)."""
+    en_part = mesure == "Taux_hits"
+    couleurs = [PRESSE if focus is None or str(x) == focus else CLAIR for x in t.index]
+    texte = [f"{v:.0%}".replace("%", " %") if en_part else millions(v, 2) for v in t[mesure]]
+    fig = go.Figure(go.Bar(
+        x=t.index.astype(str), y=t[mesure], marker_color=couleurs, marker_line_width=0, text=texte, textposition="outside",
+        cliponaxis=False, customdata=t["Jeux"],
+        hovertemplate="Note %{x}<br><b>%{text}</b><br>%{customdata:,} jeux<extra></extra>",
+    ))
+    habiller(fig, 380, showlegend=False, bargap=0.3)
+    fig.update_xaxes(title="Note presse (Metacritic, /100)")
+    fig.update_yaxes(title="Part de jeux à plus d'1 M" if en_part else "Ventes mondiales médianes (M)",
+                     tickformat=".0%" if en_part else ",.1f")
+    return fig
+
+
+def notes_par_annee(par_an: pd.DataFrame) -> go.Figure:
+    fig = go.Figure()
+    for col, nom, couleur in [("Critic_Score", "Presse", PRESSE), ("User_Score_100", "Joueurs (x10)", JOUEURS)]:
+        fig.add_trace(go.Scatter(x=par_an.index, y=par_an[col], name=nom, mode="lines+markers",
+                                 line=dict(color=couleur, width=2.5), marker=dict(size=6),
+                                 hovertemplate=f"<b>{nom}</b> · %{{x}}<br>%{{y:.1f}}/100<extra></extra>"))
+    habiller(fig, 380, hovermode="x unified")
+    fig.update_yaxes(title="Note moyenne (/100)")
+    fig.update_xaxes(title="Année de sortie")
+    return fig
+
+
+def notes_par_categorie(g: pd.DataFrame, noms: list[str], focus: str | None = None) -> go.Figure:
+    """Haltères presse / joueurs par catégorie (genre, plateforme...), triées par note presse."""
+    fig = go.Figure()
+    for y, (p, j) in enumerate(zip(g["Presse"], g["Joueurs"])):
+        fig.add_trace(go.Scatter(x=[p, j], y=[noms[y]] * 2, mode="lines", line=dict(color=C.GRIS, width=2),
+                                 hoverinfo="skip", showlegend=False))
+    taille = [14 if focus is None or n == focus else 9 for n in noms]
+    for col, nom, couleur in [("Presse", "Presse", PRESSE), ("Joueurs", "Joueurs (x10)", JOUEURS)]:
+        fig.add_trace(go.Scatter(x=g[col], y=noms, mode="markers", name=nom, text=noms, customdata=g["Jeux"],
+                                 marker=dict(size=taille, color=couleur, line=dict(color="white", width=1.5)),
+                                 hovertemplate=f"<b>%{{y}}</b><br>{nom} : %{{x:.1f}}/100<br>%{{customdata:,}} jeux notés<extra></extra>"))
+    habiller(fig, max(340, 32 * len(noms) + 80))
+    fig.update_xaxes(title="Note moyenne (/100)", showgrid=True, gridcolor=C.GRILLE)
+    fig.update_yaxes(showgrid=False)
+    return fig
+
+
+def regions_par_note(profil: pd.DataFrame) -> go.Figure:
+    fig = go.Figure()
+    for r in C.REGIONS:
+        fig.add_trace(go.Bar(x=profil.index.astype(str), y=profil[r], name=C.REGION_LABELS[r], marker_color=C.COULEURS_REGION[r],
+                             text=[f"{v:.0%}".replace("%", " %") if v > 0.06 else "" for v in profil[r]],
+                             textposition="inside", insidetextanchor="middle", textfont=dict(color="white"),
+                             hovertemplate=f"<b>{C.REGION_LABELS[r]}</b> · note %{{x}}<br>%{{y:.1%}} des ventes<extra></extra>"))
+    habiller(fig, 400, barmode="stack", bargap=0.3)
+    fig.update_yaxes(title="Part moyenne des ventes du jeu", tickformat=".0%", range=[0, 1])
+    fig.update_xaxes(title="Note presse (Metacritic, /100)")
     return fig

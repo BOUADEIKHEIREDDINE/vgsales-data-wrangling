@@ -31,6 +31,8 @@ def joindre(ventes: pd.DataFrame, notes: pd.DataFrame) -> pd.DataFrame:
     v = ventes.assign(_cle=cle_jeu(ventes["Name"].astype(str)))
     n = notes.assign(_cle=cle_jeu(notes["Name"].astype(str)))[CLE + COLONNES_NOTES]
     joint = v.merge(n, on=CLE, how="left", indicator="_m", validate="one_to_one")
+    # Une jointure à gauche garde l'ordre des lignes : on garde aussi l'index, pour filtrer comme les ventes.
+    joint.index = ventes.index
     joint["Relie"] = joint["_m"] == "both"
     joint["Note_Presse"] = joint["Critic_Score"].notna()
     return joint.drop(columns=["_cle", "_m"])

@@ -15,6 +15,7 @@ from app import donnees as D
 from app import views
 from modules import config as C
 from modules import indicators as I
+from modules import jointure as J
 
 st.set_page_config(page_title="Ventes mondiales de jeux vidéo", page_icon="🎮", layout="wide")
 
@@ -66,7 +67,8 @@ D.initialiser({
     "ens_part": "Volume", "t_n": 20, "g_sel": ["Action", "Shooter", "Platform", "Role-Playing"],
     "r_mode": "Affinité (préférences)", "mpi_min": 20, "mpi_norm": "minmax", "mpi_n": 15,
     "jeu_min": 0.5, "jeu_reg": "JP_Sales", "c_galerie": "II. Analyse exploratoire",
-    **{f"w_{k}": 20 for k in I.COMPOSANTES},
+    **{f"w_{k}": 20 for k in J.COMPOSANTES_QUALITE},
+    "mpi_qualite": False, "g_notes": False, "n_mesure": "Ventes médianes", "n_sens": "Presse plus enthousiaste",
 })
 
 
@@ -119,6 +121,9 @@ pages = {
         st.Page(lambda: views.vue_mpi(ctx), title="Market Power Index", icon="🏆", url_path="mpi"),
         st.Page(lambda: views.vue_jeux(ctx), title="Explorateur de jeux", icon="🔎", url_path="jeux"),
     ],
+    "Deuxième source": [
+        st.Page(lambda: views.vue_notes(ctx), title="Notes Metacritic", icon="⭐", url_path="notes"),
+    ],
     "Données": [
         st.Page(lambda: views.vue_qualite(ctx), title="Qualité des données", icon="🧹", url_path="qualite"),
     ],
@@ -127,6 +132,6 @@ pages = {
     ],
 }
 # Pages indexées par leur chemin (la page par défaut a un url_path vide pour Streamlit, d'où ce relevé à part).
-ctx["ordre"] = ["accueil", "tendances", "genres", "regions", "mpi", "jeux", "qualite", "conclusion"]
+ctx["ordre"] = ["accueil", "tendances", "genres", "regions", "mpi", "jeux", "notes", "qualite", "conclusion"]
 ctx["pages"] = dict(zip(ctx["ordre"], (p for groupe in pages.values() for p in groupe)))
 st.navigation(pages).run()

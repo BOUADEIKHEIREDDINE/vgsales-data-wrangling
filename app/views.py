@@ -13,6 +13,7 @@ import streamlit as st
 
 from modules import config as C
 from modules import indicators as I
+from modules import jointure as J
 
 from . import charts as G
 from . import donnees as D
@@ -142,6 +143,20 @@ def profil_jeu(ctx: dict, nom: str, prefixe: str) -> None:
         ("Plateformes", str(int(t["n_plateformes"])), t["Plateformes"]),
         ("Divergence régionale", fr(score, 3), "0 = se vend exactement comme le marché ; 1 = maximum"),
     ])
+    joint = D.joint(ctx["cle"])
+    notes_jeu = joint[(joint["Name"] == nom) & joint["Note_Presse"]]
+    if len(notes_jeu):
+        meilleure = notes_jeu.loc[notes_jeu["Critic_Score"].idxmax()]
+        joueurs = notes_jeu["User_Score_100"].dropna()
+        critiques = f" ({int(meilleure['Critic_Count'])} critiques)" if pd.notna(meilleure["Critic_Count"]) else ""
+        tuiles([
+            ("Note presse", f"{fr(meilleure['Critic_Score'])}/100", f"Metacritic, meilleure version : {meilleure['Platform_Name']}{critiques}"),
+            ("Note joueurs", f"{fr(joueurs.mean())}/100" if len(joueurs) else "–", "Moyenne des versions notées par les joueurs, ramenée sur 100"),
+            ("Studio", meilleure["Developer_Main"], "Studio de développement (Metacritic)"),
+            ("Classification", meilleure["Rating"], meilleure["Rating_Label"]),
+        ])
+    else:
+        st.caption("Pas de note Metacritic pour ce titre : Metacritic couvre surtout les jeux sortis après 2000.")
     c1, c2 = st.columns([1.3, 1])
     with c1:
         graphique(G.profil_regional(parts, ref), key=f"{prefixe}_profil")
@@ -152,10 +167,15 @@ def profil_jeu(ctx: dict, nom: str, prefixe: str) -> None:
                     f"({pct(parts[exces.index[0]], 0)} des ventes contre {pct(ref[exces.index[0]], 0)} pour le marché).")
         if t["Global_Sales"] < 0.5:
             st.info("Titre sous 0,5 M : les ventes étant arrondies au centième, son profil régional est peu fiable.")
-        versions = df[df["Name"] == nom][["Platform_Name", "Year", "NA_Sales", "EU_Sales", "JP_Sales", "Other_Sales", "Global_Sales"]]
+        versions = joint[joint["Name"] == nom][["Platform_Name", "Year", "NA_Sales", "EU_Sales", "JP_Sales", "Other_Sales", "Global_Sales",
+                                                "Critic_Score", "User_Score_100"]]
         st.dataframe(versions.rename(columns={"Platform_Name": "Plateforme", "Year": "Année", "NA_Sales": "NA", "EU_Sales": "EU",
-                                              "JP_Sales": "JP", "Other_Sales": "Autres", "Global_Sales": "Total"}),
-                     hide_index=True, key=f"{prefixe}_versions", column_config={"Année": st.column_config.NumberColumn(format="%d")})
+                                              "JP_Sales": "JP", "Other_Sales": "Autres", "Global_Sales": "Total",
+                                              "Critic_Score": "Presse", "User_Score_100": "Joueurs"}),
+                     hide_index=True, key=f"{prefixe}_versions", column_config={
+                         "Année": st.column_config.NumberColumn(format="%d"),
+                         "Presse": st.column_config.NumberColumn(format="%.0f", help="Note presse Metacritic (/100)"),
+                         "Joueurs": st.column_config.NumberColumn(format="%.0f", help="Note joueurs Metacritic, ramenée sur 100")})
 
 
 COLONNES_JEUX = {
@@ -310,6 +330,7 @@ def _tendances_classement(ctx: dict) -> None:
     ).sort_values("Ventes", ascending=False)
     p["Part"] = p["Ventes"] / p["Ventes"].sum()
     p["Ventes par jeu"] = p["Ventes"] / p["Jeux"]
+    p["Note presse"] = D.joint(ctx["cle"]).groupby("Platform", observed=True)["Critic_Score"].mean()
     p = p.reset_index()
     if st.session_state.get("t_plateforme") not in set(p["Platform"]):
         st.session_state["t_plateforme"] = p["Platform"].iloc[0]
@@ -320,11 +341,13 @@ def _tendances_classement(ctx: dict) -> None:
     gauche, droite = st.columns([1.5, 1])
     with gauche:
         tableau(p, "t_plateformes", clic=choisir, hide_index=True, height=460,
-                column_order=["Plateforme", "Constructeur", "Type", "Jeux", "Ventes", "Part", "Ventes par jeu", "Début", "Fin"],
+                column_order=["Plateforme", "Constructeur", "Type", "Jeux", "Ventes", "Part", "Ventes par jeu", "Note presse", "Début", "Fin"],
                 column_config={
                     "Ventes": st.column_config.ProgressColumn("Ventes (M)", format="%.0f", min_value=0, max_value=float(p["Ventes"].max())),
                     "Part": st.column_config.NumberColumn(format="percent"),
                     "Ventes par jeu": st.column_config.NumberColumn(format="%.2f M"),
+                    "Note presse": st.column_config.NumberColumn(format="%.1f", help="Note presse Metacritic moyenne des jeux notés (/100). "
+                                                                 "Vide : plateforme non couverte par Metacritic."),
                     "Début": st.column_config.NumberColumn(format="%d"), "Fin": st.column_config.NumberColumn(format="%d"),
                 })
         astuce("Cliquez sur une plateforme pour voir ses meilleures ventes.")
@@ -410,6 +433,25 @@ def _genres_zoom(ctx: dict) -> None:
         st.markdown("**Éditeurs dominants**")
         ed = d.groupby("Publisher")["Global_Sales"].sum().nlargest(8)
         graphique(G.barres_horizontales(ed, hauteur=330), key="g_editeurs")
+
+    if D.persistant(st.toggle, "g_notes", "Afficher les notes Metacritic par genre"):
+        _genres_notes(ctx, focus)
+
+
+def _genres_notes(ctx: dict, focus: str) -> None:
+    joint = D.joint(ctx["cle"])
+    notes = joint[joint["Note_Presse"]]
+    if len(notes) < 20:
+        st.info("Trop peu de jeux notés dans la sélection : Metacritic couvre surtout les jeux sortis entre 2000 et 2016.")
+        return
+    g = notes.groupby("Genre", observed=True).agg(Jeux=("Name", "size"), Presse=("Critic_Score", "mean"),
+                                                   Joueurs=("User_Score_100", "mean")).sort_values("Presse")
+    st.markdown("**Note moyenne par genre : presse et joueurs**")
+    graphique(G.notes_par_categorie(g, [C.GENRES_FR[x] for x in g.index], C.GENRES_FR[focus]), key="g_notes_graphe")
+    d = notes[notes["Genre"] == focus]
+    if len(d):
+        st.caption(f"{C.GENRES_FR[focus]} : {fr(len(d))} jeux notés, note presse moyenne {fr(d['Critic_Score'].mean(), 1)}/100 "
+                   f"(tous genres : {fr(notes['Critic_Score'].mean(), 1)}). Les jeux sans note Metacritic sont exclus.")
 
 
 @st.fragment
@@ -513,8 +555,12 @@ def vue_mpi(ctx: dict) -> None:
 | Diversité | Entropie de Shannon de ses ventes par genre, normalisée entre 0 et 1 |
 | Constance régionale | 1 − CV(parts de marché NA, EU, JP, Autres) / √3 |
 | Taux de succès | Part de ses titres dépassant 1 million d'exemplaires |
+| *Qualité perçue (option)* | Note presse Metacritic moyenne, pondérée par les ventes, sur les notes d'au moins 5 critiques |
 
 Chaque composante est ramenée entre 0 et 1, puis pondérée. Le score final va de 0 à 100.
+
+La qualité perçue vient de la deuxième source (Metacritic). Quand moins de 30 % des jeux d'un éditeur sont notés,
+sa note n'est pas représentative : on lui attribue la note médiane des éditeurs, qui ne le favorise ni ne le pénalise.
 """)
     _mpi_corps(ctx)
     suite(ctx, "mpi")
@@ -527,18 +573,27 @@ def _mpi_corps(ctx: dict) -> None:
     entete_poids, presets = st.columns([1, 2], vertical_alignment="center")
     entete_poids.markdown("**Pondérations**")
     presets.pills("Préréglages", list(PREREGLAGES), key="mpi_preset", on_change=appliquer_prereglage, label_visibility="collapsed")
-    cols = st.columns(5)
-    poids = {k: D.persistant(cols[i].slider, f"w_{k}", label, 0, 100, step=5) for i, (k, label) in enumerate(I.COMPOSANTES.items())}
+    qualite = D.persistant(st.toggle, "mpi_qualite", "Inclure la qualité perçue (note presse Metacritic, 6e composante)")
+    composantes = J.COMPOSANTES_QUALITE if qualite else I.COMPOSANTES
+    cols = st.columns(len(composantes))
+    poids = {k: D.persistant(cols[i].slider, f"w_{k}", label, 0, 100, step=5) for i, (k, label) in enumerate(composantes.items())}
     c1, c2, _ = st.columns([1, 1, 2])
     min_titres = D.persistant(c1.number_input, "mpi_min", "Titres minimum pour être classé", 5, 100, step=5)
-    normalisation = D.persistant(c2.selectbox, "mpi_norm", "Normalisation", ["minmax", "rang"], param="index",
-                                format_func={"minmax": "Min-max", "rang": "Rangs (percentiles)"}.get)
+    if qualite:
+        normalisation = "minmax"
+        c2.caption("<br>Normalisation min-max (celle du notebook de la deuxième base).", unsafe_allow_html=True)
+    else:
+        normalisation = D.persistant(c2.selectbox, "mpi_norm", "Normalisation", ["minmax", "rang"], param="index",
+                                    format_func={"minmax": "Min-max", "rang": "Rangs (percentiles)"}.get)
 
     if sum(poids.values()) == 0:
         st.warning("Toutes les pondérations sont à zéro : donnez du poids à au moins une composante.")
         return
     try:
-        mpi = D.mpi(ctx["cle"], tuple(poids.items()), int(min_titres), normalisation)
+        if qualite:
+            mpi = D.mpi_qualite(ctx["cle"], tuple(poids.items()), int(min_titres))
+        else:
+            mpi = D.mpi(ctx["cle"], tuple(poids.items()), int(min_titres), normalisation)
     except Exception:
         mpi = pd.DataFrame()
     if len(mpi) < 5:
@@ -546,7 +601,11 @@ def _mpi_corps(ctx: dict) -> None:
         return
 
     defaut = all(v == 20 for v in poids.values()) and min_titres == 20 and normalisation == "minmax" and not ctx["filtre_actif"]
-    st.caption(f"{len(mpi)} éditeurs classés." + (" Paramètres du notebook : les résultats sont identiques." if defaut else ""))
+    texte_defaut = " Paramètres du notebook bdd2.ipynb (Partie V) : les résultats sont identiques." if qualite else \
+        " Paramètres du notebook : les résultats sont identiques."
+    st.caption(f"{len(mpi)} éditeurs classés." + (texte_defaut if defaut else "")
+               + (f" Qualité non représentative (note médiane attribuée) pour {int((~mpi['qualite_representative']).sum())} éditeurs."
+                  if qualite else ""))
     n_max = min(40, len(mpi))
     if n_max > 5:
         D.definir("mpi_n", min(D.valeur("mpi_n"), n_max))
@@ -559,7 +618,7 @@ def _mpi_corps(ctx: dict) -> None:
     def choisir_editeur(point: dict) -> None:
         D.definir("mpi_ed", point["y"])
 
-    graphique(G.decomposition_mpi(mpi, poids, n, D.valeur("mpi_ed")), key="mpi_bar", clic=choisir_editeur)
+    graphique(G.decomposition_mpi(mpi, poids, n, D.valeur("mpi_ed"), composantes), key="mpi_bar", clic=choisir_editeur)
     astuce("Cliquez sur un éditeur pour afficher sa fiche ci-dessous.")
 
     st.subheader("Fiche éditeur")
@@ -579,19 +638,19 @@ def _mpi_corps(ctx: dict) -> None:
     ])
     gauche, droite = st.columns([1, 1.15])
     with gauche:
-        st.markdown("**Profil des 5 composantes (scores normalisés)**")
+        st.markdown(f"**Profil des {len(composantes)} composantes (scores normalisés)**")
         choisis = [editeur] + ([comparer] if comparer != "(aucun)" else [])
-        graphique(G.radar_editeurs(mpi, choisis), key="mpi_radar")
+        graphique(G.radar_editeurs(mpi, choisis, G.COURTS_QUALITE if qualite else G.COURTS), key="mpi_radar")
     with droite:
         st.markdown(f"**Titres les plus vendus de {editeur}**")
         t = D.titres(ctx["cle"])
         tableau_jeux(ctx, t[t["Publisher"] == editeur].head(10), key="mpi_titres", hauteur=390)
     with st.expander("Valeurs détaillées des composantes"):
         comp = pd.DataFrame({
-            "Composante": list(I.COMPOSANTES.values()),
-            "Valeur brute": [e["part_marche"], e["leadership"], e["diversite"], e["constance"], e["taux_hits"]],
-            "Score normalisé": [e[f"{k}_norm"] for k in I.COMPOSANTES],
-            "Médiane des éditeurs": [mpi[f"{k}_norm"].median() for k in I.COMPOSANTES],
+            "Composante": list(composantes.values()),
+            "Valeur brute": [e[k] for k in composantes],
+            "Score normalisé": [e[f"{k}_norm"] for k in composantes],
+            "Médiane des éditeurs": [mpi[f"{k}_norm"].median() for k in composantes],
         })
         st.dataframe(comp, hide_index=True, column_config={
             "Valeur brute": st.column_config.NumberColumn(format="%.3f"),
@@ -600,7 +659,8 @@ def _mpi_corps(ctx: dict) -> None:
         })
 
     st.subheader("Classement complet")
-    classement = mpi[["rang", "MPI", "ventes", "part_marche", "genres_leader", "leadership", "diversite", "constance", "taux_hits", "n_titres", "genre_principal"]]
+    classement = mpi[["rang", "MPI", "ventes", "part_marche", "genres_leader", "leadership", "diversite", "constance", "taux_hits",
+                      *(["qualite"] if qualite else []), "n_titres", "genre_principal"]]
     affiche = classement.assign(genre_principal=classement["genre_principal"].map(C.GENRES_FR)).reset_index()
 
     def choisir_ligne(ligne: pd.Series) -> None:
@@ -615,6 +675,7 @@ def _mpi_corps(ctx: dict) -> None:
         "diversite": st.column_config.NumberColumn("Diversité", format="%.2f"),
         "constance": st.column_config.NumberColumn("Constance", format="%.2f"),
         "taux_hits": st.column_config.NumberColumn("Taux de hits", format="percent"),
+        "qualite": st.column_config.NumberColumn("Qualité perçue", format="%.1f", help="Note presse moyenne pondérée par les ventes (/100)"),
         "n_titres": "Titres", "genre_principal": "Genre principal",
     })
     astuce("Cliquez sur une ligne pour afficher la fiche de cet éditeur plus haut.")
@@ -692,36 +753,204 @@ def _jeux_outliers(ctx: dict) -> None:
 
 
 # --------------------------------------------------------------------------------------
-# 7. Qualité des données
+# 7. Notes Metacritic (deuxième source)
+# --------------------------------------------------------------------------------------
+
+TRANCHES_NOTE = [0, 50, 60, 70, 80, 90, 101]
+NOMS_TRANCHES = ["< 50", "50-59", "60-69", "70-79", "80-89", "90 et +"]
+
+
+def jeux_notes(ctx: dict) -> pd.DataFrame:
+    """Jeux de la sélection qui ont une note presse, avec leur tranche de note."""
+    joint = D.joint(ctx["cle"])
+    n = joint[joint["Note_Presse"]].copy()
+    n["Tranche"] = pd.cut(n["Critic_Score"], TRANCHES_NOTE, right=False, labels=NOMS_TRANCHES)
+    n["Hit"] = n["Global_Sales"] >= C.SEUIL_HIT
+    return n
+
+
+def vue_notes(ctx: dict) -> None:
+    df = ctx["df"]
+    entete("Notes Metacritic : la qualité perçue",
+           "Deuxième source : notes de la presse et des joueurs, reliées aux ventes jeu par jeu")
+    if garde_vide(df):
+        return
+    joint = D.joint(ctx["cle"])
+    n = jeux_notes(ctx)
+    ventes = joint["Global_Sales"].sum()
+    deux = n.dropna(subset=["User_Score_100"])
+    tuiles([
+        ("Jeux reliés", pct(joint["Relie"].mean()), f"{fr(joint['Relie'].sum())} jeux sur {fr(len(joint))} retrouvés dans Metacritic"),
+        ("Jeux notés", pct(len(n) / len(joint), 0),
+         f"Ils font {pct(n['Global_Sales'].sum() / ventes, 0)} des ventes : les jeux notés sont les plus visibles"),
+        ("Note presse moyenne", f"{fr(n['Critic_Score'].mean(), 1)}/100" if len(n) else "–", "Moyenne des jeux notés par la presse"),
+        ("Note joueurs moyenne", f"{fr(deux['User_Score_100'].mean(), 1)}/100" if len(deux) else "–", "Note sur 10 ramenée sur 100"),
+        ("Accord presse / joueurs", fr(deux["Critic_Score"].corr(deux["User_Score_100"]), 2) if len(deux) > 2 else "–",
+         "Corrélation entre les deux notes (1 = parfaitement d'accord)"),
+    ])
+    if len(n) < 30:
+        st.info("Trop peu de jeux notés dans la sélection : Metacritic couvre surtout les jeux sortis entre 2000 et 2016.")
+        return
+    encart("<b>Source</b> : <i>Video Game Sales with Ratings</i> (Kaggle), scraping de Metacritic du 22/12/2016, reliée aux ventes "
+           "sur nom normalisé + plateforme + année. <b>Biais à garder en tête</b> : Metacritic note surtout les jeux récents et "
+           "visibles. Les jeux les plus vendus ont deux fois plus de chances d'être notés que les moins vendus.")
+
+    st.subheader("Une bonne note fait-elle vendre ?")
+    _notes_ventes(ctx)
+
+    st.subheader("Presse contre joueurs")
+    _notes_presse_joueurs(ctx)
+
+    st.subheader("Les régions réagissent-elles pareil aux notes ?")
+    parts = n[C.REGIONS].div(n[C.REGIONS].sum(axis=1), axis=0)
+    profil = parts.groupby(n["Tranche"], observed=True).mean()
+    gauche, droite = st.columns([1.5, 1])
+    with gauche:
+        graphique(G.regions_par_note(profil), key="n_regions")
+    with droite:
+        correl = pd.Series({C.REGION_LABELS[r]: np.log10(n[r] + 0.01).corr(n["Critic_Score"]) for r in C.REGIONS})
+        st.markdown("**Lien entre note et ventes, par région**")
+        st.dataframe(correl.rename("Corrélation").to_frame(), column_config={
+            "Corrélation": st.column_config.ProgressColumn(min_value=0, max_value=0.6, format="%.2f")})
+        encart("Plus un jeu est mal noté, plus ses ventes sont concentrées en <b>Amérique du Nord</b>. L'<b>Europe</b> est le "
+               "marché le plus sensible aux notes ; le <b>Japon</b> l'est le moins, car Metacritic regroupe des critiques occidentales.")
+    suite(ctx, "notes")
+
+
+@st.fragment
+def _notes_ventes(ctx: dict) -> None:
+    fiche_si_demandee(ctx)
+    n = jeux_notes(ctx)
+    t = n.groupby("Tranche", observed=True).agg(Jeux=("Name", "size"), Ventes_medianes=("Global_Sales", "median"),
+                                                 Taux_hits=("Hit", "mean"))
+    tranches = [str(x) for x in t.index]
+    if st.session_state.get("n_tranche") not in tranches:
+        st.session_state["n_tranche"] = tranches[-1]
+    focus = st.session_state["n_tranche"]
+
+    def choisir_tranche(point: dict) -> None:
+        st.session_state["n_tranche"] = str(point["x"])
+
+    mesure = D.persistant(st.segmented_control, "n_mesure", "Mesure", ["Ventes médianes", "Taux de hits"], param="default",
+                          required=True, label_visibility="collapsed")
+    gauche, droite = st.columns([1.2, 1])
+    with gauche:
+        graphique(G.ventes_par_note(t, "Taux_hits" if mesure == "Taux de hits" else "Ventes_medianes", focus), key="n_ventes",
+                  clic=choisir_tranche)
+        astuce("Cliquez sur une tranche de note pour afficher ses meilleures ventes.")
+    with droite:
+        st.markdown(f"**Meilleures ventes parmi les jeux notés {focus}**")
+        top = n[n["Tranche"].astype(str) == focus].nlargest(10, "Global_Sales")
+        top = top[["Name", "Platform_Name", "Year", "Critic_Score", "Global_Sales"]].reset_index(drop=True)
+        tableau(top, "n_top", clic=lambda ligne: ouvrir_jeu(ligne["Name"]), hide_index=True, height=390, column_config={
+            "Name": "Titre", "Platform_Name": "Plateforme", "Year": st.column_config.NumberColumn("Année", format="%d"),
+            "Critic_Score": st.column_config.NumberColumn("Presse", format="%.0f"),
+            "Global_Sales": st.column_config.NumberColumn("Ventes (M)", format="%.2f"),
+        })
+    if {"< 50", "90 et +"} <= set(tranches):
+        ratio = t.loc["90 et +", "Ventes_medianes"] / t.loc["< 50", "Ventes_medianes"]
+        encart(f"Un jeu noté 90 et plus se vend en médiane <b>{fr(ratio, 0)} fois plus</b> qu'un jeu noté moins de 50 "
+               f"({pct(t.loc['90 et +', 'Taux_hits'], 0)} de hits contre {pct(t.loc['< 50', 'Taux_hits'], 0)}). "
+               "<b>Lien ne veut pas dire cause</b> : les jeux attendus ont à la fois plus de budget marketing, plus de critiques "
+               "et de meilleures notes. Les jeux familiaux (<i>Wii Play</i>, <i>Kinect Adventures!</i>) se vendent par millions "
+               "malgré des notes médiocres.")
+
+
+@st.fragment
+def _notes_presse_joueurs(ctx: dict) -> None:
+    fiche_si_demandee(ctx)
+    n = jeux_notes(ctx)
+    gauche, droite = st.columns([1.2, 1])
+    with gauche:
+        par_an = n[n["Year"] >= 2000].groupby("Year")[["Critic_Score", "User_Score_100"]].mean()
+        if len(par_an) >= 3:
+            st.markdown("**Note moyenne par année de sortie**")
+            graphique(G.notes_par_annee(par_an), key="n_annees")
+            st.caption("Depuis 2000 (avant, trop peu de jeux notés). Vers 2010, les joueurs deviennent plus sévères que la presse.")
+        else:
+            st.info("Élargissez la période (2000-2016) pour comparer l'évolution des deux notes.")
+    with droite:
+        sens = D.persistant(st.segmented_control, "n_sens", "Écart", ["Presse plus enthousiaste", "Joueurs plus enthousiastes"],
+                            param="default", required=True, label_visibility="collapsed")
+        fiables = n[n["Note_Presse_Fiable"].astype(bool) & n["Note_Joueurs_Fiable"].astype(bool)]
+        ecarts = fiables.sort_values("Ecart_Presse_Joueurs", ascending=sens == "Joueurs plus enthousiastes").head(10)
+        ecarts = ecarts[["Name", "Platform_Name", "Year", "Critic_Score", "User_Score_100", "User_Count"]].reset_index(drop=True)
+        tableau(ecarts, "n_ecarts", clic=lambda ligne: ouvrir_jeu(ligne["Name"]), hide_index=True, height=390, column_config={
+            "Name": "Titre", "Platform_Name": "Plateforme", "Year": st.column_config.NumberColumn("Année", format="%d"),
+            "Critic_Score": st.column_config.NumberColumn("Presse", format="%.0f"),
+            "User_Score_100": st.column_config.NumberColumn("Joueurs", format="%.0f"),
+            "User_Count": st.column_config.NumberColumn("Votes", format="%d"),
+        })
+        st.caption("Notes fiables uniquement (au moins 5 critiques et 10 votes). Cliquez sur une ligne pour la fiche du jeu.")
+
+
+# --------------------------------------------------------------------------------------
+# 8. Qualité des données
 # --------------------------------------------------------------------------------------
 
 def vue_qualite(ctx: dict) -> None:
     raw, df_all, journal = ctx["raw"], ctx["df_all"], ctx["journal"]
     entete("Qualité des données", "Du fichier brut au jeu d'analyse : chaque correction est tracée")
-    tuiles([
-        ("Lignes brutes", fr(len(raw)), "vgsales.csv"),
-        ("Jeux propres", fr(len(df_all)), "Après nettoyage"),
-        ("Volume conservé", pct(df_all["Global_Sales"].sum() / raw["Global_Sales"].sum()), "Part des ventes du fichier brut"),
-        ("Valeurs manquantes", "0", f"contre {int(raw.isna().sum().sum())} dans le brut"),
-    ])
-    st.subheader("Journal de nettoyage")
-    st.dataframe(pd.DataFrame(journal), hide_index=True, column_config={"Détail": st.column_config.TextColumn(width="large")})
+    onglet_ventes, onglet_notes = st.tabs(["Ventes (vgsales.csv)", "Notes (Metacritic)"])
+    with onglet_ventes:
+        tuiles([
+            ("Lignes brutes", fr(len(raw)), "vgsales.csv"),
+            ("Jeux propres", fr(len(df_all)), "Après nettoyage"),
+            ("Volume conservé", pct(df_all["Global_Sales"].sum() / raw["Global_Sales"].sum()), "Part des ventes du fichier brut"),
+            ("Valeurs manquantes", "0", f"contre {int(raw.isna().sum().sum())} dans le brut"),
+        ])
+        st.subheader("Journal de nettoyage")
+        st.dataframe(pd.DataFrame(journal), hide_index=True, column_config={"Détail": st.column_config.TextColumn(width="large")})
 
-    st.subheader("Les problèmes trouvés dans le fichier brut")
+        st.subheader("Les problèmes trouvés dans le fichier brut")
+        encart("""
+        <ul>
+        <li><b>271 années manquantes</b> : 118 retrouvées grâce à une fiche jumelle ou aux autres plateformes du même titre, 153 supprimées (0,5 % des ventes).</li>
+        <li><b>261 éditeurs inconnus</b> sous deux libellés (vide et « Unknown ») : regroupés sous « Inconnu ».</li>
+        <li><b>149 fiches partielles</b> « (JP sales) », « (US sales) »... : fusionnées dans la fiche principale en prenant le maximum par région, pour ne jamais compter deux fois les mêmes ventes.</li>
+        <li><b>Doublons d'écriture</b> (« wwe Smackdown » / « WWE SmackDown! ») détectés grâce à une clé de nom normalisée.</li>
+        <li><b>Dates impossibles</b> : 4 sorties après 2016, un jeu DS daté de 1985.</li>
+        <li><b>Limites non corrigeables</b> : 2016 incomplète, ventes dématérialisées absentes, quelques ventes européennes saisies en « reste du monde » (Gran Turismo 4).</li>
+        </ul>
+        """)
+        st.subheader("Données nettoyées")
+        _qualite_apercu(df_all)
+        st.download_button("Télécharger le jeu nettoyé (CSV)", df_all.to_csv(index=False).encode("utf-8"), "vgsales_clean.csv", "text/csv")
+    with onglet_notes:
+        _qualite_notes()
+    suite(ctx, "qualite")
+
+
+def _qualite_notes() -> None:
+    raw2, notes, journal2 = D.charger_notes()
+    bilan = J.bilan_jointure(D.joint_complet(), notes)
+    tuiles([
+        ("Lignes brutes", fr(len(raw2)), "video_games_ratings.csv (Kaggle, scraping Metacritic du 22/12/2016)"),
+        ("Jeux propres", fr(len(notes)), "Après nettoyage, une ligne par jeu et par plateforme"),
+        ("Notes presse", fr(notes["Critic_Score"].notna().sum()), f"{pct(notes['Critic_Score'].notna().mean(), 0)} des jeux : non imputées"),
+        ("Jeux reliés aux ventes", pct(bilan.loc["reliés à la base Metacritic", "Part des jeux"]),
+         f"{pct(bilan.loc['reliés à la base Metacritic', 'Part des ventes'], 2)} des ventes"),
+    ])
+    st.subheader("Journal de nettoyage de la deuxième base")
+    st.dataframe(pd.DataFrame(journal2), hide_index=True, column_config={"Détail": st.column_config.TextColumn(width="large")})
+
+    st.subheader("Jointure avec les ventes")
+    st.dataframe(bilan, column_config={
+        "Jeux": st.column_config.NumberColumn(format="%d"), "Ventes (M)": st.column_config.NumberColumn(format="%.1f"),
+        "Part des jeux": st.column_config.NumberColumn(format="percent"),
+        "Part des ventes": st.column_config.NumberColumn(format="percent"),
+    })
     encart("""
     <ul>
-    <li><b>271 années manquantes</b> : 118 retrouvées grâce à une fiche jumelle ou aux autres plateformes du même titre, 153 supprimées (0,5 % des ventes).</li>
-    <li><b>261 éditeurs inconnus</b> sous deux libellés (vide et « Unknown ») : regroupés sous « Inconnu ».</li>
-    <li><b>149 fiches partielles</b> « (JP sales) », « (US sales) »... : fusionnées dans la fiche principale en prenant le maximum par région, pour ne jamais compter deux fois les mêmes ventes.</li>
-    <li><b>Doublons d'écriture</b> (« wwe Smackdown » / « WWE SmackDown! ») détectés grâce à une clé de nom normalisée.</li>
-    <li><b>Dates impossibles</b> : 4 sorties après 2016, un jeu DS daté de 1985.</li>
-    <li><b>Limites non corrigeables</b> : 2016 incomplète, ventes dématérialisées absentes, quelques ventes européennes saisies en « reste du monde » (Gran Turismo 4).</li>
+    <li><b>Clé de jointure</b> : nom normalisé (minuscules, sans ponctuation ni suffixe « (JP sales) ») + plateforme + année. L'année sépare un jeu de son remake.</li>
+    <li><b>2 425 notes joueurs « tbd »</b> (pas assez de votes) : remplacées par des valeurs manquantes, la colonne devient numérique.</li>
+    <li><b>Notes manquantes non imputées</b> : elles ne manquent pas au hasard (1 % de jeux notés dans les années 80, 61 % dans les années 2000).</li>
+    <li><b>Fausses correspondances de la source</b> : <i>Need for Speed: Most Wanted</i> 2005 et son remake de 2012 avaient la même note. Note retirée plutôt qu'attribuée au hasard.</li>
+    <li><b>Deux relevés de ventes différents</b> (<i>Wii Sports</i> : 82,74 M contre 82,53 M) : les ventes viennent toujours de vgsales.csv, la seule source de vérité.</li>
     </ul>
     """)
-    st.subheader("Données nettoyées")
-    _qualite_apercu(df_all)
-    st.download_button("Télécharger le jeu nettoyé (CSV)", df_all.to_csv(index=False).encode("utf-8"), "vgsales_clean.csv", "text/csv")
-    suite(ctx, "qualite")
+    st.download_button("Télécharger les notes nettoyées (CSV)", notes.to_csv(index=False).encode("utf-8"),
+                       "video_games_ratings_clean.csv", "text/csv")
 
 
 @st.fragment
@@ -740,7 +969,7 @@ def _qualite_apercu(df_all: pd.DataFrame) -> None:
 
 
 # --------------------------------------------------------------------------------------
-# 8. Synthèse et conclusion
+# 9. Synthèse et conclusion
 # --------------------------------------------------------------------------------------
 
 GALERIE = {
@@ -748,6 +977,8 @@ GALERIE = {
     "II. Analyse exploratoire": ["02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"],
     "II. Indicateurs avancés": ["13", "14", "15", "16", "17", "18", "19"],
     "III. Storytelling": ["20", "21", "22", "23", "24"],
+    "IV. Notes Metacritic": ["25", "26", "27", "28", "29", "30", "31", "32", "33", "34"],
+    "V. Jointure": ["35", "36", "37", "38"],
 }
 
 
@@ -780,6 +1011,24 @@ def _insights() -> dict:
     }
 
 
+@st.cache_data(show_spinner=False)
+def _insights_notes() -> dict:
+    joint = D.joint(D.CLE_COMPLETE)
+    n = joint[joint["Note_Presse"]]
+    tranche = pd.cut(n["Critic_Score"], TRANCHES_NOTE, right=False, labels=NOMS_TRANCHES)
+    mediane = n.groupby(tranche, observed=True)["Global_Sales"].median()
+    parts_na = (n["NA_Sales"] / n[C.REGIONS].sum(axis=1)).groupby(tranche, observed=True).mean()
+    avant = I.market_power_index(D.filtrer(D.CLE_COMPLETE))["rang"]
+    apres = J.market_power_index_qualite(joint)
+    gain = (avant - apres["rang"]).loc[apres.index[:12]]
+    return {
+        "ratio": mediane["90 et +"] / mediane["< 50"], "hits": n.groupby(tranche, observed=True)["Global_Sales"].apply(
+            lambda s: (s >= C.SEUIL_HIT).mean()),
+        "podium": list(apres.index[:3]), "montent": list(gain.nlargest(2).index), "descendent": list(gain.nsmallest(2).index),
+        "na_bas": parts_na["< 50"], "na_haut": parts_na["90 et +"],
+    }
+
+
 def vue_conclusion(ctx: dict) -> None:
     entete("Synthèse et conclusion", "Les résultats du projet en un coup d'œil, calculés sur l'ensemble du jeu nettoyé (1980-2016)")
 
@@ -808,6 +1057,23 @@ def vue_conclusion(ctx: dict) -> None:
             col.markdown(carte(chiffre, titre, texte), unsafe_allow_html=True)
             col.page_link(ctx["pages"][page], label="Explorer →")
 
+    y = _insights_notes()
+    cartes_notes = [
+        (f"×{fr(y['ratio'], 0)}", "Une bonne note va avec de bonnes ventes",
+         f"de ventes médianes pour un jeu noté 90 et plus face à un jeu noté moins de 50 ({pct(y['hits']['90 et +'], 0)} de hits "
+         f"contre {pct(y['hits']['< 50'], 0)}). Un lien, pas forcément une cause : le budget marketing joue sur les deux.", "notes"),
+        ("Top 3 inchangé", "La qualité reclasse les éditeurs",
+         f"{', '.join(y['podium'])} gardent le podium du MPI, mais les éditeurs premium montent ({', '.join(y['montent'])}) et les éditeurs de volume "
+         f"descendent ({', '.join(y['descendent'])}).", "mpi"),
+        (f"{pct(y['na_bas'], 0)} → {pct(y['na_haut'], 0)}", "Les jeux mal notés se vendent en Amérique du Nord",
+         "part nord-américaine des ventes d'un jeu noté moins de 50, puis 90 et plus. L'Europe est la plus sensible aux notes, "
+         "le Japon la moins.", "notes"),
+    ]
+    st.subheader("Ce qu'apporte la deuxième source (notes Metacritic)")
+    for col, (chiffre, titre, texte, page) in zip(st.columns(3), cartes_notes):
+        col.markdown(carte(chiffre, titre, texte), unsafe_allow_html=True)
+        col.page_link(ctx["pages"][page], label="Explorer →")
+
     gauche, droite = st.columns(2)
     with gauche:
         st.subheader("Difficultés de data wrangling")
@@ -817,6 +1083,7 @@ def vue_conclusion(ctx: dict) -> None:
         <li><b>Des étapes imbriquées</b> : une clé de jeu normalisée a été nécessaire pour imputer les années, puis fusionner les fiches.</li>
         <li><b>Fusionner sans double compter</b> : maximum par région plutôt que somme (<i>Ratchet &amp; Clank</i>).</li>
         <li><b>Des limites de la source</b> signalées plutôt que masquées : 2016 incomplète, dématérialisé absent, ventes européennes saisies en « reste du monde ».</li>
+        <li><b>Relier deux sources</b> : notes « tbd », remakes notés comme l'original, deux relevés de ventes différents, et des notes qui ne couvrent que les jeux récents et visibles.</li>
         </ul>
         """)
     with droite:
@@ -831,7 +1098,8 @@ def vue_conclusion(ctx: dict) -> None:
         """)
 
     st.subheader("Galerie des figures du notebook")
-    st.caption("Les 24 graphiques interprétés du notebook, exportés en PNG dans le dossier figures/. Survolez une figure et cliquez sur l'icône plein écran pour l'agrandir.")
+    st.caption("Les graphiques interprétés des notebooks (projet_final.ipynb et bdd2.ipynb), exportés en PNG dans le dossier figures/. "
+               "Survolez une figure et cliquez sur l'icône plein écran pour l'agrandir.")
     _galerie()
 
 
@@ -847,5 +1115,5 @@ def _galerie() -> None:
     presentes = [fichiers[n] for n in GALERIE[partie] if n in fichiers]
     for i in range(0, len(presentes), 2):
         for col, f in zip(st.columns(2), presentes[i:i + 2]):
-            legende = f.stem[3:].replace("_", " ").replace("story ", "").capitalize()
+            legende = f.stem[3:].replace("_", " ").replace("story ", "").replace("bdd2 ", "").replace("jointure ", "").capitalize()
             col.image(str(f), caption=f"Figure {f.name[:2]} · {legende}", width="stretch")

@@ -7,7 +7,9 @@ import streamlit as st
 
 from modules import config as C
 from modules import indicators as I
+from modules import jointure as J
 from modules.cleaning import nettoyer
+from modules.cleaning_bdd2 import nettoyer as nettoyer_notes
 
 # Clé de filtres : (période, genres, constructeurs, types), tuples triés pour être hachables et stables.
 Cle = tuple[tuple[int, int], tuple[str, ...], tuple[str, ...], tuple[str, ...]]
@@ -86,3 +88,30 @@ def divergences(cle: Cle, min_ventes: float) -> pd.DataFrame:
 @st.cache_data(show_spinner=False, max_entries=128)
 def mpi(cle: Cle, poids: tuple[tuple[str, int], ...], min_titres: int, normalisation: str) -> pd.DataFrame:
     return I.market_power_index(filtrer(cle), poids=dict(poids), min_titres=min_titres, normalisation=normalisation)
+
+
+# --------------------------------------------------------------------------------------
+# Deuxième base : notes Metacritic, reliées aux ventes
+# --------------------------------------------------------------------------------------
+
+@st.cache_data(show_spinner="Nettoyage de la base Metacritic...")
+def charger_notes() -> tuple[pd.DataFrame, pd.DataFrame, list[dict]]:
+    raw = pd.read_csv(C.RATINGS_RAW_FILE)
+    notes, journal = nettoyer_notes(raw)
+    return raw, notes, journal
+
+
+@st.cache_data(show_spinner=False)
+def joint_complet() -> pd.DataFrame:
+    return J.joindre(charger()[1], charger_notes()[1])
+
+
+@st.cache_data(show_spinner=False, max_entries=64)
+def joint(cle: Cle) -> pd.DataFrame:
+    """Ventes + notes, avec les mêmes filtres que les ventes (la jointure garde l'index des ventes)."""
+    return joint_complet().loc[filtrer(cle).index]
+
+
+@st.cache_data(show_spinner=False, max_entries=128)
+def mpi_qualite(cle: Cle, poids: tuple[tuple[str, int], ...], min_titres: int) -> pd.DataFrame:
+    return J.market_power_index_qualite(joint(cle), poids=dict(poids), min_titres=min_titres)
