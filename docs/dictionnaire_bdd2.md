@@ -11,7 +11,7 @@
 | Copie téléchargée | https://raw.githubusercontent.com/Yorko/mlcourse.ai/main/data/video_games_sales.csv (copie identique : mêmes 16 719 lignes, mêmes 16 colonnes) |
 | Date de téléchargement | 22/10/2026 |
 | Date des données | scraping du 22/12/2016 |
-| Licence | à vérifier sur la page Kaggle (compte requis) |
+| Licence | non précisée par l'auteur (« Unknown » sur la page Kaggle, vérifié le 22/10/2026). Usage limité à ce projet pédagogique, avec la source citée |
 | Fichier dans le projet | `BDD_states/video_games_ratings.csv` |
 | Taille | 16 719 lignes × 16 colonnes |
 
