@@ -105,3 +105,21 @@ COULEURS_REGION = {
 }
 # Ordre d'empilement validé (couleurs adjacentes distinguables, y compris daltonisme).
 ORDRE_CONSTRUCTEURS = ["Atari", "Sega", "Nintendo", "Sony", "Microsoft", "PC", "Autres"]
+
+# --------------------------------------------------------------------------------------
+# Deuxième base : notes Metacritic (Kaggle rush4ratio, scraping du 22/12/2016)
+# --------------------------------------------------------------------------------------
+RATINGS_RAW_FILE = DATA_DIR / "video_games_ratings.csv"
+RATINGS_CLEAN_FILE = DATA_DIR / "video_games_ratings_clean.csv"
+JOINTURE_FILE = DATA_DIR / "vgsales_ratings_joint.csv"
+
+# Classification d'âge ESRB : code -> libellé (K-A est l'ancien nom de E, avant 1998).
+ESRB_LABELS = {
+    "EC": "Petite enfance (3+)",
+    "E": "Tout public",
+    "E10+": "10 ans et plus",
+    "T": "Adolescents (13+)",
+    "M": "Adultes (17+)",
+    "AO": "Adultes uniquement (18+)",
+    "RP": "En attente de classification",
+}
